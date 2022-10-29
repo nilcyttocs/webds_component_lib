@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 
 import Typography from "@mui/material/Typography";
 
+import { useTheme } from "@mui/material/styles";
+
 import { TouchcommReport } from "@webds/service";
 
 import Plot from "react-plotly.js";
@@ -463,6 +465,8 @@ const LivePlot = (props: any): JSX.Element => {
   const [barYLayout, setBarYLayout] = useState<any>({});
   const [barYFrames, setBarYFrames] = useState<any>([]);
 
+  const theme = useTheme();
+
   const storeHeatState = (figure: any) => {
     setHeatData(figure.data);
     setHeatConfig(figure.config);
@@ -723,8 +727,8 @@ const LivePlot = (props: any): JSX.Element => {
   }, []);
 
   useEffect(() => {
-    fontColor = props.fontColor;
-  }, [props.fontColor]);
+    fontColor = theme.palette.text.primary;
+  }, [theme]);
 
   useEffect(() => {
     newPlot();

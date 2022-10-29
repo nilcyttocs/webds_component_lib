@@ -3,6 +3,8 @@ import React, { useContext, useEffect, useState } from "react";
 import Slider from "@mui/material/Slider";
 import LinearProgress from "@mui/material/LinearProgress";
 
+import { useTheme } from "@mui/material/styles";
+
 import { TouchcommReport } from "@webds/service";
 
 import Plot from "react-plotly.js";
@@ -130,6 +132,8 @@ export const PlaybackPlot = (props: any): JSX.Element | null => {
   const [barYFrames, setBarYFrames] = useState<any>([]);
 
   const recordedData = useContext(RecordedDataContext);
+
+  const theme = useTheme();
 
   const storeHeatState = (figure: any) => {
     setHeatData(figure.data);
@@ -309,8 +313,8 @@ export const PlaybackPlot = (props: any): JSX.Element | null => {
   };
 
   useEffect(() => {
-    fontColor = props.fontColor;
-  }, [props.fontColor]);
+    fontColor = theme.palette.text.primary;
+  }, [theme]);
 
   useEffect(() => {
     if (props.run && frameIndex + 1 === playbackData.data.length) {
@@ -343,7 +347,7 @@ export const PlaybackPlot = (props: any): JSX.Element | null => {
       setBarXConfig(plotConfig);
       setBarYConfig(plotConfig);
 
-      fontColor = props.fontColor;
+      fontColor = theme.palette.text.primary;
 
       playbackData = recordedData;
       numFrames = playbackData.data.length;
