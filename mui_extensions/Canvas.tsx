@@ -32,7 +32,7 @@ export const Canvas = ({
     <Paper
       elevation={7}
       sx={{
-        width: minWidth ? "auto" : (width ? width : CANVAS_ATTRS.WIDTH) + "px",
+        width: minWidth ? "100%" : (width ? width : CANVAS_ATTRS.WIDTH) + "px",
         minWidth: minWidth ? minWidth + "px" : "auto",
         borderStyle: "solid",
         borderWidth: theme.palette.mode === "light" ? "0px" : "1px",
