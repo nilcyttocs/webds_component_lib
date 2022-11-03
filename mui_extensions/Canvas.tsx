@@ -15,12 +15,14 @@ import { CANVAS_ATTRS } from "./constants";
 interface CanvasProps extends PaperProps {
   title: string;
   width?: number | null;
+  minWidth?: number | null;
   showHelp?: boolean;
 }
 
 export const Canvas = ({
   title,
   width = null,
+  minWidth = null,
   showHelp = false,
   sx,
   ...canvasProps
@@ -30,7 +32,8 @@ export const Canvas = ({
     <Paper
       elevation={7}
       sx={{
-        width: (width ? width : CANVAS_ATTRS.WIDTH) + "px",
+        width: minWidth ? "auto" : (width ? width : CANVAS_ATTRS.WIDTH) + "px",
+        minWidth: minWidth ? minWidth + "px" : "auto",
         borderStyle: "solid",
         borderWidth: theme.palette.mode === "light" ? "0px" : "1px",
         borderColor: "canvas.border",
@@ -42,7 +45,7 @@ export const Canvas = ({
       <Stack spacing={0} divider={<Divider orientation="horizontal" />}>
         <Box
           sx={{
-            width: (width ? width : CANVAS_ATTRS.WIDTH) + "px",
+            width: minWidth ? minWidth + "px" : "100%",
             height: CANVAS_ATTRS.HEIGHT_TITLE + "px",
             padding: CANVAS_ATTRS.PADDING + "px",
             boxSizing: "border-box",
