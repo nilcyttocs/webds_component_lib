@@ -1,7 +1,6 @@
 import React from "react";
 
 import Stepper, { StepperProps } from "@mui/material/Stepper";
-import StepConnector, { StepConnectorProps } from "@mui/material/StepConnector";
 import { StepIconProps } from "@mui/material/StepIcon";
 
 import { styled } from "@mui/material/styles";
@@ -41,51 +40,19 @@ export const VerticalStepIcon = (props: StepIconProps) => {
   );
 };
 
-interface VerticalStepConnectorProps extends StepConnectorProps {
-  minConnectorHeight?: number | null;
-}
-
-const VerticalStepConnector = ({
-  minConnectorHeight = null,
-  sx,
-  ...verticalStepConnectorProps
-}: VerticalStepConnectorProps) => {
-  return (
-    <StepConnector
-      sx={{
-        "& .MuiStepConnector-line": {
-          minHeight:
-            (minConnectorHeight
-              ? minConnectorHeight
-              : STEPPER_ATTRS.CONNECTOR_MIN_HEIGHT) + "px",
-          marginLeft: STEPPER_ATTRS.CONNECTOR_MARGIN_LEFT + "px"
-        },
-        ...sx
-      }}
-      {...verticalStepConnectorProps}
-    />
-  );
-};
-
-interface VerticalStepperProps extends StepperProps {
-  minConnectorHeight?: number | null;
-}
-
 export const VerticalStepper = ({
-  minConnectorHeight = null,
   sx,
   ...verticalStepperProps
-}: VerticalStepperProps) => {
+}: StepperProps) => {
   return (
     <Stepper
       orientation="vertical"
-      connector={
-        <VerticalStepConnector minConnectorHeight={minConnectorHeight} />
-      }
+      connector={null}
       sx={{
-        "& .MuiStepIcon-root": {
-          width: STEPPER_ATTRS.ICON_SIZE + "px",
-          height: STEPPER_ATTRS.ICON_SIZE + "px"
+        whiteSpace: "normal",
+        "& .MuiStepContent-root": {
+          minHeight: STEPPER_ATTRS.CONNECTOR_MIN_HEIGHT + "px",
+          marginLeft: STEPPER_ATTRS.CONNECTOR_MARGIN_LEFT + "px"
         },
         ...sx
       }}
