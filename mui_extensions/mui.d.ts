@@ -10,5 +10,6 @@ declare module "@mui/material/Typography" {
 declare module "@mui/material/StepIcon" {
   interface StepIconProps {
     onClick: (clickedStep: number) => void;
+    onHover: (hoveredStep: number) => void;
   }
 }

@@ -12,6 +12,9 @@ import { styled, useTheme } from "@mui/material/styles";
 
 import { STEPPER_ATTRS } from "./constants";
 
+const HOVERED_COLOR_LIGHT = "rgba(0, 0, 0, 0.53)";
+const HOVERED_COLOR_DARK = "rgba(255, 255, 255, 0.65)";
+
 const VerticalStepIconRoot = styled("div")<{
   ownerState: { completed?: boolean; active?: boolean };
 }>(({ theme, ownerState }) => ({
@@ -27,6 +30,11 @@ const VerticalStepIconRoot = styled("div")<{
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
+  "&:hover": !ownerState.active && {
+    cursor: "pointer",
+    backgroundColor:
+      theme.palette.mode === "dark" ? HOVERED_COLOR_DARK : HOVERED_COLOR_LIGHT
+  },
   ...(ownerState.active && { backgroundColor: "#007dc3" })
 }));
 
@@ -39,7 +47,9 @@ const VerticalStepIcon = (props: StepIconProps) => {
       onClick={() => {
         props.onClick((props.icon as number) - 1);
       }}
-      sx={{ cursor: "pointer" }}
+      onMouseOver={() => {
+        props.onHover((props.icon as number) - 1);
+      }}
     >
       {String(props.icon)}
     </VerticalStepIconRoot>
@@ -65,7 +75,10 @@ export const VerticalStepper = ({
 }: VerticalStepperProps) => {
   const [activeVerticalStep, setActiveVerticalStep] = useState<
     number | undefined
-  >(activeStep);
+  >(undefined);
+  const [hoveredVerticalStep, setHoveredVerticalStep] = useState<
+    number | undefined
+  >(undefined);
 
   const theme = useTheme();
 
@@ -98,6 +111,9 @@ export const VerticalStepper = ({
                 if (onStepClick) {
                   onStepClick(clickedStep);
                 }
+              },
+              onHover: (hoveredStep: number) => {
+                setHoveredVerticalStep(hoveredStep);
               }
             }}
           >
@@ -105,7 +121,11 @@ export const VerticalStepper = ({
               sx={{
                 color:
                   index !== activeVerticalStep
-                    ? theme.palette.text.disabled
+                    ? index === hoveredVerticalStep
+                      ? theme.palette.mode === "dark"
+                        ? HOVERED_COLOR_DARK
+                        : HOVERED_COLOR_LIGHT
+                      : theme.palette.text.disabled
                     : theme.palette.text.primary
               }}
             >
