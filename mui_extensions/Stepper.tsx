@@ -45,10 +45,10 @@ const VerticalStepIcon = (props: StepIconProps) => {
       ownerState={{ completed, active }}
       className={className}
       onClick={() => {
-        props.onClick((props.icon as number) - 1);
+        props.onStepClick((props.icon as number) - 1);
       }}
       onMouseOver={() => {
-        props.onHover((props.icon as number) - 1);
+        props.onStepHover((props.icon as number) - 1);
       }}
     >
       {String(props.icon)}
@@ -106,13 +106,13 @@ export const VerticalStepper = ({
           <StepLabel
             StepIconComponent={VerticalStepIcon}
             StepIconProps={{
-              onClick: (clickedStep: number) => {
+              onStepClick: (clickedStep: number) => {
                 setActiveVerticalStep(clickedStep);
                 if (onStepClick) {
                   onStepClick(clickedStep);
                 }
               },
-              onHover: (hoveredStep: number) => {
+              onStepHover: (hoveredStep: number) => {
                 setHoveredVerticalStep(hoveredStep);
               }
             }}
