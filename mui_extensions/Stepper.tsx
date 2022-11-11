@@ -144,7 +144,8 @@ export const VerticalStepper = ({
                         ? HOVERED_COLOR_DARK
                         : HOVERED_COLOR_LIGHT
                       : theme.palette.text.disabled
-                    : theme.palette.text.primary
+                    : theme.palette.text.primary,
+                fontWeight: index === activeVerticalStep ? "bold" : "normal"
               }}
             >
               {step.label}
