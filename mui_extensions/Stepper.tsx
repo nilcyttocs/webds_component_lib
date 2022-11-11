@@ -15,6 +15,9 @@ import { STEPPER_ATTRS } from "./constants";
 const HOVERED_COLOR_LIGHT = "rgba(0, 0, 0, 0.53)";
 const HOVERED_COLOR_DARK = "rgba(255, 255, 255, 0.65)";
 
+let iconSize: number;
+let connectorMinHeight: number;
+
 const VerticalStepIconRoot = styled("div")<{
   ownerState: { completed?: boolean; active?: boolean };
 }>(({ theme, ownerState }) => ({
@@ -22,8 +25,8 @@ const VerticalStepIconRoot = styled("div")<{
     theme.palette.mode === "dark"
       ? "rgba(255, 255, 255, 0.5)"
       : "rgba(0, 0, 0, 0.38)",
-  width: STEPPER_ATTRS.ICON_SIZE,
-  height: STEPPER_ATTRS.ICON_SIZE,
+  width: iconSize,
+  height: iconSize,
   zIndex: 1,
   color: "#fff",
   borderRadius: "50%",
@@ -63,6 +66,8 @@ type Steps = {
 
 interface VerticalStepperProps extends StepperProps {
   steps: Steps;
+  iconSize?: number;
+  connectorMinHeight?: number;
   onStepClick?: (clickedStep: number) => void;
 }
 
@@ -83,6 +88,19 @@ export const VerticalStepper = ({
   const theme = useTheme();
 
   useEffect(() => {
+    if (verticalStepperProps.iconSize) {
+      iconSize = verticalStepperProps.iconSize;
+    } else {
+      iconSize = STEPPER_ATTRS.ICON_SIZE;
+    }
+    if (verticalStepperProps.connectorMinHeight) {
+      connectorMinHeight = verticalStepperProps.connectorMinHeight;
+    } else {
+      connectorMinHeight = STEPPER_ATTRS.CONNECTOR_MIN_HEIGHT;
+    }
+  }, [verticalStepperProps.iconSize, verticalStepperProps.connectorMinHeight]);
+
+  useEffect(() => {
     setActiveVerticalStep(activeStep);
   }, [activeStep]);
 
@@ -94,8 +112,8 @@ export const VerticalStepper = ({
       sx={{
         whiteSpace: "normal",
         "& .MuiStepContent-root": {
-          minHeight: STEPPER_ATTRS.CONNECTOR_MIN_HEIGHT + "px",
-          marginLeft: STEPPER_ATTRS.ICON_SIZE / 2 + "px"
+          minHeight: connectorMinHeight + "px",
+          marginLeft: iconSize / 2 + "px"
         },
         ...sx
       }}

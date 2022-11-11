@@ -25,5 +25,5 @@ export const getContentAttrs = (
 
 export const STEPPER_ATTRS = {
   ICON_SIZE: 32,
-  CONNECTOR_MIN_HEIGHT: 40
+  CONNECTOR_MIN_HEIGHT: 20
 };
