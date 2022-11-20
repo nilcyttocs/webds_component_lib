@@ -15,43 +15,52 @@ import { STEPPER_ATTRS } from "./constants";
 const HOVERED_COLOR_LIGHT = "rgba(0, 0, 0, 0.53)";
 const HOVERED_COLOR_DARK = "rgba(255, 255, 255, 0.65)";
 
-let iconSize: number;
-let connectorMinHeight: number;
+let verticalStepperIconSize: number;
 
 const VerticalStepIconRoot = styled("div")<{
-  ownerState: { completed?: boolean; active?: boolean };
+  ownerState: { strict: boolean; active?: boolean; completed?: boolean };
 }>(({ theme, ownerState }) => ({
   backgroundColor:
     theme.palette.mode === "dark"
       ? "rgba(255, 255, 255, 0.5)"
       : "rgba(0, 0, 0, 0.38)",
-  width: iconSize,
-  height: iconSize,
+  width: verticalStepperIconSize,
+  height: verticalStepperIconSize,
   zIndex: 1,
   color: "#fff",
   borderRadius: "50%",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  "&:hover": !ownerState.active && {
-    cursor: "pointer",
-    backgroundColor:
-      theme.palette.mode === "dark" ? HOVERED_COLOR_DARK : HOVERED_COLOR_LIGHT
-  },
+  "&:hover": !ownerState.strict &&
+    !ownerState.active && {
+      cursor: "pointer",
+      backgroundColor:
+        theme.palette.mode === "dark" ? HOVERED_COLOR_DARK : HOVERED_COLOR_LIGHT
+    },
   ...(ownerState.active && { backgroundColor: "#007dc3" })
 }));
 
 const VerticalStepIcon = (props: StepIconProps) => {
-  const { active, completed, className } = props;
+  const { strict, active, completed, className } = props;
   return (
     <VerticalStepIconRoot
-      ownerState={{ completed, active }}
+      ownerState={{ strict, active, completed }}
       className={className}
       onClick={() => {
-        props.onStepClick((props.icon as number) - 1);
+        if (props.stepClick) {
+          props.stepClick(props.icon as number);
+        }
       }}
       onMouseOver={() => {
-        props.onStepHover((props.icon as number) - 1);
+        if (props.stepHover) {
+          props.stepHover(props.icon as number);
+        }
+      }}
+      onMouseOut={() => {
+        if (props.stepUnhover) {
+          props.stepUnhover();
+        }
       }}
     >
       {String(props.icon)}
@@ -66,6 +75,7 @@ type Steps = {
 
 interface VerticalStepperProps extends StepperProps {
   steps: Steps;
+  strict?: boolean;
   iconSize?: number;
   connectorMinHeight?: number;
   onStepClick?: (clickedStep: number) => void;
@@ -73,40 +83,28 @@ interface VerticalStepperProps extends StepperProps {
 
 export const VerticalStepper = ({
   steps,
-  onStepClick,
   activeStep,
+  strict = false,
+  iconSize = STEPPER_ATTRS.ICON_SIZE,
+  connectorMinHeight = STEPPER_ATTRS.CONNECTOR_MIN_HEIGHT,
+  onStepClick = undefined,
   sx,
   ...verticalStepperProps
 }: VerticalStepperProps) => {
-  const [activeVerticalStep, setActiveVerticalStep] = useState<
-    number | undefined
-  >(undefined);
-  const [hoveredVerticalStep, setHoveredVerticalStep] = useState<
-    number | undefined
-  >(undefined);
+  const [activeVerticalStep, setActiveVerticalStep] = useState<number>(1);
+  const [hoveredVerticalStep, setHoveredVerticalStep] = useState<number>(0);
 
   const theme = useTheme();
 
-  useEffect(() => {
-    if (verticalStepperProps.iconSize) {
-      iconSize = verticalStepperProps.iconSize;
-    } else {
-      iconSize = STEPPER_ATTRS.ICON_SIZE;
-    }
-    if (verticalStepperProps.connectorMinHeight) {
-      connectorMinHeight = verticalStepperProps.connectorMinHeight;
-    } else {
-      connectorMinHeight = STEPPER_ATTRS.CONNECTOR_MIN_HEIGHT;
-    }
-  }, [verticalStepperProps.iconSize, verticalStepperProps.connectorMinHeight]);
+  verticalStepperIconSize = iconSize;
 
   useEffect(() => {
-    setActiveVerticalStep(activeStep);
+    setActiveVerticalStep(activeStep!);
   }, [activeStep]);
 
   return (
     <Stepper
-      activeStep={activeVerticalStep}
+      activeStep={activeVerticalStep - 1}
       orientation="vertical"
       connector={null}
       sx={{
@@ -124,28 +122,41 @@ export const VerticalStepper = ({
           <StepLabel
             StepIconComponent={VerticalStepIcon}
             StepIconProps={{
-              onStepClick: (clickedStep: number) => {
+              strict: strict,
+              stepClick: (clickedStep: number) => {
+                if (strict) {
+                  return;
+                }
                 setActiveVerticalStep(clickedStep);
-                if (onStepClick) {
+                if (onStepClick !== undefined) {
                   onStepClick(clickedStep);
                 }
               },
-              onStepHover: (hoveredStep: number) => {
+              stepHover: (hoveredStep: number) => {
+                if (strict) {
+                  return;
+                }
                 setHoveredVerticalStep(hoveredStep);
+              },
+              stepUnhover: () => {
+                if (strict) {
+                  return;
+                }
+                setHoveredVerticalStep(0);
               }
             }}
           >
             <Typography
               sx={{
                 color:
-                  index !== activeVerticalStep
-                    ? index === hoveredVerticalStep
+                  index !== activeVerticalStep - 1
+                    ? index === hoveredVerticalStep - 1
                       ? theme.palette.mode === "dark"
                         ? HOVERED_COLOR_DARK
                         : HOVERED_COLOR_LIGHT
                       : theme.palette.text.disabled
                     : theme.palette.text.primary,
-                fontWeight: index === activeVerticalStep ? "bold" : "normal"
+                fontWeight: index === activeVerticalStep - 1 ? "bold" : "normal"
               }}
             >
               {step.label}
