@@ -241,6 +241,25 @@ export const DeltaImage = (props: any): JSX.Element => {
   }, [theme]);
 
   useEffect(() => {
+    const pause = () => {
+      removeEvent();
+    };
+    const resume = async () => {
+      try {
+        await setReport([], [REPORT_DELTA]);
+      } catch (error) {
+        console.error(error);
+        return;
+      }
+    };
+    if (props.pauseResume === "pause") {
+      pause();
+    } else if (props.pauseResume === "resume") {
+      resume();
+    }
+  }, [props.pauseResume]);
+
+  useEffect(() => {
     newPlot();
     return () => {
       stopAnimation();
