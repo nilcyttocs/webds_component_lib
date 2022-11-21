@@ -76,7 +76,7 @@ const addEvent = () => {
     return;
   }
   eventError = false;
-  eventSource = new window.EventSource("http://localhost:8888/webds/report");
+  eventSource = new window.EventSource("/webds/report");
   eventSource.addEventListener("report", eventHandler, false);
   eventSource.addEventListener("error", errorHandler, false);
 };
@@ -108,7 +108,6 @@ const stopAnimation = () => {
 
 const computePlot = () => {
   if (eventData === undefined || eventData.image === undefined) {
-    heatZ = undefined;
     return;
   }
 
@@ -227,11 +226,13 @@ export const DeltaImage = (props: any): JSX.Element => {
 
   const newPlot = async () => {
     setHeatConfig(plotConfig);
-    try {
-      await setReport([], [REPORT_DELTA]);
-    } catch (error) {
-      console.error(error);
-      return;
+    if (props.pauseResume !== "pause") {
+      try {
+        await setReport([], [REPORT_DELTA]);
+      } catch (error) {
+        console.error(error);
+        return;
+      }
     }
     startAnimation();
   };
@@ -260,19 +261,20 @@ export const DeltaImage = (props: any): JSX.Element => {
   }, [props.pauseResume]);
 
   useEffect(() => {
-    newPlot();
-    return () => {
-      stopAnimation();
-      removeEvent();
-    };
-  }, []);
-
-  useEffect(() => {
     plotWidth = props.plotWidth;
     numRows = contextData.numRows;
     numCols = contextData.numCols;
     plotHeight = Math.floor((plotWidth * numRows) / numCols);
-  }, [props.plotWidth, contextData.numRows, contextData.numCols]);
+    heatZ = new Array(numRows)
+      .fill(0)
+      .map(() => new Array(numCols).fill(props.zMin));
+    newPlot();
+    return () => {
+      stopAnimation();
+      removeEvent();
+      heatZ = undefined;
+    };
+  }, []);
 
   return (
     <div
