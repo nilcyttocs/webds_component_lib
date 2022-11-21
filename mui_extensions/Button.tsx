@@ -14,7 +14,7 @@ export const BackButton = ({ sx, ...backButtonProps }: ButtonProps) => {
   return (
     <Button variant="text" sx={{ padding: 0, ...sx }} {...backButtonProps}>
       <KeyboardArrowLeft />
-      Back
+      Prev
     </Button>
   );
 };
