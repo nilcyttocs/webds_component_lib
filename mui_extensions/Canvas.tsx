@@ -17,6 +17,7 @@ interface CanvasProps extends PaperProps {
   width?: number | null;
   minWidth?: number | null;
   showHelp?: boolean;
+  annotation?: string | null;
 }
 
 export const Canvas = ({
@@ -24,6 +25,7 @@ export const Canvas = ({
   width = null,
   minWidth = null,
   showHelp = false,
+  annotation = null,
   sx,
   ...canvasProps
 }: CanvasProps) => {
@@ -76,6 +78,18 @@ export const Canvas = ({
             >
               <Typography variant="underline">Help</Typography>
             </Button>
+          )}
+          {annotation && (
+            <div
+              style={{
+                position: "absolute",
+                top: "50%",
+                right: "16px",
+                transform: "translate(0%, -50%)"
+              }}
+            >
+              <Typography variant="body2">{annotation}</Typography>
+            </div>
           )}
         </Box>
         {canvasProps.children}
