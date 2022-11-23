@@ -63,9 +63,11 @@ export const ProgressButton = ({
         sx={{
           width: "125px",
           position: "relative",
-          border:
-            progress === undefined || progress === 100 ? "0px" : "1px solid",
-          borderColor: theme.palette.primary.main,
+          border: "1px solid",
+          borderColor:
+            progress === undefined || progress === 100
+              ? "rgba(0, 0, 0, 0)"
+              : theme.palette.primary.main,
           color: progress !== undefined && progress !== 100 ? "black" : null,
           backgroundColor:
             progress !== undefined && progress !== 100
