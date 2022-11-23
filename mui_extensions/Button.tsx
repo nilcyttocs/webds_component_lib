@@ -33,6 +33,7 @@ interface ProgressButtonProps extends ButtonProps {
   onDoneClick: () => void;
   onCancelClick?: () => void;
   onResetClick?: () => void;
+  progressMessage?: string | null;
 }
 
 export const ProgressButton = ({
@@ -41,6 +42,7 @@ export const ProgressButton = ({
   onDoneClick,
   onCancelClick = undefined,
   onResetClick = undefined,
+  progressMessage = null,
   sx,
   ...progressButtonProps
 }: ProgressButtonProps) => {
@@ -117,7 +119,11 @@ export const ProgressButton = ({
                 variant="button"
                 sx={{ color: "black", textTransform: "none" }}
               >
-                {onCancelClick !== undefined ? "Cancel" : "Processing..."}
+                {onCancelClick !== undefined
+                  ? "Cancel"
+                  : progressMessage
+                  ? progressMessage
+                  : "Processing..."}
               </Typography>
             </div>
           </>
