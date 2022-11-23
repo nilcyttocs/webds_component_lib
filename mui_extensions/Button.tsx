@@ -46,7 +46,7 @@ export const ProgressButton = ({
 }: ProgressButtonProps) => {
   const theme = useTheme();
   return (
-    <div style={{ width: "125px", height: "100%", position: "relative" }}>
+    <div style={{ position: "relative" }}>
       <Button
         disabled={
           onCancelClick === undefined &&
@@ -62,6 +62,7 @@ export const ProgressButton = ({
         }
         sx={{
           width: "125px",
+          padding: "5px 15px",
           position: "relative",
           border: "1px solid",
           borderColor:
