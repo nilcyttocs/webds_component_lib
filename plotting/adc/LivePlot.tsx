@@ -10,7 +10,7 @@ import Plot from "react-plotly.js";
 
 import { requestAPI } from "../handler";
 
-import { ADCData } from "../local_exports";
+import { ADCData } from "./local_exports";
 
 const SSE_CLOSED = 2;
 
