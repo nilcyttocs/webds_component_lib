@@ -14,7 +14,7 @@ export const PlaybackProgress = (props: any): JSX.Element => {
     if (props.frameIndex === 0) {
       setTransition("transform 0ms linear");
     } else {
-      setTransition("transform 100ms linear");
+      setTransition("transform 10ms linear");
     }
     setProgress(Math.ceil(((props.frameIndex + 1) * 100) / props.numFrames));
   }, [props.frameIndex, props.numFrames]);
