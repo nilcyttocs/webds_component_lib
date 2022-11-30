@@ -4,7 +4,7 @@ import ImagePlot from "./ImagePlot";
 import HybridXPlot from "./HybridXPlot";
 import HybridYPlot from "./HybridYPlot";
 
-import { TouchcommReport } from "../utils";
+import { TouchcommReport } from "@webds/service";
 
 import { ADCData, ADCDataContext } from "../local_exports";
 

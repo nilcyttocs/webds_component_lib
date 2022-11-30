@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { useTheme } from "@mui/material/styles";
 
-import { TouchcommReport } from "../utils";
+import { TouchcommReport } from "@webds/service";
 
 import Plot from "react-plotly.js";
 
