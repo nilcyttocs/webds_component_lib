@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 
-import ImagePlot from "./ImagePlot";
-import HybridXPlot from "./HybridXPlot";
-import HybridYPlot from "./HybridYPlot";
+import ImagePlot from "../adc_plots/ImagePlot";
+import HybridXPlot from "../adc_plots/HybridXPlot";
+import HybridYPlot from "../adc_plots/HybridYPlot";
 
 import { TouchcommReport } from "@webds/service";
 
