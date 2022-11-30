@@ -174,8 +174,8 @@ export const DeltaImage = (props: any): JSX.Element => {
     setHeatData([
       {
         z: heatZ,
-        zmin: props.zMin ? props.zMin : heatZMin,
-        zmax: props.zMax ? props.zMax : heatZMax,
+        zmin: props.zMin !== undefined ? props.zMin : heatZMin,
+        zmax: props.zMax !== undefined ? props.zMax : heatZMax,
         type: "heatmap",
         showscale: props.showScale !== undefined ? props.showScale : true,
         colorscale: "Viridis",
@@ -183,8 +183,8 @@ export const DeltaImage = (props: any): JSX.Element => {
           tickformat: "<-d",
           tickmode: "array",
           tickvals: [
-            props.zMin ? props.zMin : heatZMin,
-            props.zMax ? props.zMax : heatZMax
+            props.zMin !== undefined ? props.zMin : heatZMin,
+            props.zMax !== undefined ? props.zMax : heatZMax
           ]
         }
       }
