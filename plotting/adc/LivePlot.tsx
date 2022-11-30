@@ -10,7 +10,7 @@ import Plot from "react-plotly.js";
 
 import { requestAPI } from "../handler";
 
-import { RecordedData } from "../local_exports";
+import { ADCData } from "../local_exports";
 
 const SSE_CLOSED = 2;
 
@@ -100,7 +100,7 @@ let fps: number;
 
 let record = false;
 let saving = false;
-const recordedData: RecordedData = { data: [] };
+const recordedData: ADCData = { data: [] };
 
 const saveRecordedData = () => {
   saving = true;
