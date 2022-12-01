@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 
 import { useTheme } from "@mui/material/styles";
 
-import { TouchcommReport } from "@webds/service";
+import { TouchcommADCReport } from "@webds/service";
 
 import Plot from "react-plotly.js";
 
@@ -91,8 +91,8 @@ let index: number;
 let filled: boolean;
 
 const bufferSize = 1000;
-let buffer: TouchcommReport[];
-let subBuffer: TouchcommReport[] | undefined;
+let buffer: TouchcommADCReport[];
+let subBuffer: TouchcommADCReport[] | undefined;
 
 let t00: number;
 let t11: number;
@@ -225,7 +225,7 @@ const setReport = async (
   return Promise.resolve();
 };
 
-const getMean = (): TouchcommReport | undefined => {
+const getMean = (): TouchcommADCReport | undefined => {
   if (subBuffer === undefined) {
     return undefined;
   }
@@ -257,7 +257,7 @@ const getMean = (): TouchcommReport | undefined => {
   }
 };
 
-const getMax = (): TouchcommReport | undefined => {
+const getMax = (): TouchcommADCReport | undefined => {
   if (subBuffer === undefined) {
     return undefined;
   }
@@ -294,7 +294,7 @@ const getMax = (): TouchcommReport | undefined => {
   }
 };
 
-const getMin = (): TouchcommReport | undefined => {
+const getMin = (): TouchcommADCReport | undefined => {
   if (subBuffer === undefined) {
     return undefined;
   }
@@ -331,7 +331,7 @@ const getMin = (): TouchcommReport | undefined => {
   }
 };
 
-const getRange = (): TouchcommReport | undefined => {
+const getRange = (): TouchcommADCReport | undefined => {
   if (subBuffer === undefined) {
     return undefined;
   }
@@ -378,7 +378,7 @@ const computePlot = () => {
     return;
   }
 
-  let result: TouchcommReport | undefined;
+  let result: TouchcommADCReport | undefined;
   switch (statistics) {
     case "Single":
       result = buffer[index];

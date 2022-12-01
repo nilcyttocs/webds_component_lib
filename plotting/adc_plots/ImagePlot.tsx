@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { useTheme } from "@mui/material/styles";
 
-import { TouchcommReport } from "@webds/service";
+import { TouchcommADCReport } from "@webds/service";
 
 import Plot from "react-plotly.js";
 
@@ -26,7 +26,7 @@ let heatZMax: number;
 const plotConfig = { displayModeBar: false };
 const paperBgColor = "rgba(0, 0, 0, 0)";
 
-const computePlot = (report: TouchcommReport) => {
+const computePlot = (report: TouchcommADCReport) => {
   heatZ = report.image;
 
   if (heatZ === undefined) {
@@ -60,7 +60,7 @@ export const ImagePlot = (props: any): JSX.Element | null => {
     setHeatFrames(figure.frames);
   };
 
-  const renderPlot = (report: TouchcommReport) => {
+  const renderPlot = (report: TouchcommADCReport) => {
     computePlot(report);
 
     if (heatZ === undefined) {
@@ -119,9 +119,9 @@ export const ImagePlot = (props: any): JSX.Element | null => {
       if (props.margins !== undefined) {
         plotMargins = props.margins;
       }
+      setHeatConfig(plotConfig);
       setInitialized(true);
     }
-    setHeatConfig(plotConfig);
     renderPlot(props.report);
   }, [props.report]);
 

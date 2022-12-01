@@ -4,7 +4,7 @@ import ImagePlot from "../adc_plots/ImagePlot";
 import HybridXPlot from "../adc_plots/HybridXPlot";
 import HybridYPlot from "../adc_plots/HybridYPlot";
 
-import { TouchcommReport } from "@webds/service";
+import { TouchcommADCReport } from "@webds/service";
 
 import { ADCData, ADCDataContext } from "../local_exports";
 
@@ -71,7 +71,7 @@ const stopAnimation = () => {
 
 export const PlaybackComposite = (props: any): JSX.Element | null => {
   const [initialized, setInitialized] = useState<boolean>(false);
-  const [report, setReport] = useState<TouchcommReport>();
+  const [report, setReport] = useState<TouchcommADCReport>();
 
   playbackData = useContext(ADCDataContext);
 

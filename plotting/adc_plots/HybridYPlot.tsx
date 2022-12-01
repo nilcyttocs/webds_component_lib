@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { useTheme } from "@mui/material/styles";
 
-import { TouchcommReport } from "@webds/service";
+import { TouchcommADCReport } from "@webds/service";
 
 import Plot from "react-plotly.js";
 
@@ -18,16 +18,16 @@ let plotMargins = {
   b: 0
 };
 
-let barY: number[];
-let barYMin: number;
-let barYMax: number;
+let barY: number[] | undefined;
+let barYMin: number | undefined;
+let barYMax: number | undefined;
 
 const plotConfig = { displayModeBar: false };
 const plotBgColor = "rgba(0.75, 0.75, 0.75, 0.1)";
 const paperBgColor = "rgba(0, 0, 0, 0)";
 const axisLineColor = "rgba(128, 128, 128, 0.5)";
 
-const computePlot = (report: TouchcommReport) => {
+const computePlot = (report: TouchcommADCReport) => {
   barY = report.hybridy;
 
   if (barY === undefined) {
@@ -55,7 +55,7 @@ export const HybridYPlot = (props: any): JSX.Element | null => {
     setBarYFrames(figure.frames);
   };
 
-  const renderPlot = (report: TouchcommReport) => {
+  const renderPlot = (report: TouchcommADCReport) => {
     computePlot(report);
 
     if (barY === undefined) {
@@ -115,10 +115,15 @@ export const HybridYPlot = (props: any): JSX.Element | null => {
       plotWidth = props.width !== undefined ? props.width : plotWidth;
       plotHeight = props.height !== undefined ? props.height : plotHeight;
       plotMargins = props.margins !== undefined ? props.margins : plotMargins;
+      setBarYConfig(plotConfig);
       setInitialized(true);
     }
-    setBarYConfig(plotConfig);
     renderPlot(props.report);
+    return () => {
+      barY = undefined;
+      barYMin = undefined;
+      barYMax = undefined;
+    };
   }, [props.report]);
 
   return showPlot ? (
