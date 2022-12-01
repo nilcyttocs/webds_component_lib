@@ -51,9 +51,9 @@ export const Canvas = ({
       {...canvasProps}
     >
       <Stack spacing={0} divider={<Divider orientation="horizontal" />}>
-        <Box
+      <Box
           sx={{
-            width: minWidth ? minWidth + "px" : "100%",
+            width: stretch ? (minWidth ? minWidth + "px" : "100%") : "100%",
             height: CANVAS_ATTRS.HEIGHT_TITLE + "px",
             padding: CANVAS_ATTRS.PADDING + "px",
             boxSizing: "border-box",
