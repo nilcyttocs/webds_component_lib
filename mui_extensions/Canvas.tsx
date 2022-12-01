@@ -16,6 +16,7 @@ interface CanvasProps extends PaperProps {
   title: string;
   width?: number | null;
   minWidth?: number | null;
+  stretch?: boolean;
   showHelp?: boolean;
   annotation?: string | null;
 }
@@ -24,6 +25,7 @@ export const Canvas = ({
   title,
   width = null,
   minWidth = null,
+  stretch = false,
   showHelp = false,
   annotation = null,
   sx,
@@ -34,7 +36,11 @@ export const Canvas = ({
     <Paper
       elevation={7}
       sx={{
-        width: minWidth ? "100%" : (width ? width : CANVAS_ATTRS.WIDTH) + "px",
+        width: stretch
+          ? "100%"
+          : minWidth !== null
+          ? null
+          : (width ? width : CANVAS_ATTRS.WIDTH) + "px",
         minWidth: minWidth ? minWidth + "px" : "auto",
         borderStyle: "solid",
         borderWidth: theme.palette.mode === "light" ? "0px" : "1px",
