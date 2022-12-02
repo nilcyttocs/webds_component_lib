@@ -1,14 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 
-import TracePlot from "../touch_plots/TracePlot";
+import TouchPlot from "../touch_plots/TouchPlot";
 
-import { TouchcommTraceReport } from "@webds/service";
+import { TouchcommTouchReport, TouchcommTraceReport } from "@webds/service";
 
-import { TraceDataContext } from "../local_exports";
+import { TouchDataContext, TraceDataContext } from "../local_exports";
 
 const SLOW_X = 3;
 
-let playbackData: TouchcommTraceReport[];
+let touchData: TouchcommTouchReport[];
+
+let traceData: TouchcommTraceReport[];
 
 let running: boolean;
 
@@ -25,11 +27,14 @@ const stopAnimation = () => {
   }
 };
 
-export const PlaybackTrace = (props: any): JSX.Element | null => {
+export const PlaybackTouch = (props: any): JSX.Element | null => {
   const [initialized, setInitialized] = useState<boolean>(false);
-  const [report, setReport] = useState<TouchcommTraceReport>();
+  const [report, setReport] = useState<
+    TouchcommTouchReport | TouchcommTraceReport
+  >();
 
-  playbackData = useContext(TraceDataContext);
+  touchData = useContext(TouchDataContext);
+  traceData = useContext(TraceDataContext);
 
   const animatePlot = () => {
     requestID = requestAnimationFrame(animatePlot);
@@ -38,7 +43,9 @@ export const PlaybackTrace = (props: any): JSX.Element | null => {
       if (animationCounter === SLOW_X) {
         animationCounter = 1;
         props.setFrameIndex(frameIndex);
-        setReport(playbackData[frameIndex]);
+        setReport(
+          props.traceView ? traceData[frameIndex] : touchData[frameIndex]
+        );
         if (frameIndex + 1 >= props.numFrames) {
           props.setRun(false);
         } else {
@@ -52,9 +59,11 @@ export const PlaybackTrace = (props: any): JSX.Element | null => {
   useEffect(() => {
     if (!running) {
       frameIndex = props.frameIndex;
-      setReport(playbackData[frameIndex]);
+      setReport(
+        props.traceView ? traceData[frameIndex] : touchData[frameIndex]
+      );
     }
-  }, [props.frameIndex]);
+  }, [props.frameIndex, props.traceView]);
 
   useEffect(() => {
     if (props.passive) {
@@ -82,29 +91,24 @@ export const PlaybackTrace = (props: any): JSX.Element | null => {
 
     if (!initialized) {
       initialize();
-    } else {
-      stopAnimation();
-      props.setRun(false);
-      props.setFrameIndex(0);
-      animationCounter = 1;
-      requestID = requestAnimationFrame(animatePlot);
     }
 
     return () => {
       stopAnimation();
     };
-  }, [playbackData]);
+  }, []);
 
   return initialized ? (
     <div>
-      <TracePlot
+      <TouchPlot
         length={props.length}
         portrait={props.portrait}
         appInfo={props.appInfo}
+        traceView={props.traceView}
         report={report}
       />
     </div>
   ) : null;
 };
 
-export default PlaybackTrace;
+export default PlaybackTouch;

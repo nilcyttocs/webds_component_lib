@@ -94,18 +94,12 @@ export const PlaybackImage = (props: any): JSX.Element | null => {
 
     if (!initialized) {
       initialize();
-    } else {
-      stopAnimation();
-      props.setRun(false);
-      props.setFrameIndex(0);
-      animationCounter = 1;
-      requestID = requestAnimationFrame(animatePlot);
     }
 
     return () => {
       stopAnimation();
     };
-  }, [playbackData]);
+  }, []);
 
   return initialized ? (
     <div>

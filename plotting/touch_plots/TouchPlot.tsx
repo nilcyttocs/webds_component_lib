@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { VIRIDIS_COLORS } from "./constants";
 
-import { TouchcommTraceReport } from "@webds/service";
+import { TouchcommTouchReport, TouchcommTraceReport } from "@webds/service";
 
 import Plot from "react-plotly.js";
 
@@ -24,7 +24,7 @@ const plotBgColor = "black";
 const paperBgColor = "rgba(0, 0, 0, 0)";
 const axisLineColor = "rgba(128, 128, 128, 0.5)";
 
-export const TracePlot = (props: any): JSX.Element | null => {
+export const TouchPlot = (props: any): JSX.Element | null => {
   const [initialized, setInitialized] = useState<boolean>(false);
   const [showPlot, setShowPlot] = useState<boolean>(false);
   const [data, setData] = useState<any>([]);
@@ -60,10 +60,67 @@ export const TracePlot = (props: any): JSX.Element | null => {
     return traces;
   };
 
-  const renderPlot = (report: TouchcommTraceReport) => {
+  const renderTraces = (report: TouchcommTraceReport) => {
     const xTrace = swap ? report.yTrace : report.xTrace;
     const yTrace = swap ? report.xTrace : report.yTrace;
+    if (xTrace === undefined || yTrace === undefined) {
+      return;
+    }
     setData(generateTraces(xTrace, yTrace));
+    setShowPlot(true);
+  };
+
+  const generateMarkers = (x: number[][], y: number[][]): any => {
+    const markers = [];
+
+    for (let i = 0; i < 10; i++) {
+      const marker = {
+        x: x[i],
+        y: y[i],
+        mode: "markers+text",
+        marker: { size: 32, color: VIRIDIS_COLORS[i] },
+        text: [i.toString()],
+        textposition: "inside",
+        textfont: { family: "Arial", color: "white", size: 16 },
+        name: "Object " + i,
+        hovertemplate: "(%{x}, %{y})<extra></extra>"
+      };
+      if (i >= 5) {
+        marker.textfont.color = "black";
+      }
+      markers.push(marker);
+    }
+
+    return markers;
+  };
+
+  const renderMarkers = (report: TouchcommTouchReport) => {
+    let pos = report.pos;
+    if (pos === undefined) {
+      pos = [];
+    }
+
+    const stats = [...Array(10)].map((e) => Array(5));
+    const x = [...Array(10)].map((e) => Array(1));
+    const y = [...Array(10)].map((e) => Array(1));
+    for (let i = 0; i < pos.length; i++) {
+      const obj = pos[i];
+      const index = obj.objectIndex;
+      x[index][0] = swap ? obj.yMeas : obj.xMeas;
+      y[index][0] = swap ? obj.xMeas : obj.yMeas;
+      stats[index][0] = obj.xMeas;
+      stats[index][1] = obj.yMeas;
+      stats[index][2] = obj.z;
+      stats[index][3] = obj.xWidth;
+      stats[index][4] = obj.yWidth;
+    }
+
+    setData(generateMarkers(x, y));
+
+    if (props.updateStats !== undefined) {
+      props.updateStats(stats);
+    }
+
     setShowPlot(true);
   };
 
@@ -109,8 +166,12 @@ export const TracePlot = (props: any): JSX.Element | null => {
       });
       setInitialized(true);
     }
-    renderPlot(props.report);
-  }, [props.report]);
+    if (props.traceView) {
+      renderTraces(props.report);
+    } else {
+      renderMarkers(props.report);
+    }
+  }, [props.report, props.traceView]);
 
   return showPlot ? (
     <Plot
@@ -124,4 +185,4 @@ export const TracePlot = (props: any): JSX.Element | null => {
   ) : null;
 };
 
-export default TracePlot;
+export default TouchPlot;
