@@ -95,7 +95,6 @@ export const HybridYPlot = (props: any): JSX.Element | null => {
         linecolor: axisLineColor
       }
     });
-
     setBarYData([
       {
         x: barY,

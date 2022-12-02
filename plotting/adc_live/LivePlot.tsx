@@ -10,8 +10,6 @@ import Plot from "react-plotly.js";
 
 import { requestAPI } from "../handler";
 
-import { ADCData } from "./local_exports";
-
 const SSE_CLOSED = 2;
 
 const REPORT_TOUCH = 17;
@@ -100,14 +98,14 @@ let fps: number;
 
 let record = false;
 let saving = false;
-const recordedData: ADCData = { data: [] };
+let recordedData: TouchcommADCReport[] = [];
 
 const saveRecordedData = () => {
   saving = true;
-  let blob = new Blob([JSON.stringify(recordedData)], {
+  let blob = new Blob([JSON.stringify({ data: recordedData })], {
     type: "application/json"
   });
-  recordedData.data = [];
+  recordedData = [];
   saving = false;
   let link = document.createElement("a");
   link.href = window.URL.createObjectURL(blob);
@@ -146,9 +144,9 @@ const eventHandler = (event: any) => {
   }
 
   if (record) {
-    recordedData.data.push(eventData);
+    recordedData.push(eventData);
   } else {
-    if (recordedData.data.length > 0 && !saving) {
+    if (recordedData.length > 0 && !saving) {
       saveRecordedData();
       return;
     }

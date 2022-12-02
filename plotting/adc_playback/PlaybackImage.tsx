@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 
 import ImagePlot from "../adc_plots/ImagePlot";
-import HybridXPlot from "../adc_plots/HybridXPlot";
-import HybridYPlot from "../adc_plots/HybridYPlot";
 
 import { TouchcommADCReport } from "@webds/service";
 
@@ -10,24 +8,10 @@ import { ADCDataContext } from "../local_exports";
 
 const SLOW_X = 3;
 
-const IMAGE_LENGTH = 550;
-const HYBRID_HEIGHT = 60;
-
-const HYBRIDY_L_MARGIN = 40;
-const HYBRIDY_R_MARGIN = 40;
-const HYBRIDY_T_MARGIN = 24;
-const HYBRIDY_B_MARGIN = 32;
-
 const IMAGE_L_MARGIN = 0;
-const IMAGE_R_MARGIN = 112;
-const IMAGE_T_MARGIN = HYBRIDY_T_MARGIN;
-const IMAGE_B_MARGIN = HYBRIDY_B_MARGIN;
-
-const HYBRIDX_L_MARGIN =
-  HYBRID_HEIGHT + HYBRIDY_L_MARGIN + HYBRIDY_R_MARGIN + IMAGE_L_MARGIN;
-const HYBRIDX_R_MARGIN = IMAGE_R_MARGIN;
-const HYBRIDX_T_MARGIN = 10;
-const HYBRIDX_B_MARGIN = 10;
+const IMAGE_R_MARGIN = 0;
+const IMAGE_T_MARGIN = 0;
+const IMAGE_B_MARGIN = 0;
 
 const imageMargins = {
   l: IMAGE_L_MARGIN,
@@ -36,27 +20,9 @@ const imageMargins = {
   b: IMAGE_B_MARGIN
 };
 
-const hybridXMargins = {
-  l: HYBRIDX_L_MARGIN,
-  r: HYBRIDX_R_MARGIN,
-  t: HYBRIDX_T_MARGIN,
-  b: HYBRIDX_B_MARGIN
-};
-
-const hybridYMargins = {
-  l: HYBRIDY_L_MARGIN,
-  r: HYBRIDY_R_MARGIN,
-  t: HYBRIDY_T_MARGIN,
-  b: HYBRIDY_B_MARGIN
-};
-
 let playbackData: TouchcommADCReport[];
 
 let running: boolean;
-
-let imageWidth: number;
-
-let imageHeight: number;
 
 let frameIndex: number;
 
@@ -71,7 +37,7 @@ const stopAnimation = () => {
   }
 };
 
-export const PlaybackComposite = (props: any): JSX.Element | null => {
+export const PlaybackImage = (props: any): JSX.Element | null => {
   const [initialized, setInitialized] = useState<boolean>(false);
   const [report, setReport] = useState<TouchcommADCReport>();
 
@@ -113,19 +79,7 @@ export const PlaybackComposite = (props: any): JSX.Element | null => {
   }, [props.passive, props.run, props.numFrames]);
 
   useEffect(() => {
-    const setWidthHeight = () => {
-      const numRows = playbackData[0].image.length;
-      const numCols = playbackData[0].image[0].length;
-      if (numCols > numRows) {
-        imageWidth = props.length !== undefined ? props.length : IMAGE_LENGTH;
-        imageHeight = Math.floor((imageWidth * numRows) / numCols);
-      } else {
-        imageHeight = props.length !== undefined ? props.length : IMAGE_LENGTH;
-        imageWidth = Math.floor((imageHeight * numCols) / numRows);
-      }
-    };
     const initialize = () => {
-      setWidthHeight();
       animationCounter = 1;
       requestID = requestAnimationFrame(animatePlot);
       setInitialized(true);
@@ -133,7 +87,6 @@ export const PlaybackComposite = (props: any): JSX.Element | null => {
 
     if (props.passive) {
       if (!initialized) {
-        setWidthHeight();
         setInitialized(true);
       }
       return;
@@ -156,25 +109,15 @@ export const PlaybackComposite = (props: any): JSX.Element | null => {
 
   return initialized ? (
     <div>
-      <div style={{ display: "flex", flexWrap: "nowrap" }}>
-        <HybridYPlot
-          height={imageHeight}
-          margins={hybridYMargins}
-          report={report}
-        />
-        <ImagePlot
-          length={props.length}
-          margins={imageMargins}
-          report={report}
-        />
-      </div>
-      <HybridXPlot
-        width={imageWidth}
-        margins={hybridXMargins}
+      <ImagePlot
+        length={props.length}
+        portrait={props.portrait}
         report={report}
+        margins={imageMargins}
+        showScale={false}
       />
     </div>
   ) : null;
 };
 
-export default PlaybackComposite;
+export default PlaybackImage;

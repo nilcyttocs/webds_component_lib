@@ -6,7 +6,7 @@ import { TouchcommADCReport } from "@webds/service";
 
 import Plot from "react-plotly.js";
 
-const PLOT_WIDTH = 550;
+const PLOT_LENGTH = 550;
 
 let numRows: number;
 let numCols: number;
@@ -23,14 +23,24 @@ let heatZ: number[][];
 let heatZMin: number;
 let heatZMax: number;
 
+let swap: boolean;
+
 const plotConfig = { displayModeBar: false };
 const paperBgColor = "rgba(0, 0, 0, 0)";
+
+const transpose = (matrix: number[][]): number[][] => {
+  return matrix[0].map((col, i) => matrix.map((row) => row[i]));
+};
 
 const computePlot = (report: TouchcommADCReport) => {
   heatZ = report.image;
 
   if (heatZ === undefined) {
     return;
+  }
+
+  if (swap) {
+    heatZ = transpose(heatZ);
   }
 
   const minRow = heatZ.map((row: number[]) => {
@@ -68,8 +78,8 @@ export const ImagePlot = (props: any): JSX.Element | null => {
     }
 
     setHeatLayout({
-      width: plotWidth + plotMargins.l + plotMargins.r,
-      height: plotHeight + plotMargins.t + plotMargins.b,
+      width: (swap ? plotHeight : plotWidth) + plotMargins.l + plotMargins.r,
+      height: (swap ? plotWidth : plotHeight) + plotMargins.t + plotMargins.b,
       margin: plotMargins,
       font: {
         color: theme.palette.text.primary
@@ -84,7 +94,6 @@ export const ImagePlot = (props: any): JSX.Element | null => {
         showticklabels: false
       }
     });
-
     setHeatData([
       {
         z: heatZ,
@@ -114,8 +123,14 @@ export const ImagePlot = (props: any): JSX.Element | null => {
     if (!initialized) {
       numRows = props.report.image.length;
       numCols = props.report.image[0].length;
-      plotWidth = props.width !== undefined ? props.width : PLOT_WIDTH;
-      plotHeight = Math.floor((plotWidth * numRows) / numCols);
+      if (numCols > numRows) {
+        plotWidth = props.length !== undefined ? props.length : PLOT_LENGTH;
+        plotHeight = Math.floor((plotWidth * numRows) / numCols);
+      } else {
+        plotHeight = props.length !== undefined ? props.length : PLOT_LENGTH;
+        plotWidth = Math.floor((plotHeight * numCols) / numRows);
+      }
+      swap = props.portrait && plotWidth > plotHeight;
       if (props.margins !== undefined) {
         plotMargins = props.margins;
       }
