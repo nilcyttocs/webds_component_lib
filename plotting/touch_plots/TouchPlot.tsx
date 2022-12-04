@@ -61,11 +61,25 @@ export const TouchPlot = (props: any): JSX.Element | null => {
   };
 
   const renderTraces = (report: TouchcommTraceReport) => {
-    const xTrace = swap ? report.yTrace : report.xTrace;
-    const yTrace = swap ? report.xTrace : report.yTrace;
-    if (xTrace === undefined || yTrace === undefined) {
+    if (report.xTrace === undefined || report.yTrace === undefined) {
       return;
     }
+
+    let traceX: number[][] = [];
+    let traceY: number[][] = [];
+    for (let i = 0; i < 10; i++) {
+      traceX.push(report.xTrace[i].slice());
+      traceY.push(report.yTrace[i].slice());
+      if (props.flip?.v) {
+        traceX[i] = traceX[i].map((item) => props.appInfo.maxX - item);
+      }
+      if (props.flip?.h) {
+        traceY[i] = traceY[i].map((item) => props.appInfo.maxY - item);
+      }
+    }
+    const xTrace = swap ? traceY : traceX;
+    const yTrace = swap ? traceX : traceY;
+
     setData(generateTraces(xTrace, yTrace));
     setShowPlot(true);
   };
@@ -106,8 +120,10 @@ export const TouchPlot = (props: any): JSX.Element | null => {
     for (let i = 0; i < pos.length; i++) {
       const obj = pos[i];
       const index = obj.objectIndex;
-      x[index][0] = swap ? obj.yMeas : obj.xMeas;
-      y[index][0] = swap ? obj.xMeas : obj.yMeas;
+      let xMeas = props.flip?.v ? props.appInfo.maxX - obj.xMeas : obj.xMeas;
+      let yMeas = props.flip?.h ? props.appInfo.maxY - obj.yMeas : obj.yMeas;
+      x[index][0] = swap ? yMeas : xMeas;
+      y[index][0] = swap ? xMeas : yMeas;
       stats[index][0] = obj.xMeas;
       stats[index][1] = obj.yMeas;
       stats[index][2] = obj.z;
@@ -171,7 +187,7 @@ export const TouchPlot = (props: any): JSX.Element | null => {
     } else {
       renderMarkers(props.report);
     }
-  }, [props.report, props.traceView]);
+  }, [props.report, props.flip, props.traceView]);
 
   return showPlot ? (
     <Plot

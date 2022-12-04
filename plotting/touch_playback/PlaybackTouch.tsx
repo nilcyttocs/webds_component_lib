@@ -16,6 +16,8 @@ let running: boolean;
 
 let frameIndex: number;
 
+let numFrames: number;
+
 let requestID: number | undefined;
 
 let animationCounter: number;
@@ -46,7 +48,7 @@ export const PlaybackTouch = (props: any): JSX.Element | null => {
         setReport(
           props.traceView ? traceData[frameIndex] : touchData[frameIndex]
         );
-        if (frameIndex + 1 >= props.numFrames) {
+        if (frameIndex + 1 >= numFrames) {
           props.setRun(false);
         } else {
           frameIndex += 1;
@@ -64,6 +66,10 @@ export const PlaybackTouch = (props: any): JSX.Element | null => {
       );
     }
   }, [props.frameIndex, props.traceView]);
+
+  useEffect(() => {
+    numFrames = props.numFrames;
+  }, [props.numFrames]);
 
   useEffect(() => {
     if (props.passive) {
@@ -103,6 +109,7 @@ export const PlaybackTouch = (props: any): JSX.Element | null => {
       <TouchPlot
         length={props.length}
         portrait={props.portrait}
+        flip={props.flip}
         appInfo={props.appInfo}
         traceView={props.traceView}
         report={report}

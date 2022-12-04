@@ -26,6 +26,8 @@ let running: boolean;
 
 let frameIndex: number;
 
+let numFrames: number;
+
 let requestID: number | undefined;
 
 let animationCounter: number;
@@ -51,7 +53,7 @@ export const PlaybackImage = (props: any): JSX.Element | null => {
         animationCounter = 1;
         props.setFrameIndex(frameIndex);
         setReport(playbackData[frameIndex]);
-        if (frameIndex + 1 >= props.numFrames) {
+        if (frameIndex + 1 >= numFrames) {
           props.setRun(false);
         } else {
           frameIndex += 1;
@@ -67,6 +69,10 @@ export const PlaybackImage = (props: any): JSX.Element | null => {
       setReport(playbackData[frameIndex]);
     }
   }, [props.frameIndex]);
+
+  useEffect(() => {
+    numFrames = props.numFrames;
+  }, [props.numFrames]);
 
   useEffect(() => {
     if (props.passive) {
@@ -106,6 +112,7 @@ export const PlaybackImage = (props: any): JSX.Element | null => {
       <ImagePlot
         length={props.length}
         portrait={props.portrait}
+        flip={props.flip}
         report={report}
         margins={imageMargins}
         showScale={false}

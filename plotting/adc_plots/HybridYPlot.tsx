@@ -9,8 +9,8 @@ import Plot from "react-plotly.js";
 const PLOT_WIDTH = 60;
 const PLOT_HEIGHT = 250;
 
-let plotWidth = PLOT_WIDTH;
-let plotHeight = PLOT_HEIGHT;
+let plotWidthHeight = { w: PLOT_WIDTH, h: PLOT_HEIGHT };
+
 let plotMargins = {
   l: 0,
   r: 0,
@@ -63,8 +63,8 @@ export const HybridYPlot = (props: any): JSX.Element | null => {
     }
 
     setBarYLayout({
-      width: plotWidth + plotMargins.l + plotMargins.r,
-      height: plotHeight + plotMargins.t + plotMargins.b,
+      width: plotWidthHeight.w + plotMargins.l + plotMargins.r,
+      height: plotWidthHeight.h + plotMargins.t + plotMargins.b,
       margin: plotMargins,
       font: {
         color: theme.palette.text.primary
@@ -111,8 +111,10 @@ export const HybridYPlot = (props: any): JSX.Element | null => {
       return;
     }
     if (!initialized) {
-      plotWidth = props.width !== undefined ? props.width : plotWidth;
-      plotHeight = props.height !== undefined ? props.height : plotHeight;
+      plotWidthHeight.w =
+        props.width !== undefined ? props.width : plotWidthHeight.w;
+      plotWidthHeight.h =
+        props.height !== undefined ? props.height : plotWidthHeight.h;
       plotMargins = props.margins !== undefined ? props.margins : plotMargins;
       setBarYConfig(plotConfig);
       setInitialized(true);

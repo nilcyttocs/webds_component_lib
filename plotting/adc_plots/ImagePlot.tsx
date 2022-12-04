@@ -8,10 +8,8 @@ import Plot from "react-plotly.js";
 
 const PLOT_LENGTH = 550;
 
-let numRows: number;
-let numCols: number;
-let plotWidth: number;
-let plotHeight: number;
+let plotWidthHeight = { w: 0, h: 0 };
+
 let plotMargins = {
   l: 0,
   r: 0,
@@ -19,9 +17,9 @@ let plotMargins = {
   b: 0
 };
 
-let heatZ: number[][];
-let heatZMin: number;
-let heatZMax: number;
+let heatZ: number[][] | undefined;
+let heatZMin: number | undefined;
+let heatZMax: number | undefined;
 
 let swap: boolean;
 
@@ -32,7 +30,7 @@ const transpose = (matrix: number[][]): number[][] => {
   return matrix[0].map((col, i) => matrix.map((row) => row[i]));
 };
 
-const computePlot = (report: TouchcommADCReport) => {
+const computePlot = (props: any, report: TouchcommADCReport) => {
   heatZ = report.image;
 
   if (heatZ === undefined) {
@@ -41,6 +39,22 @@ const computePlot = (report: TouchcommADCReport) => {
 
   if (swap) {
     heatZ = transpose(heatZ);
+  }
+
+  if (props.flip?.h) {
+    if (swap) {
+      heatZ = heatZ.map((item) => item.reverse());
+    } else {
+      heatZ = heatZ.reverse();
+    }
+  }
+
+  if (props.flip?.v) {
+    if (swap) {
+      heatZ = heatZ.reverse();
+    } else {
+      heatZ = heatZ.map((item) => item.reverse());
+    }
   }
 
   const minRow = heatZ.map((row: number[]) => {
@@ -71,15 +85,15 @@ export const ImagePlot = (props: any): JSX.Element | null => {
   };
 
   const renderPlot = (report: TouchcommADCReport) => {
-    computePlot(report);
+    computePlot(props, report);
 
     if (heatZ === undefined) {
       return;
     }
 
     setHeatLayout({
-      width: (swap ? plotHeight : plotWidth) + plotMargins.l + plotMargins.r,
-      height: (swap ? plotWidth : plotHeight) + plotMargins.t + plotMargins.b,
+      width: plotWidthHeight.w + plotMargins.l + plotMargins.r,
+      height: plotWidthHeight.h + plotMargins.t + plotMargins.b,
       margin: plotMargins,
       font: {
         color: theme.palette.text.primary
@@ -121,24 +135,32 @@ export const ImagePlot = (props: any): JSX.Element | null => {
       return;
     }
     if (!initialized) {
-      numRows = props.report.image.length;
-      numCols = props.report.image[0].length;
+      const numRows = props.report.image.length;
+      const numCols = props.report.image[0].length;
       if (numCols > numRows) {
-        plotWidth = props.length !== undefined ? props.length : PLOT_LENGTH;
-        plotHeight = Math.floor((plotWidth * numRows) / numCols);
+        plotWidthHeight.w =
+          props.length !== undefined ? props.length : PLOT_LENGTH;
+        plotWidthHeight.h = Math.floor((plotWidthHeight.w * numRows) / numCols);
       } else {
-        plotHeight = props.length !== undefined ? props.length : PLOT_LENGTH;
-        plotWidth = Math.floor((plotHeight * numCols) / numRows);
+        plotWidthHeight.h =
+          props.length !== undefined ? props.length : PLOT_LENGTH;
+        plotWidthHeight.w = Math.floor((plotWidthHeight.h * numCols) / numRows);
       }
-      swap = props.portrait && plotWidth > plotHeight;
-      if (props.margins !== undefined) {
-        plotMargins = props.margins;
+      swap = props.portrait && plotWidthHeight.w > plotWidthHeight.h;
+      if (swap) {
+        plotWidthHeight = { w: plotWidthHeight.h, h: plotWidthHeight.w };
       }
+      plotMargins = props.margins !== undefined ? props.margins : plotMargins;
       setHeatConfig(plotConfig);
       setInitialized(true);
     }
     renderPlot(props.report);
-  }, [props.report]);
+    return () => {
+      heatZ = undefined;
+      heatZMin = undefined;
+      heatZMax = undefined;
+    };
+  }, [props.report, props.flip]);
 
   return showPlot ? (
     <Plot
