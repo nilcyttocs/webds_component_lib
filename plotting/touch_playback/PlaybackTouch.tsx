@@ -65,7 +65,7 @@ export const PlaybackTouch = (props: any): JSX.Element | null => {
         props.traceView ? traceData[frameIndex] : touchData[frameIndex]
       );
     }
-  }, [props.frameIndex, props.traceView]);
+  }, [props.frameIndex, props.traceView, touchData, traceData]);
 
   useEffect(() => {
     numFrames = props.numFrames;

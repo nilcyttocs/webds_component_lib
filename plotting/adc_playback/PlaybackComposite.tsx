@@ -102,7 +102,7 @@ export const PlaybackComposite = (props: any): JSX.Element | null => {
       frameIndex = props.frameIndex;
       setReport(playbackData[frameIndex]);
     }
-  }, [props.frameIndex]);
+  }, [props.frameIndex, playbackData]);
 
   useEffect(() => {
     numFrames = props.numFrames;

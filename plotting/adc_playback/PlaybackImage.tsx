@@ -68,7 +68,7 @@ export const PlaybackImage = (props: any): JSX.Element | null => {
       frameIndex = props.frameIndex;
       setReport(playbackData[frameIndex]);
     }
-  }, [props.frameIndex]);
+  }, [props.frameIndex, playbackData]);
 
   useEffect(() => {
     numFrames = props.numFrames;
