@@ -20,6 +20,8 @@ const REPORT_DELTA = 18;
 const REPORT_RAW = 19;
 const REPORT_BASELINE = 20;
 
+const RECORDED_DATA_FILE_NAME = "adc_data.json";
+
 const IMAGE_LENGTH = 550;
 const HYBRID_HEIGHT = 60;
 
@@ -39,25 +41,18 @@ const HYBRIDX_R_MARGIN = IMAGE_R_MARGIN;
 const HYBRIDX_T_MARGIN = 10;
 const HYBRIDX_B_MARGIN = 10;
 
-const imageMargins = {
-  l: IMAGE_L_MARGIN,
-  r: IMAGE_R_MARGIN,
-  t: IMAGE_T_MARGIN,
-  b: IMAGE_B_MARGIN
+type Margins = {
+  l: number;
+  r: number;
+  t: number;
+  b: number;
 };
 
-const hybridXMargins = {
-  l: HYBRIDX_L_MARGIN,
-  r: HYBRIDX_R_MARGIN,
-  t: HYBRIDX_T_MARGIN,
-  b: HYBRIDX_B_MARGIN
-};
-
-const hybridYMargins = {
-  l: HYBRIDY_L_MARGIN,
-  r: HYBRIDY_R_MARGIN,
-  t: HYBRIDY_T_MARGIN,
-  b: HYBRIDY_B_MARGIN
+const zeroMargins: Margins = {
+  l: 0,
+  r: 0,
+  t: 0,
+  b: 0
 };
 
 let running: boolean;
@@ -99,10 +94,9 @@ const saveRecordedData = () => {
   });
   recordedData = [];
   saving = false;
-  let link = document.createElement("a");
+  const link = document.createElement("a");
   link.href = window.URL.createObjectURL(blob);
-  let output = "adc_data.json";
-  link.download = output;
+  link.download = RECORDED_DATA_FILE_NAME;
   link.click();
 };
 
@@ -228,6 +222,9 @@ const getMean = (): TouchcommADCReport | undefined => {
   try {
     const mean = subBuffer.reduce(
       function (mean, cur) {
+        if (cur === undefined) {
+          return mean;
+        }
         for (let i = 0; i < numRows; i++) {
           for (let j = 0; j < numCols; j++) {
             mean.image[i][j] += cur.image[i][j] / samples;
@@ -261,6 +258,9 @@ const getMax = (): TouchcommADCReport | undefined => {
   try {
     const max = subBuffer.reduce(
       function (max, cur) {
+        if (cur === undefined) {
+          return max;
+        }
         for (let i = 0; i < numRows; i++) {
           for (let j = 0; j < numCols; j++) {
             max.image[i][j] =
@@ -299,6 +299,9 @@ const getMin = (): TouchcommADCReport | undefined => {
   try {
     const min = subBuffer.reduce(
       function (min, cur) {
+        if (cur === undefined) {
+          return min;
+        }
         for (let i = 0; i < numRows; i++) {
           for (let j = 0; j < numCols; j++) {
             min.image[i][j] =
@@ -388,7 +391,6 @@ const computePlot = () => {
       break;
     case "Min":
       computedReport = getMin();
-
       break;
     case "Range":
       computedReport = getRange();
@@ -399,13 +401,15 @@ const computePlot = () => {
   }
 };
 
-export const LiveComposite = (props: any): JSX.Element | null => {
+export const ADCLive = (props: any): JSX.Element | null => {
   const [initialized, setInitialized] = useState<boolean>(false);
   const [showPlot, setShowPlot] = useState<boolean>(false);
-  const [showMessage, setShowMessage] = useState<boolean>(false);
   const [report, setReport] = useState<TouchcommADCReport>();
   const [imageWidth, setImageWidth] = useState<number>(0);
   const [imageHeight, setImageHeight] = useState<number>(0);
+  const [imageMargins, setImageMargins] = useState<Margins>(zeroMargins);
+  const [hybridXMargins, setHybridXMargins] = useState<Margins>(zeroMargins);
+  const [hybridYMargins, setHybridYMargins] = useState<Margins>(zeroMargins);
   const [swapXY, setSwapXY] = useState<boolean>(false);
 
   const setWidthHeight = () => {
@@ -428,6 +432,28 @@ export const LiveComposite = (props: any): JSX.Element | null => {
       setSwapXY(false);
       setImageWidth(imageWidth);
       setImageHeight(imageHeight);
+    }
+    if (props.imageOnly) {
+      setImageMargins(zeroMargins);
+    } else {
+      setImageMargins({
+        l: IMAGE_L_MARGIN,
+        r: IMAGE_R_MARGIN,
+        t: IMAGE_T_MARGIN,
+        b: IMAGE_B_MARGIN
+      });
+      setHybridXMargins({
+        l: HYBRIDX_L_MARGIN,
+        r: HYBRIDX_R_MARGIN,
+        t: HYBRIDX_T_MARGIN,
+        b: HYBRIDX_B_MARGIN
+      });
+      setHybridYMargins({
+        l: HYBRIDY_L_MARGIN,
+        r: HYBRIDY_R_MARGIN,
+        t: HYBRIDY_T_MARGIN,
+        b: HYBRIDY_B_MARGIN
+      });
     }
   };
 
@@ -496,10 +522,8 @@ export const LiveComposite = (props: any): JSX.Element | null => {
   const newPlot = async () => {
     reportType = props.reportType;
     if (reportType === undefined) {
-      setShowMessage(true);
       return;
     }
-    setShowMessage(false);
     try {
       switch (reportType) {
         case REPORT_DELTA:
@@ -560,12 +584,14 @@ export const LiveComposite = (props: any): JSX.Element | null => {
   return showPlot ? (
     <div>
       <div style={{ display: "flex", flexWrap: "nowrap" }}>
-        <HybridYPlot
-          height={imageHeight}
-          margins={hybridYMargins}
-          swapXY={swapXY}
-          report={report}
-        />
+        {!props.imageOnly && (
+          <HybridYPlot
+            height={imageHeight}
+            margins={hybridYMargins}
+            swapXY={swapXY}
+            report={report}
+          />
+        )}
         <ImagePlot
           width={imageWidth}
           height={imageHeight}
@@ -574,16 +600,16 @@ export const LiveComposite = (props: any): JSX.Element | null => {
           report={report}
         />
       </div>
-      <HybridXPlot
-        width={imageWidth}
-        margins={hybridXMargins}
-        swapXY={swapXY}
-        report={report}
-      />
+      {!props.imageOnly && (
+        <HybridXPlot
+          width={imageWidth}
+          margins={hybridXMargins}
+          swapXY={swapXY}
+          report={report}
+        />
+      )}
     </div>
-  ) : showMessage ? (
-    <Typography>Please select report type</Typography>
   ) : null;
 };
 
-export default LiveComposite;
+export default ADCLive;

@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 
-import ImagePlot from "../adc_plots/ImagePlot";
-import HybridXPlot from "../adc_plots/HybridXPlot";
-import HybridYPlot from "../adc_plots/HybridYPlot";
+import ImagePlot from "./ImagePlot";
+import HybridXPlot from "./HybridXPlot";
+import HybridYPlot from "./HybridYPlot";
 
 import { TouchcommADCReport } from "@webds/service";
 
@@ -29,25 +29,18 @@ const HYBRIDX_R_MARGIN = IMAGE_R_MARGIN;
 const HYBRIDX_T_MARGIN = 10;
 const HYBRIDX_B_MARGIN = 10;
 
-const imageMargins = {
-  l: IMAGE_L_MARGIN,
-  r: IMAGE_R_MARGIN,
-  t: IMAGE_T_MARGIN,
-  b: IMAGE_B_MARGIN
+type Margins = {
+  l: number;
+  r: number;
+  t: number;
+  b: number;
 };
 
-const hybridXMargins = {
-  l: HYBRIDX_L_MARGIN,
-  r: HYBRIDX_R_MARGIN,
-  t: HYBRIDX_T_MARGIN,
-  b: HYBRIDX_B_MARGIN
-};
-
-const hybridYMargins = {
-  l: HYBRIDY_L_MARGIN,
-  r: HYBRIDY_R_MARGIN,
-  t: HYBRIDY_T_MARGIN,
-  b: HYBRIDY_B_MARGIN
+const zeroMargins: Margins = {
+  l: 0,
+  r: 0,
+  t: 0,
+  b: 0
 };
 
 let playbackData: TouchcommADCReport[];
@@ -69,11 +62,14 @@ const stopAnimation = () => {
   }
 };
 
-export const PlaybackComposite = (props: any): JSX.Element | null => {
+export const ADCPlayback = (props: any): JSX.Element | null => {
   const [initialized, setInitialized] = useState<boolean>(false);
   const [report, setReport] = useState<TouchcommADCReport>();
   const [imageWidth, setImageWidth] = useState<number>(0);
   const [imageHeight, setImageHeight] = useState<number>(0);
+  const [imageMargins, setImageMargins] = useState<Margins>(zeroMargins);
+  const [hybridXMargins, setHybridXMargins] = useState<Margins>(zeroMargins);
+  const [hybridYMargins, setHybridYMargins] = useState<Margins>(zeroMargins);
   const [swapXY, setSwapXY] = useState<boolean>(false);
 
   playbackData = useContext(ADCDataContext);
@@ -98,6 +94,28 @@ export const PlaybackComposite = (props: any): JSX.Element | null => {
       setSwapXY(false);
       setImageWidth(imageWidth);
       setImageHeight(imageHeight);
+    }
+    if (props.imageOnly) {
+      setImageMargins(zeroMargins);
+    } else {
+      setImageMargins({
+        l: IMAGE_L_MARGIN,
+        r: IMAGE_R_MARGIN,
+        t: IMAGE_T_MARGIN,
+        b: IMAGE_B_MARGIN
+      });
+      setHybridXMargins({
+        l: HYBRIDX_L_MARGIN,
+        r: HYBRIDX_R_MARGIN,
+        t: HYBRIDX_T_MARGIN,
+        b: HYBRIDX_B_MARGIN
+      });
+      setHybridYMargins({
+        l: HYBRIDY_L_MARGIN,
+        r: HYBRIDY_R_MARGIN,
+        t: HYBRIDY_T_MARGIN,
+        b: HYBRIDY_B_MARGIN
+      });
     }
   };
 
@@ -172,28 +190,33 @@ export const PlaybackComposite = (props: any): JSX.Element | null => {
   return initialized ? (
     <div>
       <div style={{ display: "flex", flexWrap: "nowrap" }}>
-        <HybridYPlot
-          height={imageHeight}
-          margins={hybridYMargins}
-          swapXY={swapXY}
-          report={report}
-        />
+        {!props.imageOnly && (
+          <HybridYPlot
+            height={imageHeight}
+            margins={hybridYMargins}
+            swapXY={swapXY}
+            report={report}
+          />
+        )}
         <ImagePlot
           width={imageWidth}
           height={imageHeight}
           margins={imageMargins}
           swapXY={swapXY}
+          flip={props.flip}
           report={report}
         />
       </div>
-      <HybridXPlot
-        width={imageWidth}
-        margins={hybridXMargins}
-        swapXY={swapXY}
-        report={report}
-      />
+      {!props.imageOnly && (
+        <HybridXPlot
+          width={imageWidth}
+          margins={hybridXMargins}
+          swapXY={swapXY}
+          report={report}
+        />
+      )}
     </div>
   ) : null;
 };
 
-export default PlaybackComposite;
+export default ADCPlayback;

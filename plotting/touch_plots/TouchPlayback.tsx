@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 
-import TouchPlot from "../touch_plots/TouchPlot";
+import TouchPlot from "./TouchPlot";
 
 import { TouchcommTouchReport, TouchcommTraceReport } from "@webds/service";
 
@@ -31,7 +31,7 @@ const stopAnimation = () => {
   }
 };
 
-export const PlaybackTouch = (props: any): JSX.Element | null => {
+export const TouchPlayback = (props: any): JSX.Element | null => {
   const [initialized, setInitialized] = useState<boolean>(false);
   const [report, setReport] = useState<
     TouchcommTouchReport | TouchcommTraceReport
@@ -155,4 +155,4 @@ export const PlaybackTouch = (props: any): JSX.Element | null => {
   ) : null;
 };
 
-export default PlaybackTouch;
+export default TouchPlayback;
