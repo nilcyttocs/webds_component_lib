@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-import Typography from "@mui/material/Typography";
-
 import ImagePlot from "../adc_plots/ImagePlot";
 import HybridXPlot from "../adc_plots/HybridXPlot";
 import HybridYPlot from "../adc_plots/HybridYPlot";
