@@ -204,6 +204,7 @@ export const ADCPlayback = (props: any): JSX.Element | null => {
           margins={imageMargins}
           swapXY={swapXY}
           flip={props.flip}
+          showScale={!props.imageOnly}
           report={report}
         />
       </div>
