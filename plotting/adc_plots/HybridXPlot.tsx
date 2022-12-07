@@ -6,10 +6,8 @@ import { TouchcommADCReport } from "@webds/service";
 
 import Plot from "react-plotly.js";
 
-const PLOT_WIDTH = 550;
+const PLOT_WIDTH = 0;
 const PLOT_HEIGHT = 60;
-
-let plotWidthHeight = { w: PLOT_WIDTH, h: PLOT_HEIGHT };
 
 let plotMargins = {
   l: 0,
@@ -27,8 +25,8 @@ const plotBgColor = "rgba(0.75, 0.75, 0.75, 0.1)";
 const paperBgColor = "rgba(0, 0, 0, 0)";
 const axisLineColor = "rgba(128, 128, 128, 0.5)";
 
-const computePlot = (report: TouchcommADCReport) => {
-  barX = report.hybridx;
+const computePlot = (swapXY: boolean, report: TouchcommADCReport) => {
+  barX = swapXY ? report.hybridy : report.hybridx;
 
   if (barX === undefined) {
     return;
@@ -56,16 +54,20 @@ export const HybridXPlot = (props: any): JSX.Element | null => {
   };
 
   const renderPlot = (report: TouchcommADCReport) => {
-    computePlot(report);
+    computePlot(props.swapXY, report);
 
     if (barX === undefined) {
       return;
     }
 
+    const w = props.width !== undefined ? props.width : PLOT_WIDTH;
+    const h = props.height !== undefined ? props.height : PLOT_HEIGHT;
+    const m = props.margins !== undefined ? props.margins : plotMargins;
+
     setBarXLayout({
-      width: plotWidthHeight.w + plotMargins.l + plotMargins.r,
-      height: plotWidthHeight.h + plotMargins.t + plotMargins.b,
-      margin: plotMargins,
+      width: w + m.l + m.r,
+      height: h + m.t + m.b,
+      margin: m,
       font: {
         color: theme.palette.text.primary
       },
@@ -110,11 +112,6 @@ export const HybridXPlot = (props: any): JSX.Element | null => {
       return;
     }
     if (!initialized) {
-      plotWidthHeight.w =
-        props.width !== undefined ? props.width : plotWidthHeight.w;
-      plotWidthHeight.h =
-        props.height !== undefined ? props.height : plotWidthHeight.h;
-      plotMargins = props.margins !== undefined ? props.margins : plotMargins;
       setBarXConfig(plotConfig);
       setInitialized(true);
     }

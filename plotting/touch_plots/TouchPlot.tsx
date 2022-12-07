@@ -6,18 +6,15 @@ import { TouchcommTouchReport, TouchcommTraceReport } from "@webds/service";
 
 import Plot from "react-plotly.js";
 
-const PLOT_LENGTH = 550;
+const PLOT_WIDTH = 0;
+const PLOT_HEIGHT = 0;
 
-let plotWidth: number;
-let plotHeight: number;
 let plotMargins = {
   l: 1,
   r: 1,
   t: 1,
   b: 1
 };
-
-let swap: boolean;
 
 const plotConfig = { displayModeBar: false };
 const plotBgColor = "black";
@@ -77,8 +74,8 @@ export const TouchPlot = (props: any): JSX.Element | null => {
         traceY[i] = traceY[i].map((item) => props.appInfo.maxY - item);
       }
     }
-    const xTrace = swap ? traceY : traceX;
-    const yTrace = swap ? traceX : traceY;
+    const xTrace = props.swapXY ? traceY : traceX;
+    const yTrace = props.swapXY ? traceX : traceY;
 
     setData(generateTraces(xTrace, yTrace));
     setShowPlot(true);
@@ -122,8 +119,8 @@ export const TouchPlot = (props: any): JSX.Element | null => {
       const index = obj.objectIndex;
       let xMeas = props.flip?.v ? props.appInfo.maxX - obj.xMeas : obj.xMeas;
       let yMeas = props.flip?.h ? props.appInfo.maxY - obj.yMeas : obj.yMeas;
-      x[index][0] = swap ? yMeas : xMeas;
-      y[index][0] = swap ? xMeas : yMeas;
+      x[index][0] = props.swapXY ? yMeas : xMeas;
+      y[index][0] = props.swapXY ? xMeas : yMeas;
       stats[index][0] = obj.xMeas;
       stats[index][1] = obj.yMeas;
       stats[index][2] = obj.z;
@@ -145,43 +142,34 @@ export const TouchPlot = (props: any): JSX.Element | null => {
       return;
     }
     if (!initialized) {
-      if (props.appInfo.maxX > props.appInfo.maxY) {
-        plotWidth = props.length !== undefined ? props.length : PLOT_LENGTH;
-        plotHeight = Math.floor(
-          (plotWidth * (props.appInfo.maxY + 1)) / (props.appInfo.maxX + 1)
-        );
-      } else {
-        plotHeight = props.length !== undefined ? props.length : PLOT_LENGTH;
-        plotWidth = Math.floor(
-          (plotWidth * (props.appInfo.maxX + 1)) / (props.appInfo.maxY + 1)
-        );
-      }
-      swap = props.portrait && plotWidth > plotHeight;
       setConfig(plotConfig);
-      setLayout({
-        width: swap ? plotHeight : plotWidth,
-        height: swap ? plotWidth : plotHeight,
-        margin: plotMargins,
-        plot_bgcolor: plotBgColor,
-        paper_bgcolor: paperBgColor,
-        xaxis: {
-          range: [0, swap ? props.appInfo.maxY : props.appInfo.maxX],
-          mirror: true,
-          showline: true,
-          linecolor: axisLineColor,
-          showticklabels: false
-        },
-        yaxis: {
-          range: [0, swap ? props.appInfo.maxX : props.appInfo.maxY],
-          mirror: true,
-          showline: true,
-          linecolor: axisLineColor,
-          showticklabels: false
-        },
-        showlegend: false
-      });
       setInitialized(true);
     }
+    const w = props.width !== undefined ? props.width : PLOT_WIDTH;
+    const h = props.height !== undefined ? props.height : PLOT_HEIGHT;
+    const m = props.margins !== undefined ? props.margins : plotMargins;
+    setLayout({
+      width: w + m.l + m.r,
+      height: h + m.t + m.b,
+      margin: m,
+      plot_bgcolor: plotBgColor,
+      paper_bgcolor: paperBgColor,
+      xaxis: {
+        range: [0, props.swapXY ? props.appInfo.maxY : props.appInfo.maxX],
+        mirror: true,
+        showline: true,
+        linecolor: axisLineColor,
+        showticklabels: false
+      },
+      yaxis: {
+        range: [0, props.swapXY ? props.appInfo.maxX : props.appInfo.maxY],
+        mirror: true,
+        showline: true,
+        linecolor: axisLineColor,
+        showticklabels: false
+      },
+      showlegend: false
+    });
     if (props.traceView) {
       renderTraces(props.report);
     } else {

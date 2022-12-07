@@ -54,10 +54,6 @@ let playbackData: TouchcommADCReport[];
 
 let running: boolean;
 
-let imageWidth: number;
-
-let imageHeight: number;
-
 let frameIndex: number;
 
 let numFrames: number;
@@ -76,8 +72,34 @@ const stopAnimation = () => {
 export const PlaybackComposite = (props: any): JSX.Element | null => {
   const [initialized, setInitialized] = useState<boolean>(false);
   const [report, setReport] = useState<TouchcommADCReport>();
+  const [imageWidth, setImageWidth] = useState<number>(0);
+  const [imageHeight, setImageHeight] = useState<number>(0);
+  const [swapXY, setSwapXY] = useState<boolean>(false);
 
   playbackData = useContext(ADCDataContext);
+
+  const setWidthHeight = () => {
+    const numRows = playbackData[0].image.length;
+    const numCols = playbackData[0].image[0].length;
+    let imageWidth: number;
+    let imageHeight: number;
+    if (numCols > numRows) {
+      imageWidth = props.length !== undefined ? props.length : IMAGE_LENGTH;
+      imageHeight = Math.floor((imageWidth * numRows) / numCols);
+    } else {
+      imageHeight = props.length !== undefined ? props.length : IMAGE_LENGTH;
+      imageWidth = Math.floor((imageHeight * numCols) / numRows);
+    }
+    if (props.portrait && imageWidth > imageHeight) {
+      setSwapXY(true);
+      setImageWidth(imageHeight);
+      setImageHeight(imageWidth);
+    } else {
+      setSwapXY(false);
+      setImageWidth(imageWidth);
+      setImageHeight(imageHeight);
+    }
+  };
 
   const animatePlot = () => {
     requestID = requestAnimationFrame(animatePlot);
@@ -119,17 +141,10 @@ export const PlaybackComposite = (props: any): JSX.Element | null => {
   }, [props.passive, props.run, props.numFrames]);
 
   useEffect(() => {
-    const setWidthHeight = () => {
-      const numRows = playbackData[0].image.length;
-      const numCols = playbackData[0].image[0].length;
-      if (numCols > numRows) {
-        imageWidth = props.length !== undefined ? props.length : IMAGE_LENGTH;
-        imageHeight = Math.floor((imageWidth * numRows) / numCols);
-      } else {
-        imageHeight = props.length !== undefined ? props.length : IMAGE_LENGTH;
-        imageWidth = Math.floor((imageHeight * numCols) / numRows);
-      }
-    };
+    setWidthHeight();
+  }, [props.dataCounter]);
+
+  useEffect(() => {
     const initialize = () => {
       setWidthHeight();
       animationCounter = 1;
@@ -160,17 +175,21 @@ export const PlaybackComposite = (props: any): JSX.Element | null => {
         <HybridYPlot
           height={imageHeight}
           margins={hybridYMargins}
+          swapXY={swapXY}
           report={report}
         />
         <ImagePlot
-          length={props.length}
+          width={imageWidth}
+          height={imageHeight}
           margins={imageMargins}
+          swapXY={swapXY}
           report={report}
         />
       </div>
       <HybridXPlot
         width={imageWidth}
         margins={hybridXMargins}
+        swapXY={swapXY}
         report={report}
       />
     </div>

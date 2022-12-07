@@ -6,9 +6,8 @@ import { TouchcommADCReport } from "@webds/service";
 
 import Plot from "react-plotly.js";
 
-const PLOT_LENGTH = 550;
-
-let plotWidthHeight = { w: 0, h: 0 };
+const PLOT_WIDTH = 0;
+const PLOT_HEIGHT = 0;
 
 let plotMargins = {
   l: 0,
@@ -20,8 +19,6 @@ let plotMargins = {
 let heatZ: number[][] | undefined;
 let heatZMin: number | undefined;
 let heatZMax: number | undefined;
-
-let swap: boolean;
 
 const plotConfig = { displayModeBar: false };
 const paperBgColor = "rgba(0, 0, 0, 0)";
@@ -37,12 +34,12 @@ const computePlot = (props: any, report: TouchcommADCReport) => {
     return;
   }
 
-  if (swap) {
+  if (props.swapXY) {
     heatZ = transpose(heatZ);
   }
 
   if (props.flip?.h) {
-    if (swap) {
+    if (props.swapXY) {
       heatZ = heatZ.map((item) => item.reverse());
     } else {
       heatZ = heatZ.reverse();
@@ -50,7 +47,7 @@ const computePlot = (props: any, report: TouchcommADCReport) => {
   }
 
   if (props.flip?.v) {
-    if (swap) {
+    if (props.swapXY) {
       heatZ = heatZ.reverse();
     } else {
       heatZ = heatZ.map((item) => item.reverse());
@@ -91,10 +88,14 @@ export const ImagePlot = (props: any): JSX.Element | null => {
       return;
     }
 
+    const w = props.width !== undefined ? props.width : PLOT_WIDTH;
+    const h = props.height !== undefined ? props.height : PLOT_HEIGHT;
+    const m = props.margins !== undefined ? props.margins : plotMargins;
+
     setHeatLayout({
-      width: plotWidthHeight.w + plotMargins.l + plotMargins.r,
-      height: plotWidthHeight.h + plotMargins.t + plotMargins.b,
-      margin: plotMargins,
+      width: w + m.l + m.r,
+      height: h + m.t + m.b,
+      margin: m,
       font: {
         color: theme.palette.text.primary
       },
@@ -135,22 +136,6 @@ export const ImagePlot = (props: any): JSX.Element | null => {
       return;
     }
     if (!initialized) {
-      const numRows = props.report.image.length;
-      const numCols = props.report.image[0].length;
-      if (numCols > numRows) {
-        plotWidthHeight.w =
-          props.length !== undefined ? props.length : PLOT_LENGTH;
-        plotWidthHeight.h = Math.floor((plotWidthHeight.w * numRows) / numCols);
-      } else {
-        plotWidthHeight.h =
-          props.length !== undefined ? props.length : PLOT_LENGTH;
-        plotWidthHeight.w = Math.floor((plotWidthHeight.h * numCols) / numRows);
-      }
-      swap = props.portrait && plotWidthHeight.w > plotWidthHeight.h;
-      if (swap) {
-        plotWidthHeight = { w: plotWidthHeight.h, h: plotWidthHeight.w };
-      }
-      plotMargins = props.margins !== undefined ? props.margins : plotMargins;
       setHeatConfig(plotConfig);
       setInitialized(true);
     }
