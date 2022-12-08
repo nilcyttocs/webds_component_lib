@@ -16,6 +16,8 @@ let traceData: TouchcommTraceReport[];
 
 let running: boolean;
 
+let slowX: number;
+
 let frameIndex: number;
 
 let numFrames: number;
@@ -86,7 +88,7 @@ export const TouchPlayback = (props: any): JSX.Element | null => {
     requestID = requestAnimationFrame(animatePlot);
 
     if (running) {
-      if (animationCounter === SLOW_X) {
+      if (animationCounter === slowX) {
         animationCounter = 1;
         props.setFrameIndex(frameIndex);
         setReport(
@@ -97,10 +99,17 @@ export const TouchPlayback = (props: any): JSX.Element | null => {
         } else {
           frameIndex += 1;
         }
+      } else {
+        animationCounter++;
       }
-      animationCounter++;
     }
   };
+
+  useEffect(() => {
+    animationCounter = 1;
+    slowX = SLOW_X - props.speed;
+    slowX = slowX * 2 + 1;
+  }, [props.speed]);
 
   useEffect(() => {
     if (!running) {
@@ -132,7 +141,6 @@ export const TouchPlayback = (props: any): JSX.Element | null => {
   useEffect(() => {
     const initialize = () => {
       setWidthHeight();
-      animationCounter = 1;
       requestID = requestAnimationFrame(animatePlot);
       setInitialized(true);
     };
