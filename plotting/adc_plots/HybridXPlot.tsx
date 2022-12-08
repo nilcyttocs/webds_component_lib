@@ -121,7 +121,7 @@ export const HybridXPlot = (props: any): JSX.Element | null => {
       barXMin = undefined;
       barXMax = undefined;
     };
-  }, [props.report]);
+  }, [props]);
 
   return showPlot ? (
     <Plot

@@ -81,10 +81,24 @@ export const ADCPlayback = (props: any): JSX.Element | null => {
     let imageHeight: number;
     if (numCols > numRows) {
       imageWidth = props.length !== undefined ? props.length : IMAGE_LENGTH;
-      imageHeight = Math.floor((imageWidth * numRows) / numCols);
+      if (props.width !== undefined) {
+        imageHeight = props.width;
+      } else {
+        imageHeight = Math.floor((imageWidth * numRows) / numCols);
+        if (props.setWidth) {
+          props.setWidth(imageHeight);
+        }
+      }
     } else {
       imageHeight = props.length !== undefined ? props.length : IMAGE_LENGTH;
-      imageWidth = Math.floor((imageHeight * numCols) / numRows);
+      if (props.width !== undefined) {
+        imageWidth = props.width;
+      } else {
+        imageWidth = Math.floor((imageHeight * numCols) / numRows);
+        if (props.setWidth) {
+          props.setWidth(imageHeight);
+        }
+      }
     }
     if (props.portrait && imageWidth > imageHeight) {
       setSwapXY(true);
@@ -160,7 +174,7 @@ export const ADCPlayback = (props: any): JSX.Element | null => {
 
   useEffect(() => {
     setWidthHeight();
-  }, [props.dataCounter]);
+  }, [props.length, props.width, props.dataCounter]);
 
   useEffect(() => {
     const initialize = () => {

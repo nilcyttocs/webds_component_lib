@@ -48,14 +48,28 @@ export const TouchPlayback = (props: any): JSX.Element | null => {
     let imageHeight: number;
     if (props.appInfo.maxX > props.appInfo.maxY) {
       imageWidth = props.length !== undefined ? props.length : IMAGE_LENGTH;
-      imageHeight = Math.floor(
-        (imageWidth * (props.appInfo.maxY + 1)) / (props.appInfo.maxX + 1)
-      );
+      if (props.width !== undefined) {
+        imageHeight = props.width;
+      } else {
+        imageHeight = Math.floor(
+          (imageWidth * (props.appInfo.maxY + 1)) / (props.appInfo.maxX + 1)
+        );
+        if (props.setWidth) {
+          props.setWidth(imageHeight);
+        }
+      }
     } else {
       imageHeight = props.length !== undefined ? props.length : IMAGE_LENGTH;
-      imageWidth = Math.floor(
-        (imageHeight * (props.appInfo.maxX + 1)) / (props.appInfo.maxY + 1)
-      );
+      if (props.width !== undefined) {
+        imageWidth = props.width;
+      } else {
+        imageWidth = Math.floor(
+          (imageHeight * (props.appInfo.maxX + 1)) / (props.appInfo.maxY + 1)
+        );
+        if (props.setWidth) {
+          props.setWidth(imageWidth);
+        }
+      }
     }
     if (props.portrait && imageWidth > imageHeight) {
       setSwapXY(true);
@@ -113,7 +127,7 @@ export const TouchPlayback = (props: any): JSX.Element | null => {
 
   useEffect(() => {
     setWidthHeight();
-  }, [props.dataCounter]);
+  }, [props.length, props.width, props.dataCounter]);
 
   useEffect(() => {
     const initialize = () => {

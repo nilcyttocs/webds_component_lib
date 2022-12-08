@@ -145,7 +145,7 @@ export const ImagePlot = (props: any): JSX.Element | null => {
       heatZMin = undefined;
       heatZMax = undefined;
     };
-  }, [props.report, props.flip]);
+  }, [props]);
 
   return showPlot ? (
     <Plot

@@ -122,7 +122,7 @@ export const HybridYPlot = (props: any): JSX.Element | null => {
       barYMin = undefined;
       barYMax = undefined;
     };
-  }, [props.report]);
+  }, [props]);
 
   return showPlot ? (
     <Plot

@@ -13,7 +13,6 @@ const REPORT_FPS = 120;
 const RENDER_FPS = 15;
 const RENDER_INTERVAL = 1000 / RENDER_FPS;
 
-const REPORT_TOUCH = 17;
 const REPORT_DELTA = 18;
 const REPORT_RAW = 19;
 const REPORT_BASELINE = 20;
@@ -205,12 +204,29 @@ const setReportTypes = async (
       body: JSON.stringify(dataToSend),
       method: "POST"
     });
-    addEvent();
   } catch (error) {
     console.error(`Error - POST /webds/report\n${error}`);
     return Promise.reject("Failed to enable/disable report types");
   }
   return Promise.resolve();
+};
+
+const enableReport = async (enable: boolean) => {
+  if (reportType === undefined) {
+    return;
+  }
+  try {
+    await setReportTypes(
+      enable ? [reportType] : [],
+      enable ? [] : [reportType]
+    );
+    if (enable) {
+      addEvent();
+    }
+  } catch (error) {
+    console.error(error);
+    return Promise.reject();
+  }
 };
 
 const getMean = (): TouchcommADCReport | undefined => {
@@ -411,16 +427,33 @@ export const ADCLive = (props: any): JSX.Element | null => {
   const [swapXY, setSwapXY] = useState<boolean>(false);
 
   const setWidthHeight = () => {
+    if (originalReport === undefined) {
+      return;
+    }
     numRows = originalReport.image.length;
     numCols = originalReport.image[0].length;
     let imageWidth: number;
     let imageHeight: number;
     if (numCols > numRows) {
       imageWidth = props.length !== undefined ? props.length : IMAGE_LENGTH;
-      imageHeight = Math.floor((imageWidth * numRows) / numCols);
+      if (props.width !== undefined) {
+        imageHeight = props.width;
+      } else {
+        imageHeight = Math.floor((imageWidth * numRows) / numCols);
+        if (props.setWidth) {
+          props.setWidth(imageHeight);
+        }
+      }
     } else {
       imageHeight = props.length !== undefined ? props.length : IMAGE_LENGTH;
-      imageWidth = Math.floor((imageHeight * numCols) / numRows);
+      if (props.width !== undefined) {
+        imageWidth = props.width;
+      } else {
+        imageWidth = Math.floor((imageHeight * numCols) / numRows);
+        if (props.setWidth) {
+          props.setWidth(imageHeight);
+        }
+      }
     }
     if (props.portrait && imageWidth > imageHeight) {
       setSwapXY(true);
@@ -460,6 +493,9 @@ export const ADCLive = (props: any): JSX.Element | null => {
       removeEvent();
       requestID = undefined;
       setShowPlot(false);
+      if (props.setPlotReady) {
+        props.setPlotReady(false);
+      }
       if (props.resetReportType) {
         props.resetReportType();
       }
@@ -502,7 +538,12 @@ export const ADCLive = (props: any): JSX.Element | null => {
         }
       }
       setReport(computedReport);
-      setShowPlot(true);
+      if (!showPlot) {
+        setShowPlot(true);
+        if (props.setPlotReady) {
+          props.setPlotReady(true);
+        }
+      }
     }
   };
 
@@ -518,35 +559,12 @@ export const ADCLive = (props: any): JSX.Element | null => {
   };
 
   const newPlot = async () => {
-    reportType = props.reportType;
     if (reportType === undefined) {
       return;
     }
     try {
-      switch (reportType) {
-        case REPORT_DELTA:
-          await setReportTypes(
-            [REPORT_DELTA],
-            [REPORT_TOUCH, REPORT_RAW, REPORT_BASELINE]
-          );
-          break;
-        case REPORT_RAW:
-          await setReportTypes(
-            [REPORT_RAW],
-            [REPORT_TOUCH, REPORT_DELTA, REPORT_BASELINE]
-          );
-          break;
-        case REPORT_BASELINE:
-          await setReportTypes(
-            [REPORT_BASELINE],
-            [REPORT_TOUCH, REPORT_DELTA, REPORT_RAW]
-          );
-          break;
-        default:
-          throw new Error(`Invalid report type: ${reportType}`);
-      }
-    } catch (error) {
-      console.error(error);
+      enableReport(running);
+    } catch {
       if (props.resetReportType) {
         props.resetReportType();
       }
@@ -554,6 +572,10 @@ export const ADCLive = (props: any): JSX.Element | null => {
     }
     startAnimation();
   };
+
+  useEffect(() => {
+    setWidthHeight();
+  }, [props.length, props.width]);
 
   useEffect(() => {
     statistics = props.statistics;
@@ -568,12 +590,25 @@ export const ADCLive = (props: any): JSX.Element | null => {
   }, [props.record]);
 
   useEffect(() => {
+    running = !props.halt;
+    enableReport(running);
+    if (props.halt) {
+      removeEvent();
+    }
+  }, [props.halt]);
+
+  useEffect(() => {
     running = props.run;
   }, [props.run]);
 
   useEffect(() => {
+    if (reportType !== undefined) {
+      enableReport(false);
+    }
+    reportType = props.reportType;
     newPlot();
     return () => {
+      enableReport(false);
       stopAnimation();
       removeEvent();
     };
@@ -595,6 +630,10 @@ export const ADCLive = (props: any): JSX.Element | null => {
           height={imageHeight}
           margins={imageMargins}
           swapXY={swapXY}
+          flip={props.flip}
+          zMin={props.zMin}
+          zMax={props.zMax}
+          showScale={!props.imageOnly}
           report={report}
         />
       </div>

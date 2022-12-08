@@ -175,7 +175,7 @@ export const TouchPlot = (props: any): JSX.Element | null => {
     } else {
       renderMarkers(props.report);
     }
-  }, [props.report, props.flip, props.traceView]);
+  }, [props]);
 
   return showPlot ? (
     <Plot
