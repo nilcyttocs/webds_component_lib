@@ -529,21 +529,22 @@ export const ADCLive = (props: any): JSX.Element | null => {
     }
 
     computePlot();
-    if (computedReport !== undefined) {
-      t1 = Date.now();
-      if (t1 - t0 >= 1000) {
-        t0 = t1;
-        if (props.updateSampleRate) {
-          props.updateSampleRate(fps);
-        }
+    if (computedReport === undefined) {
+      return;
+    }
+
+    t1 = Date.now();
+    if (t1 - t0 >= 1000) {
+      t0 = t1;
+      if (props.updateSampleRate) {
+        props.updateSampleRate(fps);
       }
-      setReport(computedReport);
-      if (!showPlot) {
-        setShowPlot(true);
-        if (props.setPlotReady) {
-          props.setPlotReady(true);
-        }
-      }
+    }
+
+    setReport(computedReport);
+    setShowPlot(true);
+    if (props.setPlotReady) {
+      props.setPlotReady(true);
     }
   };
 
@@ -563,7 +564,7 @@ export const ADCLive = (props: any): JSX.Element | null => {
       return;
     }
     try {
-      enableReport(running);
+      await enableReport(running);
     } catch {
       if (props.resetReportType) {
         props.resetReportType();
