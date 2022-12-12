@@ -29,9 +29,9 @@ export const PlaybackSpeed = (props: any): JSX.Element => {
         label="Speed"
         onChange={handleChange}
       >
-        <MenuItem value={3}>fast</MenuItem>
-        <MenuItem value={2}>normal</MenuItem>
-        <MenuItem value={1}>slow</MenuItem>
+        <MenuItem value={3}>Fast</MenuItem>
+        <MenuItem value={2}>Normal</MenuItem>
+        <MenuItem value={1}>Slow</MenuItem>
       </Select>
     </FormControl>
   );
