@@ -15,9 +15,9 @@ import { useTheme } from "@mui/material/styles";
 const HorizontalFlipIcon = (props: any): JSX.Element => {
   return (
     <svg
-      width="20px"
-      height="20px"
-      viewBox="-2.5 -2.5 24 24"
+      width="18px"
+      height="18px"
+      viewBox="-3.5 -4 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -35,33 +35,43 @@ const HorizontalFlipIcon = (props: any): JSX.Element => {
 
 export const HFlipToggle = ({ sx, ...hFlipToggleProps }: ToggleButtonProps) => {
   return (
-    <ToggleButton
-      sx={{
+    <div
+      style={{
         width: "40px",
         height: "40px",
-        padding: "0px",
-        borderRadius: "50%",
-        borderColor: "#007dc3",
-        "& .MuiSvgIcon-root": {
-          fontSize: "2.5rem"
-        },
-        ...sx
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center"
       }}
-      {...hFlipToggleProps}
     >
-      <SvgIcon>
-        <HorizontalFlipIcon />
-      </SvgIcon>
-    </ToggleButton>
+      <ToggleButton
+        sx={{
+          width: "33.35px",
+          height: "33.35px",
+          padding: "0px",
+          borderRadius: "50%",
+          borderColor: "#007dc3",
+          "& .MuiSvgIcon-root": {
+            fontSize: "2.5rem"
+          },
+          ...sx
+        }}
+        {...hFlipToggleProps}
+      >
+        <SvgIcon>
+          <HorizontalFlipIcon />
+        </SvgIcon>
+      </ToggleButton>
+    </div>
   );
 };
 
 const VerticalFlipIcon = (props: any): JSX.Element => {
   return (
     <svg
-      width="20px"
-      height="20px"
-      viewBox="-2.5 -2.5 24 24"
+      width="18px"
+      height="18px"
+      viewBox="-3.5 -4 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -79,33 +89,43 @@ const VerticalFlipIcon = (props: any): JSX.Element => {
 
 export const VFlipToggle = ({ sx, ...vFlipToggleProps }: ToggleButtonProps) => {
   return (
-    <ToggleButton
-      sx={{
+    <div
+      style={{
         width: "40px",
         height: "40px",
-        padding: "0px",
-        borderRadius: "50%",
-        borderColor: "#007dc3",
-        "& .MuiSvgIcon-root": {
-          fontSize: "2.5rem"
-        },
-        ...sx
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center"
       }}
-      {...vFlipToggleProps}
     >
-      <SvgIcon>
-        <VerticalFlipIcon />
-      </SvgIcon>
-    </ToggleButton>
+      <ToggleButton
+        sx={{
+          width: "33.35px",
+          height: "33.35px",
+          padding: "0px",
+          borderRadius: "50%",
+          borderColor: "#007dc3",
+          "& .MuiSvgIcon-root": {
+            fontSize: "2.5rem"
+          },
+          ...sx
+        }}
+        {...vFlipToggleProps}
+      >
+        <SvgIcon>
+          <VerticalFlipIcon />
+        </SvgIcon>
+      </ToggleButton>
+    </div>
   );
 };
 
 export const TraceViewIcon = (props: any): JSX.Element => {
   return (
     <svg
-      width="20px"
-      height="20px"
-      viewBox="-64 -64 320 320"
+      width="18px"
+      height="18px"
+      viewBox="-80 -80 320 320"
       id="Flat"
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -122,24 +142,34 @@ export const TraceViewToggle = ({
   ...traceViewToggleProps
 }: ToggleButtonProps) => {
   return (
-    <ToggleButton
-      sx={{
+    <div
+      style={{
         width: "40px",
         height: "40px",
-        padding: "0px",
-        borderRadius: "50%",
-        borderColor: "#007dc3",
-        "& .MuiSvgIcon-root": {
-          fontSize: "2.5rem"
-        },
-        ...sx
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center"
       }}
-      {...traceViewToggleProps}
     >
-      <SvgIcon>
-        <TraceViewIcon />
-      </SvgIcon>
-    </ToggleButton>
+      <ToggleButton
+        sx={{
+          width: "33.35px",
+          height: "33.35px",
+          padding: "0px",
+          borderRadius: "50%",
+          borderColor: "#007dc3",
+          "& .MuiSvgIcon-root": {
+            fontSize: "2.5rem"
+          },
+          ...sx
+        }}
+        {...traceViewToggleProps}
+      >
+        <SvgIcon>
+          <TraceViewIcon />
+        </SvgIcon>
+      </ToggleButton>
+    </div>
   );
 };
 
