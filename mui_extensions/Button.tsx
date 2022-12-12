@@ -12,7 +12,7 @@ import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 
 import { useTheme } from "@mui/material/styles";
 
-const TOGGLE_SELECT_COLOR = "#005192";
+const TOGGLE_SELECT_COLOR = "#5AACF6";
 
 const HorizontalFlipIcon = (props: any): JSX.Element => {
   return (
@@ -31,38 +31,29 @@ const HorizontalFlipIcon = (props: any): JSX.Element => {
 
 export const HFlipToggle = ({ sx, ...hFlipToggleProps }: ToggleButtonProps) => {
   return (
-    <div
-      style={{
+    <ToggleButton
+      sx={{
         width: "40px",
         height: "40px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center"
+        padding: "0px",
+        flex: "0 0 auto",
+        borderWidth: "0px",
+        borderRadius: "50%",
+        backgroundColor: "transparent !important",
+        ...sx
       }}
+      {...hFlipToggleProps}
     >
-      <ToggleButton
+      <SvgIcon
+        color="primary"
         sx={{
-          width: "33.35px",
-          height: "33.35px",
-          padding: "0px",
-          borderRadius: "50%",
-          ...sx
+          fontSize: "2.5rem",
+          fill: hFlipToggleProps.selected ? TOGGLE_SELECT_COLOR : "currentColor"
         }}
-        {...hFlipToggleProps}
       >
-        <SvgIcon
-          color="primary"
-          sx={{
-            fontSize: "2.5rem",
-            fill: hFlipToggleProps.selected
-              ? TOGGLE_SELECT_COLOR
-              : "currentColor"
-          }}
-        >
-          <HorizontalFlipIcon />
-        </SvgIcon>
-      </ToggleButton>
-    </div>
+        <HorizontalFlipIcon />
+      </SvgIcon>
+    </ToggleButton>
   );
 };
 
@@ -83,38 +74,29 @@ const VerticalFlipIcon = (props: any): JSX.Element => {
 
 export const VFlipToggle = ({ sx, ...vFlipToggleProps }: ToggleButtonProps) => {
   return (
-    <div
-      style={{
+    <ToggleButton
+      sx={{
         width: "40px",
         height: "40px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center"
+        padding: "0px",
+        flex: "0 0 auto",
+        borderWidth: "0px",
+        borderRadius: "50%",
+        backgroundColor: "transparent !important",
+        ...sx
       }}
+      {...vFlipToggleProps}
     >
-      <ToggleButton
+      <SvgIcon
+        color="primary"
         sx={{
-          width: "33.35px",
-          height: "33.35px",
-          padding: "0px",
-          borderRadius: "50%",
-          ...sx
+          fontSize: "2.5rem",
+          fill: vFlipToggleProps.selected ? TOGGLE_SELECT_COLOR : "currentColor"
         }}
-        {...vFlipToggleProps}
       >
-        <SvgIcon
-          color="primary"
-          sx={{
-            fontSize: "2.5rem",
-            fill: vFlipToggleProps.selected
-              ? TOGGLE_SELECT_COLOR
-              : "currentColor"
-          }}
-        >
-          <VerticalFlipIcon />
-        </SvgIcon>
-      </ToggleButton>
-    </div>
+        <VerticalFlipIcon />
+      </SvgIcon>
+    </ToggleButton>
   );
 };
 
@@ -138,38 +120,31 @@ export const TraceViewToggle = ({
   ...traceViewToggleProps
 }: ToggleButtonProps) => {
   return (
-    <div
-      style={{
+    <ToggleButton
+      sx={{
         width: "40px",
         height: "40px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center"
+        padding: "0px",
+        flex: "0 0 auto",
+        borderWidth: "0px",
+        borderRadius: "50%",
+        backgroundColor: "transparent !important",
+        ...sx
       }}
+      {...traceViewToggleProps}
     >
-      <ToggleButton
+      <SvgIcon
+        color="primary"
         sx={{
-          width: "33.35px",
-          height: "33.35px",
-          padding: "0px",
-          borderRadius: "50%",
-          ...sx
+          fontSize: "2.5rem",
+          fill: traceViewToggleProps.selected
+            ? TOGGLE_SELECT_COLOR
+            : "currentColor"
         }}
-        {...traceViewToggleProps}
       >
-        <SvgIcon
-          color="primary"
-          sx={{
-            fontSize: "2.5rem",
-            fill: traceViewToggleProps.selected
-              ? TOGGLE_SELECT_COLOR
-              : "currentColor"
-          }}
-        >
-          <TraceViewIcon />
-        </SvgIcon>
-      </ToggleButton>
-    </div>
+        <TraceViewIcon />
+      </SvgIcon>
+    </ToggleButton>
   );
 };
 
