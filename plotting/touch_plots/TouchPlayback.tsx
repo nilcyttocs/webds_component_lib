@@ -163,7 +163,7 @@ export const TouchPlayback = (props: any): JSX.Element | null => {
   }, []);
 
   return initialized ? (
-    <div>
+    <div style={{ height: "100%", display: "flex", flexDirection: "column" }}>
       <TouchPlot
         width={imageWidth}
         height={imageHeight}

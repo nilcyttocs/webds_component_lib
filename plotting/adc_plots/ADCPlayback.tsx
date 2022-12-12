@@ -210,7 +210,7 @@ export const ADCPlayback = (props: any): JSX.Element | null => {
   }, []);
 
   return initialized ? (
-    <div>
+    <div style={{ height: "100%", display: "flex", flexDirection: "column" }}>
       <div style={{ display: "flex", flexWrap: "nowrap" }}>
         {!props.imageOnly && (
           <HybridYPlot
@@ -226,6 +226,8 @@ export const ADCPlayback = (props: any): JSX.Element | null => {
           margins={imageMargins}
           swapXY={swapXY}
           flip={props.flip}
+          zMin={props.zMin}
+          zMax={props.zMax}
           showScale={!props.imageOnly}
           report={report}
         />

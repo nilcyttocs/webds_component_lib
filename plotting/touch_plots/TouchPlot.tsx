@@ -111,7 +111,6 @@ export const TouchPlot = (props: any): JSX.Element | null => {
       pos = [];
     }
 
-    const stats = [...Array(10)].map((e) => Array(5));
     const x = [...Array(10)].map((e) => Array(1));
     const y = [...Array(10)].map((e) => Array(1));
     for (let i = 0; i < pos.length; i++) {
@@ -121,19 +120,9 @@ export const TouchPlot = (props: any): JSX.Element | null => {
       let yMeas = props.flip?.h ? props.appInfo.maxY - obj.yMeas : obj.yMeas;
       x[index][0] = props.swapXY ? yMeas : xMeas;
       y[index][0] = props.swapXY ? xMeas : yMeas;
-      stats[index][0] = obj.xMeas;
-      stats[index][1] = obj.yMeas;
-      stats[index][2] = obj.z;
-      stats[index][3] = obj.xWidth;
-      stats[index][4] = obj.yWidth;
     }
 
     setData(generateMarkers(x, y));
-
-    if (props.updateStats !== undefined) {
-      props.updateStats(stats);
-    }
-
     setShowPlot(true);
   };
 
@@ -149,8 +138,8 @@ export const TouchPlot = (props: any): JSX.Element | null => {
     const h = props.height !== undefined ? props.height : PLOT_HEIGHT;
     const m = props.margins !== undefined ? props.margins : plotMargins;
     setLayout({
-      width: w + m.l + m.r,
-      height: h + m.t + m.b,
+      width: w,
+      height: h,
       margin: m,
       plot_bgcolor: plotBgColor,
       paper_bgcolor: paperBgColor,

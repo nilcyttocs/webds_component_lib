@@ -492,13 +492,8 @@ export const ADCLive = (props: any): JSX.Element | null => {
     if (eventError) {
       removeEvent();
       requestID = undefined;
-      setShowPlot(false);
-      if (props.setPlotReady) {
-        props.setPlotReady(false);
-      }
-      if (props.resetReportType) {
-        props.resetReportType();
-      }
+      enableReport(true);
+      requestID = requestAnimationFrame(animatePlot);
       return;
     }
 
@@ -565,10 +560,8 @@ export const ADCLive = (props: any): JSX.Element | null => {
     }
     try {
       await enableReport(running);
-    } catch {
-      if (props.resetReportType) {
-        props.resetReportType();
-      }
+    } catch (error) {
+      console.error(error);
       return;
     }
     startAnimation();
@@ -603,9 +596,17 @@ export const ADCLive = (props: any): JSX.Element | null => {
   }, [props.run]);
 
   useEffect(() => {
-    if (reportType !== undefined) {
-      enableReport(false);
-    }
+    const changeReportTyep = async () => {
+      if (reportType !== undefined) {
+        await enableReport(false);
+      }
+      reportType = props.reportType;
+      enableReport(true);
+    };
+    changeReportTyep();
+  }, [props.reportType]);
+
+  useEffect(() => {
     reportType = props.reportType;
     newPlot();
     return () => {
@@ -613,10 +614,10 @@ export const ADCLive = (props: any): JSX.Element | null => {
       stopAnimation();
       removeEvent();
     };
-  }, [props.reportType]);
+  }, []);
 
   return showPlot ? (
-    <div>
+    <div style={{ height: "100%", display: "flex", flexDirection: "column" }}>
       <div style={{ display: "flex", flexWrap: "nowrap" }}>
         {!props.imageOnly && (
           <HybridYPlot
