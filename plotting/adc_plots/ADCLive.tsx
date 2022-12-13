@@ -10,7 +10,7 @@ import { requestAPI } from "../local_exports";
 
 const SSE_CLOSED = 2;
 const REPORT_FPS = 120;
-const RENDER_FPS = 15;
+const RENDER_FPS = 30;
 const RENDER_INTERVAL = 1000 / RENDER_FPS;
 
 const REPORT_DELTA = 18;
@@ -551,6 +551,7 @@ export const ADCLive = (props: any): JSX.Element | null => {
     filled = false;
     index = bufferSize - 1;
     subBuffer = undefined;
+    tThen = window.performance.now();
     requestID = requestAnimationFrame(animatePlot);
   };
 

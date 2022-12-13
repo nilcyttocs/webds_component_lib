@@ -8,7 +8,7 @@ import { requestAPI } from "../local_exports";
 
 const SSE_CLOSED = 2;
 const REPORT_FPS = 120;
-const RENDER_FPS = 15;
+const RENDER_FPS = 30;
 const RENDER_INTERVAL = 1000 / RENDER_FPS;
 
 const REPORT_TOUCH = 17;
@@ -373,6 +373,7 @@ export const TouchLive = (props: any): JSX.Element | null => {
   };
 
   const startAnimation = () => {
+    tThen = window.performance.now();
     requestID = requestAnimationFrame(animatePlot);
   };
 
