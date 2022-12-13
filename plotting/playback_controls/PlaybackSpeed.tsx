@@ -28,10 +28,17 @@ export const PlaybackSpeed = (props: any): JSX.Element => {
         value={speed}
         label="Speed"
         onChange={handleChange}
+        sx={{ fontSize: "0.875rem" }}
       >
-        <MenuItem value={3}>Fast</MenuItem>
-        <MenuItem value={2}>Normal</MenuItem>
-        <MenuItem value={1}>Slow</MenuItem>
+        <MenuItem value={3} sx={{ fontSize: "0.875rem" }}>
+          Fast
+        </MenuItem>
+        <MenuItem value={2} sx={{ fontSize: "0.875rem" }}>
+          Normal
+        </MenuItem>
+        <MenuItem value={1} sx={{ fontSize: "0.875rem" }}>
+          Slow
+        </MenuItem>
       </Select>
     </FormControl>
   );
