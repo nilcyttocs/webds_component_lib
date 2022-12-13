@@ -9,13 +9,14 @@ import { requestAPI } from "../local_exports";
 const SSE_CLOSED = 2;
 const REPORT_FPS = 120;
 const RENDER_FPS = 30;
-const RENDER_INTERVAL = 1000 / RENDER_FPS;
 
 const REPORT_TOUCH = 17;
 
 const RECORDED_DATA_FILE_NAME = "touch_data.json";
 
 const IMAGE_LENGTH = 550;
+
+let renderInterval = 1000 / RENDER_FPS;
 
 let running: boolean;
 let recording: boolean;
@@ -336,10 +337,10 @@ export const TouchLive = (props: any): JSX.Element | null => {
 
     const tNow = window.performance.now();
     const elapsed = tNow - tThen;
-    if (elapsed <= RENDER_INTERVAL) {
+    if (elapsed <= renderInterval) {
       return;
     }
-    tThen = tNow - (elapsed % RENDER_INTERVAL);
+    tThen = tNow - (elapsed % renderInterval);
 
     if (!initialized) {
       setWidthHeight();
@@ -389,6 +390,12 @@ export const TouchLive = (props: any): JSX.Element | null => {
     }
     startAnimation();
   };
+
+  useEffect(() => {
+    if (props.renderRate !== undefined) {
+      renderInterval = 1000 / props.renderRate;
+    }
+  }, [props.renderRate]);
 
   useEffect(() => {
     clearPlot();

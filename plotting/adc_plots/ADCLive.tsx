@@ -11,7 +11,6 @@ import { requestAPI } from "../local_exports";
 const SSE_CLOSED = 2;
 const REPORT_FPS = 120;
 const RENDER_FPS = 30;
-const RENDER_INTERVAL = 1000 / RENDER_FPS;
 
 const REPORT_DELTA = 18;
 const REPORT_RAW = 19;
@@ -37,6 +36,8 @@ const HYBRIDX_L_MARGIN =
 const HYBRIDX_R_MARGIN = IMAGE_R_MARGIN;
 const HYBRIDX_T_MARGIN = 10;
 const HYBRIDX_B_MARGIN = 10;
+
+let renderInterval = 1000 / RENDER_FPS;
 
 type Margins = {
   l: number;
@@ -505,10 +506,10 @@ export const ADCLive = (props: any): JSX.Element | null => {
 
     const tNow = window.performance.now();
     const elapsed = tNow - tThen;
-    if (elapsed <= RENDER_INTERVAL) {
+    if (elapsed <= renderInterval) {
       return;
     }
-    tThen = tNow - (elapsed % RENDER_INTERVAL);
+    tThen = tNow - (elapsed % renderInterval);
 
     if (!initialized) {
       if (
@@ -567,6 +568,12 @@ export const ADCLive = (props: any): JSX.Element | null => {
     }
     startAnimation();
   };
+
+  useEffect(() => {
+    if (props.renderRate !== undefined) {
+      renderInterval = 1000 / props.renderRate;
+    }
+  }, [props.renderRate]);
 
   useEffect(() => {
     setWidthHeight();
