@@ -18,7 +18,7 @@ export const PlaybackSpeed = (props: any): JSX.Element => {
       sx={{
         minWidth: "100px",
         maxWidth: "100px",
-        "& .MuiOutlinedInput-root": { height: "36px", textAlign: "center" },
+        "& .MuiOutlinedInput-root": { height: "40px", textAlign: "center" },
         "& .MuiSelect-icon": { width: "0.75em", height: "0.75em" }
       }}
     >
