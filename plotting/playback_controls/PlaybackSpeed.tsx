@@ -7,6 +7,10 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 const DEFAULT_SPEED = "Normal";
 
+const FONT_SIZE = "0.875rem";
+
+const speeds = ["Fast", "Normal", "Slow"];
+
 const convertSpeedtoNum = (speed: string) => {
   switch (speed) {
     case "Fast":
@@ -39,23 +43,21 @@ export const PlaybackSpeed = (props: any): JSX.Element => {
         "& .MuiSelect-icon": { width: "0.75em", height: "0.75em" }
       }}
     >
-      <InputLabel>Speed</InputLabel>
+      <InputLabel sx={{ fontSize: FONT_SIZE }}>Speed</InputLabel>
       <Select
         disabled={props.disabled}
         value={speed}
         label="Speed"
         onChange={handleChange}
-        sx={{ fontSize: "0.875rem" }}
+        sx={{ fontSize: FONT_SIZE }}
       >
-        <MenuItem value={"Fast"} sx={{ fontSize: "0.875rem" }}>
-          Fast
-        </MenuItem>
-        <MenuItem value={"Normal"} sx={{ fontSize: "0.875rem" }}>
-          Normal
-        </MenuItem>
-        <MenuItem value={"Slow"} sx={{ fontSize: "0.875rem" }}>
-          Slow
-        </MenuItem>
+        {speeds.map((item) => {
+          return (
+            <MenuItem key={item} value={item} sx={{ fontSize: FONT_SIZE }}>
+              {item}
+            </MenuItem>
+          );
+        })}
       </Select>
     </FormControl>
   );
