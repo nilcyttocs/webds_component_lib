@@ -3,9 +3,8 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button, { ButtonProps } from "@mui/material/Button";
-import ToggleButton, { ToggleButtonProps } from "@mui/material/ToggleButton";
+import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import SvgIcon from "@mui/material/SvgIcon";
-import IconButton from "@mui/material/IconButton";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
@@ -28,34 +27,6 @@ const HorizontalFlipIcon = (props: any): JSX.Element => {
   );
 };
 
-export const HFlipToggle = ({ sx, ...hFlipToggleProps }: ToggleButtonProps) => {
-  return (
-    <ToggleButton
-      sx={{
-        width: "40px",
-        height: "40px",
-        padding: "0px",
-        flex: "0 0 auto",
-        borderWidth: "0px",
-        borderRadius: "50%",
-        backgroundColor: "transparent !important",
-        ...sx
-      }}
-      {...hFlipToggleProps}
-    >
-      <SvgIcon
-        color="primary"
-        sx={{
-          fontSize: "2.5rem",
-          fill: hFlipToggleProps.selected ? TOGGLE_SELECT_COLOR : "currentColor"
-        }}
-      >
-        <HorizontalFlipIcon />
-      </SvgIcon>
-    </ToggleButton>
-  );
-};
-
 const VerticalFlipIcon = (props: any): JSX.Element => {
   return (
     <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
@@ -70,35 +41,47 @@ const VerticalFlipIcon = (props: any): JSX.Element => {
   );
 };
 
-export const VFlipToggle = ({ sx, ...vFlipToggleProps }: ToggleButtonProps) => {
+interface FlipToggleProps extends IconButtonProps {
+  horizontal: boolean;
+  flip: boolean;
+}
+
+export const FlipToggle = ({
+  horizontal,
+  flip,
+  sx,
+  ...hFlipToggleProps
+}: FlipToggleProps) => {
   return (
-    <ToggleButton
-      sx={{
-        width: "40px",
-        height: "40px",
-        padding: "0px",
-        flex: "0 0 auto",
-        borderWidth: "0px",
-        borderRadius: "50%",
-        backgroundColor: "transparent !important",
-        ...sx
-      }}
-      {...vFlipToggleProps}
-    >
+    <IconButton sx={{ padding: "0px", ...sx }} {...hFlipToggleProps}>
       <SvgIcon
         color="primary"
         sx={{
           fontSize: "2.5rem",
-          fill: vFlipToggleProps.selected ? TOGGLE_SELECT_COLOR : "currentColor"
+          fill: flip ? TOGGLE_SELECT_COLOR : "currentColor"
         }}
       >
-        <VerticalFlipIcon />
+        {horizontal ? <HorizontalFlipIcon /> : <VerticalFlipIcon />}
       </SvgIcon>
-    </ToggleButton>
+    </IconButton>
   );
 };
 
-export const TraceViewIcon = (props: any): JSX.Element => {
+const PositionViewIcon = (props: any): JSX.Element => {
+  return (
+    <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+      <g id="position_view">
+        <path
+          id="position_view"
+          d="m12,22c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10m-0.375,-12.8125c-0.8978,0 -1.625,-0.7831 -1.625,-1.75c0,-0.9668 0.7272,-1.75 1.625,-1.75c0.8978,0 1.625,0.7832 1.625,1.75c0,0.9669 -0.7272,1.75 -1.625,1.75zm0.375,12.8125c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10m-3.75,-8.0625c-0.8978,0 -1.625,-0.7831 -1.625,-1.75c0,-0.9669 0.7272,-1.75 1.625,-1.75c0.8978,0 1.625,0.7831 1.625,1.75c0,0.9669 -0.7272,1.75 -1.625,1.75zm3.75,8.0625c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10m3,-4.5625c-0.8978,0 -1.625,-0.7831 -1.625,-1.75c0,-0.9669 0.7272,-1.75 1.625,-1.75c0.8978,0 1.625,0.7831 1.625,1.75c0,0.9669 -0.7272,1.75 -1.625,1.75z"
+          fill-rule="evenodd"
+        />
+      </g>
+    </svg>
+  );
+};
+
+const TraceViewIcon = (props: any): JSX.Element => {
   return (
     <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
       <g id="trace_view">
@@ -112,36 +95,21 @@ export const TraceViewIcon = (props: any): JSX.Element => {
   );
 };
 
-export const TraceViewToggle = ({
+interface TouchViewToggleProps extends IconButtonProps {
+  traceView: boolean;
+}
+
+export const TouchViewToggle = ({
+  traceView,
   sx,
-  ...traceViewToggleProps
-}: ToggleButtonProps) => {
+  ...touchViewToggleProps
+}: TouchViewToggleProps) => {
   return (
-    <ToggleButton
-      sx={{
-        width: "40px",
-        height: "40px",
-        padding: "0px",
-        flex: "0 0 auto",
-        borderWidth: "0px",
-        borderRadius: "50%",
-        backgroundColor: "transparent !important",
-        ...sx
-      }}
-      {...traceViewToggleProps}
-    >
-      <SvgIcon
-        color="primary"
-        sx={{
-          fontSize: "2.5rem",
-          fill: traceViewToggleProps.selected
-            ? TOGGLE_SELECT_COLOR
-            : "currentColor"
-        }}
-      >
-        <TraceViewIcon />
+    <IconButton sx={{ padding: "0px", ...sx }} {...touchViewToggleProps}>
+      <SvgIcon color="primary" sx={{ fontSize: "2.5rem" }}>
+        {traceView ? <PositionViewIcon /> : <TraceViewIcon />}
       </SvgIcon>
-    </ToggleButton>
+    </IconButton>
   );
 };
 
