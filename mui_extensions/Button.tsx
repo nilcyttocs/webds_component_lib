@@ -2,10 +2,18 @@ import React from "react";
 
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import Tooltip from "@mui/material/Tooltip";
+import { keyframes } from "@mui/system";
 import Button, { ButtonProps } from "@mui/material/Button";
 import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import SvgIcon from "@mui/material/SvgIcon";
+import PlayCircleIcon from "@mui/icons-material/PlayCircle";
+import PauseCircleIcon from "@mui/icons-material/PauseCircle";
+import StopCircleIcon from "@mui/icons-material/StopCircle";
+import ChangeCircleIcon from "@mui/icons-material/ChangeCircle";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
+import FileUploadIcon from "@mui/icons-material/FileUpload";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 
@@ -18,9 +26,9 @@ const HorizontalFlipIcon = (props: any): JSX.Element => {
     <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
       <g id="h_flip">
         <path
-          fill-rule="evenodd"
-          d="m12,22c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10zm-5,-6.3334c-0.1763,0 -0.3396,-0.0929 -0.4298,-0.2445c-0.0902,-0.1515 -0.0938,-0.3394 -0.0096,-0.4942l4.1666,-7.6666c0.1092,-0.201 0.3409,-0.3022 0.5626,-0.2458c0.2216,0.0563 0.3768,0.2559 0.3768,0.4846l0,7.6666c0,0.2762 -0.2238,0.5 -0.5,0.5l-4.1666,0l0,-0.0001zm10.4298,-0.2445c-0.0902,0.1516 -0.2534,0.2445 -0.4298,0.2445l-4.1666,0c-0.2762,0 -0.5,-0.2238 -0.5,-0.5l0,-7.6666c0,-0.2286 0.1552,-0.4282 0.3768,-0.4846c0.2217,-0.0563 0.4534,0.045 0.5626,0.2458l4.1666,7.6666c0.0842,0.155 0.0806,0.3427 -0.0096,0.4942l0,0.0001zm-4.0964,-5.9551l0,5.1996l2.8258,0l-2.8258,-5.1996z"
           id="h_flip"
+          d="m12,22c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10zm-5,-6.3334c-0.1763,0 -0.3396,-0.0929 -0.4298,-0.2445c-0.0902,-0.1515 -0.0938,-0.3394 -0.0096,-0.4942l4.1666,-7.6666c0.1092,-0.201 0.3409,-0.3022 0.5626,-0.2458c0.2216,0.0563 0.3768,0.2559 0.3768,0.4846l0,7.6666c0,0.2762 -0.2238,0.5 -0.5,0.5l-4.1666,0l0,-0.0001zm10.4298,-0.2445c-0.0902,0.1516 -0.2534,0.2445 -0.4298,0.2445l-4.1666,0c-0.2762,0 -0.5,-0.2238 -0.5,-0.5l0,-7.6666c0,-0.2286 0.1552,-0.4282 0.3768,-0.4846c0.2217,-0.0563 0.4534,0.045 0.5626,0.2458l4.1666,7.6666c0.0842,0.155 0.0806,0.3427 -0.0096,0.4942l0,0.0001zm-4.0964,-5.9551l0,5.1996l2.8258,0l-2.8258,-5.1996z"
+          fill-rule="evenodd"
         />
       </g>
     </svg>
@@ -32,9 +40,9 @@ const VerticalFlipIcon = (props: any): JSX.Element => {
     <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
       <g transform="rotate(-90,12,12)" id="v_flip">
         <path
-          fill-rule="evenodd"
-          d="m12,22c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10zm-5,-6.3334c-0.1763,0 -0.3396,-0.0929 -0.4298,-0.2445c-0.0902,-0.1515 -0.0938,-0.3394 -0.0096,-0.4942l4.1666,-7.6666c0.1092,-0.201 0.3409,-0.3022 0.5626,-0.2458c0.2216,0.0563 0.3768,0.2559 0.3768,0.4846l0,7.6666c0,0.2762 -0.2238,0.5 -0.5,0.5l-4.1666,0l0,-0.0001zm10.4298,-0.2445c-0.0902,0.1516 -0.2534,0.2445 -0.4298,0.2445l-4.1666,0c-0.2762,0 -0.5,-0.2238 -0.5,-0.5l0,-7.6666c0,-0.2286 0.1552,-0.4282 0.3768,-0.4846c0.2217,-0.0563 0.4534,0.045 0.5626,0.2458l4.1666,7.6666c0.0842,0.155 0.0806,0.3427 -0.0096,0.4942l0,0.0001zm-4.0964,-5.9551l0,5.1996l2.8258,0l-2.8258,-5.1996z"
           id="v_flip"
+          d="m12,22c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10zm-5,-6.3334c-0.1763,0 -0.3396,-0.0929 -0.4298,-0.2445c-0.0902,-0.1515 -0.0938,-0.3394 -0.0096,-0.4942l4.1666,-7.6666c0.1092,-0.201 0.3409,-0.3022 0.5626,-0.2458c0.2216,0.0563 0.3768,0.2559 0.3768,0.4846l0,7.6666c0,0.2762 -0.2238,0.5 -0.5,0.5l-4.1666,0l0,-0.0001zm10.4298,-0.2445c-0.0902,0.1516 -0.2534,0.2445 -0.4298,0.2445l-4.1666,0c-0.2762,0 -0.5,-0.2238 -0.5,-0.5l0,-7.6666c0,-0.2286 0.1552,-0.4282 0.3768,-0.4846c0.2217,-0.0563 0.4534,0.045 0.5626,0.2458l4.1666,7.6666c0.0842,0.155 0.0806,0.3427 -0.0096,0.4942l0,0.0001zm-4.0964,-5.9551l0,5.1996l2.8258,0l-2.8258,-5.1996z"
+          fill-rule="evenodd"
         />
       </g>
     </svg>
@@ -53,17 +61,22 @@ export const FlipToggle = ({
   ...hFlipToggleProps
 }: FlipToggleProps) => {
   return (
-    <IconButton sx={{ padding: "0px", ...sx }} {...hFlipToggleProps}>
-      <SvgIcon
-        color="primary"
-        sx={{
-          fontSize: "2.5rem",
-          fill: flip ? TOGGLE_SELECT_COLOR : "currentColor"
-        }}
+    <Tooltip title={horizontal ? "Horizontal Flip" : "Vertical Flip"}>
+      <IconButton
+        sx={{ width: "40px", height: "40px", padding: "0px", ...sx }}
+        {...hFlipToggleProps}
       >
-        {horizontal ? <HorizontalFlipIcon /> : <VerticalFlipIcon />}
-      </SvgIcon>
-    </IconButton>
+        <SvgIcon
+          color="primary"
+          sx={{
+            fontSize: "2.5rem",
+            fill: flip ? TOGGLE_SELECT_COLOR : "currentColor"
+          }}
+        >
+          {horizontal ? <HorizontalFlipIcon /> : <VerticalFlipIcon />}
+        </SvgIcon>
+      </IconButton>
+    </Tooltip>
   );
 };
 
@@ -73,7 +86,7 @@ const PositionViewIcon = (props: any): JSX.Element => {
       <g id="position_view">
         <path
           id="position_view"
-          d="m12,22c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10m-0.375,-12.8125c-0.8978,0 -1.625,-0.7831 -1.625,-1.75c0,-0.9668 0.7272,-1.75 1.625,-1.75c0.8978,0 1.625,0.7832 1.625,1.75c0,0.9669 -0.7272,1.75 -1.625,1.75zm0.375,12.8125c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10m-3.75,-8.0625c-0.8978,0 -1.625,-0.7831 -1.625,-1.75c0,-0.9669 0.7272,-1.75 1.625,-1.75c0.8978,0 1.625,0.7831 1.625,1.75c0,0.9669 -0.7272,1.75 -1.625,1.75zm3.75,8.0625c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10m3,-4.5625c-0.8978,0 -1.625,-0.7831 -1.625,-1.75c0,-0.9669 0.7272,-1.75 1.625,-1.75c0.8978,0 1.625,0.7831 1.625,1.75c0,0.9669 -0.7272,1.75 -1.625,1.75z"
+          d="m12,22c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10zm-0.375,-12.8125c-0.8978,0 -1.625,-0.7831 -1.625,-1.75c0,-0.9668 0.7272,-1.75 1.625,-1.75c0.8978,0 1.625,0.7832 1.625,1.75c0,0.9669 -0.7272,1.75 -1.625,1.75zm0.375,12.8125c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10m-3.75,-8.0625c-0.8978,0 -1.625,-0.7831 -1.625,-1.75c0,-0.9669 0.7272,-1.75 1.625,-1.75c0.8978,0 1.625,0.7831 1.625,1.75c0,0.9669 -0.7272,1.75 -1.625,1.75zm3.75,8.0625c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10m3,-4.5625c-0.8978,0 -1.625,-0.7831 -1.625,-1.75c0,-0.9669 0.7272,-1.75 1.625,-1.75c0.8978,0 1.625,0.7831 1.625,1.75c0,0.9669 -0.7272,1.75 -1.625,1.75z"
           fill-rule="evenodd"
         />
       </g>
@@ -105,11 +118,213 @@ export const TouchViewToggle = ({
   ...touchViewToggleProps
 }: TouchViewToggleProps) => {
   return (
-    <IconButton sx={{ padding: "0px", ...sx }} {...touchViewToggleProps}>
-      <SvgIcon color="primary" sx={{ fontSize: "2.5rem" }}>
-        {traceView ? <PositionViewIcon /> : <TraceViewIcon />}
-      </SvgIcon>
-    </IconButton>
+    <Tooltip title={traceView ? "Position View" : "Trace View"}>
+      <IconButton
+        sx={{ width: "40px", height: "40px", padding: "0px", ...sx }}
+        {...touchViewToggleProps}
+      >
+        <SvgIcon color="primary" sx={{ fontSize: "2.5rem" }}>
+          {traceView ? <PositionViewIcon /> : <TraceViewIcon />}
+        </SvgIcon>
+      </IconButton>
+    </Tooltip>
+  );
+};
+
+const blink = keyframes`
+  0% { color: red; }
+  33% { color: transparent; }
+  66% { color: red; }
+  100% { color: red; }
+`;
+
+const RecordIconOuter = (props: any): JSX.Element => {
+  return (
+    <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+      <g id="record_outer">
+        <path
+          id="record_outer"
+          d="m12,22c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10zm0,-5c-2.7624,0 -5,-2.2376 -5,-5c0,-2.7624 2.2376,-5 5,-5c2.7624,0 5,2.2376 5,5c0,2.7624 -2.2376,5 -5,5z"
+          fill-rule="evenodd"
+        />
+      </g>
+    </svg>
+  );
+};
+
+const RecordIconInner = (props: any): JSX.Element => {
+  return (
+    <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+      <g>
+        <ellipse ry="5" rx="5" id="svg_2" cy="12" cx="12" fill="currentColor" />
+      </g>
+    </svg>
+  );
+};
+
+interface RecordToggleProps extends IconButtonProps {
+  recording: boolean;
+}
+
+export const RecordToggle = ({
+  recording,
+  sx,
+  ...recordToggleProps
+}: RecordToggleProps) => {
+  return (
+    <Tooltip title="Record">
+      <IconButton
+        sx={{
+          width: "40px",
+          height: "40px",
+          padding: "0px",
+          position: "relative",
+          ...sx
+        }}
+        {...recordToggleProps}
+      >
+        <SvgIcon
+          color="primary"
+          sx={{
+            fontSize: "2.5rem"
+          }}
+        >
+          <RecordIconOuter />
+        </SvgIcon>
+        <SvgIcon
+          sx={{
+            position: "absolute",
+            fontSize: "2.5rem",
+            color: "transparent",
+            animation: recording ? `${blink} 1.5s linear infinite` : null
+          }}
+        >
+          <RecordIconInner />
+        </SvgIcon>
+      </IconButton>
+    </Tooltip>
+  );
+};
+
+interface PauseRunToggleProps extends IconButtonProps {
+  running: boolean;
+}
+
+export const PauseRunToggle = ({
+  running,
+  sx,
+  ...pauseRunToggleProps
+}: PauseRunToggleProps) => {
+  return (
+    <Tooltip title={running ? "Pause" : "Run"}>
+      <IconButton
+        color="primary"
+        sx={{
+          width: "40px",
+          height: "40px",
+          padding: "0px",
+          "& .MuiSvgIcon-root": {
+            fontSize: "2.5rem"
+          },
+          ...sx
+        }}
+        {...pauseRunToggleProps}
+      >
+        {running ? <PauseCircleIcon /> : <PlayCircleIcon />}
+      </IconButton>
+    </Tooltip>
+  );
+};
+
+interface StopButtonProps extends IconButtonProps {}
+
+export const StopButton = ({ sx, ...stopButtonProps }: StopButtonProps) => {
+  return (
+    <Tooltip title="Stop">
+      <IconButton
+        color="primary"
+        sx={{
+          width: "40px",
+          height: "40px",
+          padding: "0px",
+          "& .MuiSvgIcon-root": {
+            fontSize: "2.5rem"
+          },
+          ...sx
+        }}
+        {...stopButtonProps}
+      >
+        <StopCircleIcon />
+      </IconButton>
+    </Tooltip>
+  );
+};
+
+interface ResetButtonProps extends IconButtonProps {
+  tooltip?: string;
+}
+
+export const ResetButton = ({
+  tooltip,
+  sx,
+  ...resetButtonProps
+}: ResetButtonProps) => {
+  return (
+    <Tooltip title={tooltip ? tooltip : "Reset"}>
+      <IconButton
+        color="primary"
+        sx={{
+          width: "40px",
+          height: "40px",
+          padding: "0px",
+          "& .MuiSvgIcon-root": {
+            fontSize: "2.5rem"
+          },
+          ...sx
+        }}
+        {...resetButtonProps}
+      >
+        <ChangeCircleIcon />
+      </IconButton>
+    </Tooltip>
+  );
+};
+
+interface PlaybackButtonProps {
+  input: JSX.Element;
+  tooltip?: string;
+  disabled?: boolean;
+  cloud?: boolean;
+  sx?: any;
+}
+
+export const UploadButton = ({
+  input,
+  tooltip,
+  disabled,
+  cloud = false,
+  sx
+}: PlaybackButtonProps) => {
+  return (
+    <Tooltip title={tooltip ? tooltip : "Upload File"}>
+      <IconButton
+        color="primary"
+        component="label"
+        disabled={disabled}
+        sx={{
+          width: "40px",
+          height: "40px",
+          padding: "0px",
+          "& .MuiSvgIcon-root": {
+            fontSize: "2.5rem"
+          },
+          ...sx
+        }}
+      >
+        {input}
+        {cloud ? <CloudUploadIcon /> : <FileUploadIcon />}
+      </IconButton>
+    </Tooltip>
   );
 };
 
@@ -143,8 +358,8 @@ export const ProgressButton = ({
   progress,
   onClick,
   onDoneClick,
-  onCancelClick = undefined,
-  onResetClick = undefined,
+  onCancelClick,
+  onResetClick,
   progressMessage = null,
   sx,
   ...progressButtonProps
