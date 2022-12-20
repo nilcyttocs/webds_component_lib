@@ -12,7 +12,6 @@ import PauseCircleIcon from "@mui/icons-material/PauseCircle";
 import StopCircleIcon from "@mui/icons-material/StopCircle";
 import ChangeCircleIcon from "@mui/icons-material/ChangeCircle";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
-import FileUploadIcon from "@mui/icons-material/FileUpload";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
@@ -86,7 +85,7 @@ const PositionViewIcon = (props: any): JSX.Element => {
       <g id="position_view">
         <path
           id="position_view"
-          d="m12,22c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10zm-0.375,-12.8125c-0.8978,0 -1.625,-0.7831 -1.625,-1.75c0,-0.9668 0.7272,-1.75 1.625,-1.75c0.8978,0 1.625,0.7832 1.625,1.75c0,0.9669 -0.7272,1.75 -1.625,1.75zm0.375,12.8125c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10m-3.75,-8.0625c-0.8978,0 -1.625,-0.7831 -1.625,-1.75c0,-0.9669 0.7272,-1.75 1.625,-1.75c0.8978,0 1.625,0.7831 1.625,1.75c0,0.9669 -0.7272,1.75 -1.625,1.75zm3.75,8.0625c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10m3,-4.5625c-0.8978,0 -1.625,-0.7831 -1.625,-1.75c0,-0.9669 0.7272,-1.75 1.625,-1.75c0.8978,0 1.625,0.7831 1.625,1.75c0,0.9669 -0.7272,1.75 -1.625,1.75z"
+          d="m12,22c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10zm-0.375,-12.8125c-0.8978,0 -1.625,-0.7831 -1.625,-1.75c0,-0.9668 0.7272,-1.75 1.625,-1.75c0.8978,0 1.625,0.7832 1.625,1.75c0,0.9669 -0.7272,1.75 -1.625,1.75zm0.375,12.8125c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10zm-3.75,-8.0625c-0.8978,0 -1.625,-0.7831 -1.625,-1.75c0,-0.9669 0.7272,-1.75 1.625,-1.75c0.8978,0 1.625,0.7831 1.625,1.75c0,0.9669 -0.7272,1.75 -1.625,1.75zm3.75,8.0625c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10zm3,-4.5625c-0.8978,0 -1.625,-0.7831 -1.625,-1.75c0,-0.9669 0.7272,-1.75 1.625,-1.75c0.8978,0 1.625,0.7831 1.625,1.75c0,0.9669 -0.7272,1.75 -1.625,1.75z"
           fill-rule="evenodd"
         />
       </g>
@@ -144,7 +143,7 @@ const RecordIconOuter = (props: any): JSX.Element => {
       <g id="record_outer">
         <path
           id="record_outer"
-          d="m12,22c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10zm0,-5c-2.7624,0 -5,-2.2376 -5,-5c0,-2.7624 2.2376,-5 5,-5c2.7624,0 5,2.2376 5,5c0,2.7624 -2.2376,5 -5,5z"
+          d="m12,22c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10zm0,-6c-2.2099,0 -4,-1.7901 -4,-4c0,-2.2099 1.7901,-4 4,-4c2.2099,0 4,1.7901 4,4c0,2.2099 -1.7901,4 -4,4z"
           fill-rule="evenodd"
         />
       </g>
@@ -156,7 +155,7 @@ const RecordIconInner = (props: any): JSX.Element => {
   return (
     <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
       <g>
-        <ellipse ry="5" rx="5" id="svg_2" cy="12" cx="12" fill="currentColor" />
+        <ellipse ry="4" rx="4" cy="12" cx="12" fill="currentColor" />
       </g>
     </svg>
   );
@@ -290,7 +289,21 @@ export const ResetButton = ({
   );
 };
 
-interface PlaybackButtonProps {
+const UploadIcon = (props: any): JSX.Element => {
+  return (
+    <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+      <g id="upload">
+        <path
+          id="upload"
+          d="m12,22c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10zm-1.8,-7.3l3.6,0l0,-3.6l2.4,0l-4.2,-4.2l-4.2,4.2l2.4,0l0,3.6zm1.8,7.3c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10zm-4.2,-6.1l8.4,0l0,1.2l-8.4,0l0,-1.2zm4.2,6.1c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10z"
+          fill-rule="evenodd"
+        />
+      </g>
+    </svg>
+  );
+};
+
+interface UploadButtonProps {
   input: JSX.Element;
   tooltip?: string;
   disabled?: boolean;
@@ -304,7 +317,7 @@ export const UploadButton = ({
   disabled,
   cloud = false,
   sx
-}: PlaybackButtonProps) => {
+}: UploadButtonProps) => {
   return (
     <Tooltip title={tooltip ? tooltip : "Upload File"}>
       <IconButton
@@ -322,7 +335,13 @@ export const UploadButton = ({
         }}
       >
         {input}
-        {cloud ? <CloudUploadIcon /> : <FileUploadIcon />}
+        {cloud ? (
+          <CloudUploadIcon />
+        ) : (
+          <SvgIcon color="primary">
+            <UploadIcon />
+          </SvgIcon>
+        )}
       </IconButton>
     </Tooltip>
   );
