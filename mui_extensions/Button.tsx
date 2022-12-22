@@ -61,20 +61,25 @@ export const FlipToggle = ({
 }: FlipToggleProps) => {
   return (
     <Tooltip title={horizontal ? "Horizontal Flip" : "Vertical Flip"}>
-      <IconButton
-        sx={{ width: "40px", height: "40px", padding: "0px", ...sx }}
-        {...hFlipToggleProps}
+      <div
+        style={{
+          width: "40px",
+          height: "40px",
+          ...(sx as any)
+        }}
       >
-        <SvgIcon
-          color="primary"
-          sx={{
-            fontSize: "2.5rem",
-            fill: flip ? TOGGLE_SELECT_COLOR : "currentColor"
-          }}
-        >
-          {horizontal ? <HorizontalFlipIcon /> : <VerticalFlipIcon />}
-        </SvgIcon>
-      </IconButton>
+        <IconButton sx={{ padding: "0px" }} {...hFlipToggleProps}>
+          <SvgIcon
+            color="primary"
+            sx={{
+              fontSize: "2.5rem",
+              fill: flip ? TOGGLE_SELECT_COLOR : "currentColor"
+            }}
+          >
+            {horizontal ? <HorizontalFlipIcon /> : <VerticalFlipIcon />}
+          </SvgIcon>
+        </IconButton>
+      </div>
     </Tooltip>
   );
 };
@@ -118,14 +123,19 @@ export const TouchViewToggle = ({
 }: TouchViewToggleProps) => {
   return (
     <Tooltip title={traceView ? "Position View" : "Trace View"}>
-      <IconButton
-        sx={{ width: "40px", height: "40px", padding: "0px", ...sx }}
-        {...touchViewToggleProps}
+      <div
+        style={{
+          width: "40px",
+          height: "40px",
+          ...(sx as any)
+        }}
       >
-        <SvgIcon color="primary" sx={{ fontSize: "2.5rem" }}>
-          {traceView ? <PositionViewIcon /> : <TraceViewIcon />}
-        </SvgIcon>
-      </IconButton>
+        <IconButton sx={{ padding: "0px" }} {...touchViewToggleProps}>
+          <SvgIcon color="primary" sx={{ fontSize: "2.5rem" }}>
+            {traceView ? <PositionViewIcon /> : <TraceViewIcon />}
+          </SvgIcon>
+        </IconButton>
+      </div>
     </Tooltip>
   );
 };
@@ -172,35 +182,35 @@ export const RecordToggle = ({
 }: RecordToggleProps) => {
   return (
     <Tooltip title="Record">
-      <IconButton
-        sx={{
+      <div
+        style={{
           width: "40px",
           height: "40px",
-          padding: "0px",
-          position: "relative",
-          ...sx
+          ...(sx as any)
         }}
-        {...recordToggleProps}
       >
-        <SvgIcon
-          color="primary"
+        <IconButton
           sx={{
-            fontSize: "2.5rem"
+            padding: "0px",
+            position: "relative"
           }}
+          {...recordToggleProps}
         >
-          <RecordIconOuter />
-        </SvgIcon>
-        <SvgIcon
-          sx={{
-            position: "absolute",
-            fontSize: "2.5rem",
-            color: "transparent",
-            animation: recording ? `${blink} 1.5s linear infinite` : null
-          }}
-        >
-          <RecordIconInner />
-        </SvgIcon>
-      </IconButton>
+          <SvgIcon color="primary" sx={{ fontSize: "2.5rem" }}>
+            <RecordIconOuter />
+          </SvgIcon>
+          <SvgIcon
+            sx={{
+              position: "absolute",
+              fontSize: "2.5rem",
+              color: "transparent",
+              animation: recording ? `${blink} 1.5s linear infinite` : null
+            }}
+          >
+            <RecordIconInner />
+          </SvgIcon>
+        </IconButton>
+      </div>
     </Tooltip>
   );
 };
@@ -216,21 +226,26 @@ export const PauseRunToggle = ({
 }: PauseRunToggleProps) => {
   return (
     <Tooltip title={running ? "Pause" : "Run"}>
-      <IconButton
-        color="primary"
-        sx={{
+      <div
+        style={{
           width: "40px",
           height: "40px",
-          padding: "0px",
-          "& .MuiSvgIcon-root": {
-            fontSize: "2.5rem"
-          },
-          ...sx
+          ...(sx as any)
         }}
-        {...pauseRunToggleProps}
       >
-        {running ? <PauseCircleIcon /> : <PlayCircleIcon />}
-      </IconButton>
+        <IconButton
+          color="primary"
+          sx={{
+            padding: "0px",
+            "& .MuiSvgIcon-root": {
+              fontSize: "2.5rem"
+            }
+          }}
+          {...pauseRunToggleProps}
+        >
+          {running ? <PauseCircleIcon /> : <PlayCircleIcon />}
+        </IconButton>
+      </div>
     </Tooltip>
   );
 };
@@ -240,21 +255,26 @@ interface StopButtonProps extends IconButtonProps {}
 export const StopButton = ({ sx, ...stopButtonProps }: StopButtonProps) => {
   return (
     <Tooltip title="Stop">
-      <IconButton
-        color="primary"
-        sx={{
+      <div
+        style={{
           width: "40px",
           height: "40px",
-          padding: "0px",
-          "& .MuiSvgIcon-root": {
-            fontSize: "2.5rem"
-          },
-          ...sx
+          ...(sx as any)
         }}
-        {...stopButtonProps}
       >
-        <StopCircleIcon />
-      </IconButton>
+        <IconButton
+          color="primary"
+          sx={{
+            padding: "0px",
+            "& .MuiSvgIcon-root": {
+              fontSize: "2.5rem"
+            }
+          }}
+          {...stopButtonProps}
+        >
+          <StopCircleIcon />
+        </IconButton>
+      </div>
     </Tooltip>
   );
 };
@@ -270,21 +290,26 @@ export const ResetButton = ({
 }: ResetButtonProps) => {
   return (
     <Tooltip title={tooltip ? tooltip : "Reset"}>
-      <IconButton
-        color="primary"
-        sx={{
+      <div
+        style={{
           width: "40px",
           height: "40px",
-          padding: "0px",
-          "& .MuiSvgIcon-root": {
-            fontSize: "2.5rem"
-          },
-          ...sx
+          ...(sx as any)
         }}
-        {...resetButtonProps}
       >
-        <ChangeCircleIcon />
-      </IconButton>
+        <IconButton
+          color="primary"
+          sx={{
+            padding: "0px",
+            "& .MuiSvgIcon-root": {
+              fontSize: "2.5rem"
+            }
+          }}
+          {...resetButtonProps}
+        >
+          <ChangeCircleIcon />
+        </IconButton>
+      </div>
     </Tooltip>
   );
 };
@@ -320,29 +345,34 @@ export const UploadButton = ({
 }: UploadButtonProps) => {
   return (
     <Tooltip title={tooltip ? tooltip : "Upload File"}>
-      <IconButton
-        color="primary"
-        component="label"
-        disabled={disabled}
-        sx={{
+      <div
+        style={{
           width: "40px",
           height: "40px",
-          padding: "0px",
-          "& .MuiSvgIcon-root": {
-            fontSize: "2.5rem"
-          },
-          ...sx
+          ...(sx as any)
         }}
       >
-        {input}
-        {cloud ? (
-          <CloudUploadIcon />
-        ) : (
-          <SvgIcon color="primary">
-            <UploadIcon />
-          </SvgIcon>
-        )}
-      </IconButton>
+        <IconButton
+          color="primary"
+          component="label"
+          disabled={disabled}
+          sx={{
+            padding: "0px",
+            "& .MuiSvgIcon-root": {
+              fontSize: "2.5rem"
+            }
+          }}
+        >
+          {input}
+          {cloud ? (
+            <CloudUploadIcon />
+          ) : (
+            <SvgIcon color="primary">
+              <UploadIcon />
+            </SvgIcon>
+          )}
+        </IconButton>
+      </div>
     </Tooltip>
   );
 };
