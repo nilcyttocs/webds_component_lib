@@ -105,7 +105,7 @@ export const TouchPlot = (props: any): JSX.Element | null => {
     return markers;
   };
 
-  const renderMarkers = (report: TouchcommTouchReport) => {
+  const renderMarkers = (report: TouchcommTouchReport[1]) => {
     let pos = report.pos;
     if (pos === undefined) {
       pos = [];

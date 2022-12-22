@@ -66,7 +66,7 @@ const stopAnimation = () => {
 
 export const ADCPlayback = (props: any): JSX.Element | null => {
   const [initialized, setInitialized] = useState<boolean>(false);
-  const [report, setReport] = useState<TouchcommADCReport>();
+  const [report, setReport] = useState<TouchcommADCReport[1]>();
   const [imageWidth, setImageWidth] = useState<number>(0);
   const [imageHeight, setImageHeight] = useState<number>(0);
   const [imageMargins, setImageMargins] = useState<Margins>(zeroMargins);
@@ -77,8 +77,8 @@ export const ADCPlayback = (props: any): JSX.Element | null => {
   playbackData = useContext(ADCDataContext);
 
   const setWidthHeight = () => {
-    const numRows = playbackData[0].image.length;
-    const numCols = playbackData[0].image[0].length;
+    const numRows = playbackData[0][1].image.length;
+    const numCols = playbackData[0][1].image[0].length;
     let imageWidth: number;
     let imageHeight: number;
     if (numCols > numRows) {
@@ -142,7 +142,7 @@ export const ADCPlayback = (props: any): JSX.Element | null => {
       if (animationCounter === slowX) {
         animationCounter = 1;
         props.setFrameIndex(frameIndex);
-        setReport(playbackData[frameIndex]);
+        setReport(playbackData[frameIndex][1]);
         if (frameIndex + 1 >= numFrames) {
           props.setRun(false);
         } else {
@@ -163,7 +163,7 @@ export const ADCPlayback = (props: any): JSX.Element | null => {
   useEffect(() => {
     if (!running) {
       frameIndex = props.frameIndex;
-      setReport(playbackData[frameIndex]);
+      setReport(playbackData[frameIndex][1]);
     }
   }, [props.frameIndex, playbackData]);
 

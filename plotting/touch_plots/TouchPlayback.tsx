@@ -36,7 +36,7 @@ const stopAnimation = () => {
 export const TouchPlayback = (props: any): JSX.Element | null => {
   const [initialized, setInitialized] = useState<boolean>(false);
   const [report, setReport] = useState<
-    TouchcommTouchReport | TouchcommTraceReport
+    TouchcommTouchReport[1] | TouchcommTraceReport
   >();
   const [imageWidth, setImageWidth] = useState<number>(0);
   const [imageHeight, setImageHeight] = useState<number>(0);
@@ -92,7 +92,7 @@ export const TouchPlayback = (props: any): JSX.Element | null => {
         animationCounter = 1;
         props.setFrameIndex(frameIndex);
         setReport(
-          props.traceView ? traceData[frameIndex] : touchData[frameIndex]
+          props.traceView ? traceData[frameIndex] : touchData[frameIndex][1]
         );
         if (frameIndex + 1 >= numFrames) {
           props.setRun(false);
@@ -115,7 +115,7 @@ export const TouchPlayback = (props: any): JSX.Element | null => {
     if (!running) {
       frameIndex = props.frameIndex;
       setReport(
-        props.traceView ? traceData[frameIndex] : touchData[frameIndex]
+        props.traceView ? traceData[frameIndex] : touchData[frameIndex][1]
       );
     }
   }, [props.frameIndex, props.traceView, touchData, traceData]);

@@ -27,7 +27,7 @@ const transpose = (matrix: number[][]): number[][] => {
   return matrix[0].map((col, i) => matrix.map((row) => row[i]));
 };
 
-const computePlot = (props: any, report: TouchcommADCReport) => {
+const computePlot = (props: any, report: TouchcommADCReport[1]) => {
   heatZ = report.image;
 
   if (heatZ === undefined) {
@@ -81,7 +81,7 @@ export const ImagePlot = (props: any): JSX.Element | null => {
     setHeatFrames(figure.frames);
   };
 
-  const renderPlot = (report: TouchcommADCReport) => {
+  const renderPlot = (report: TouchcommADCReport[1]) => {
     computePlot(props, report);
 
     if (heatZ === undefined) {

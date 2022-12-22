@@ -119,15 +119,15 @@ const eventHandler = (event: any) => {
     (reportType === REPORT_RAW && data.report[0] === "raw") ||
     (reportType === REPORT_BASELINE && data.report[0] === "baseline")
   ) {
-    originalReport = data.report[1];
+    originalReport = data.report;
   } else {
     return;
   }
 
   if (
-    originalReport.image === undefined ||
-    originalReport.hybridx === undefined ||
-    originalReport.hybridy === undefined ||
+    originalReport[1].image === undefined ||
+    originalReport[1].hybridx === undefined ||
+    originalReport[1].hybridy === undefined ||
     buffer === undefined
   ) {
     return;
@@ -151,11 +151,14 @@ const eventHandler = (event: any) => {
   }
 
   index = (index + 1) % bufferSize;
-  buffer[index] = {
-    image: originalReport.image,
-    hybridx: originalReport.hybridx,
-    hybridy: originalReport.hybridy
-  };
+  buffer[index] = [
+    originalReport[0],
+    {
+      image: originalReport[1].image,
+      hybridx: originalReport[1].hybridx,
+      hybridy: originalReport[1].hybridy
+    }
+  ];
 
   if (!filled) {
     if (index + 1 >= samples) {
@@ -235,29 +238,32 @@ const getMean = (): TouchcommADCReport | undefined => {
     return undefined;
   }
   try {
-    const mean = subBuffer.reduce(
+    const mean: TouchcommADCReport = subBuffer.reduce(
       function (mean, cur) {
         if (cur === undefined) {
           return mean;
         }
         for (let i = 0; i < numRows; i++) {
           for (let j = 0; j < numCols; j++) {
-            mean.image[i][j] += cur.image[i][j] / samples;
+            mean[1].image[i][j] += cur[1].image[i][j] / samples;
           }
         }
         for (let i = 0; i < numCols; i++) {
-          mean.hybridx[i] += cur.hybridx[i] / samples;
+          mean[1].hybridx[i] += cur[1].hybridx[i] / samples;
         }
         for (let i = 0; i < numRows; i++) {
-          mean.hybridy[i] += cur.hybridy[i] / samples;
+          mean[1].hybridy[i] += cur[1].hybridy[i] / samples;
         }
         return mean;
       },
-      {
-        image: [...Array(numRows)].map((e) => Array(numCols).fill(0)),
-        hybridx: [...Array(numCols)].map((e) => 0),
-        hybridy: [...Array(numRows)].map((e) => 0)
-      }
+      [
+        subBuffer[0][0],
+        {
+          image: [...Array(numRows)].map((e) => Array(numCols).fill(0)),
+          hybridx: [...Array(numCols)].map((e) => 0),
+          hybridy: [...Array(numRows)].map((e) => 0)
+        }
+      ]
     );
     return mean;
   } catch (error) {
@@ -271,34 +277,41 @@ const getMax = (): TouchcommADCReport | undefined => {
     return undefined;
   }
   try {
-    const max = subBuffer.reduce(
+    const max: TouchcommADCReport = subBuffer.reduce(
       function (max, cur) {
         if (cur === undefined) {
           return max;
         }
         for (let i = 0; i < numRows; i++) {
           for (let j = 0; j < numCols; j++) {
-            max.image[i][j] =
-              cur.image[i][j] > max.image[i][j]
-                ? cur.image[i][j]
-                : max.image[i][j];
+            max[1].image[i][j] =
+              cur[1].image[i][j] > max[1].image[i][j]
+                ? cur[1].image[i][j]
+                : max[1].image[i][j];
           }
         }
         for (let i = 0; i < numCols; i++) {
-          max.hybridx[i] =
-            cur.hybridx[i] > max.hybridx[i] ? cur.hybridx[i] : max.hybridx[i];
+          max[1].hybridx[i] =
+            cur[1].hybridx[i] > max[1].hybridx[i]
+              ? cur[1].hybridx[i]
+              : max[1].hybridx[i];
         }
         for (let i = 0; i < numRows; i++) {
-          max.hybridy[i] =
-            cur.hybridy[i] > max.hybridy[i] ? cur.hybridy[i] : max.hybridy[i];
+          max[1].hybridy[i] =
+            cur[1].hybridy[i] > max[1].hybridy[i]
+              ? cur[1].hybridy[i]
+              : max[1].hybridy[i];
         }
         return max;
       },
-      {
-        image: [...Array(numRows)].map((e) => Array(numCols).fill(-Infinity)),
-        hybridx: [...Array(numCols)].map((e) => -Infinity),
-        hybridy: [...Array(numRows)].map((e) => -Infinity)
-      }
+      [
+        subBuffer[0][0],
+        {
+          image: [...Array(numRows)].map((e) => Array(numCols).fill(-Infinity)),
+          hybridx: [...Array(numCols)].map((e) => -Infinity),
+          hybridy: [...Array(numRows)].map((e) => -Infinity)
+        }
+      ]
     );
     return max;
   } catch (error) {
@@ -312,34 +325,41 @@ const getMin = (): TouchcommADCReport | undefined => {
     return undefined;
   }
   try {
-    const min = subBuffer.reduce(
+    const min: TouchcommADCReport = subBuffer.reduce(
       function (min, cur) {
         if (cur === undefined) {
           return min;
         }
         for (let i = 0; i < numRows; i++) {
           for (let j = 0; j < numCols; j++) {
-            min.image[i][j] =
-              cur.image[i][j] < min.image[i][j]
-                ? cur.image[i][j]
-                : min.image[i][j];
+            min[1].image[i][j] =
+              cur[1].image[i][j] < min[1].image[i][j]
+                ? cur[1].image[i][j]
+                : min[1].image[i][j];
           }
         }
         for (let i = 0; i < numCols; i++) {
-          min.hybridx[i] =
-            cur.hybridx[i] < min.hybridx[i] ? cur.hybridx[i] : min.hybridx[i];
+          min[1].hybridx[i] =
+            cur[1].hybridx[i] < min[1].hybridx[i]
+              ? cur[1].hybridx[i]
+              : min[1].hybridx[i];
         }
         for (let i = 0; i < numRows; i++) {
-          min.hybridy[i] =
-            cur.hybridy[i] < min.hybridy[i] ? cur.hybridy[i] : min.hybridy[i];
+          min[1].hybridy[i] =
+            cur[1].hybridy[i] < min[1].hybridy[i]
+              ? cur[1].hybridy[i]
+              : min[1].hybridy[i];
         }
         return min;
       },
-      {
-        image: [...Array(numRows)].map((e) => Array(numCols).fill(Infinity)),
-        hybridx: [...Array(numCols)].map((e) => Infinity),
-        hybridy: [...Array(numRows)].map((e) => Infinity)
-      }
+      [
+        subBuffer[0][0],
+        {
+          image: [...Array(numRows)].map((e) => Array(numCols).fill(Infinity)),
+          hybridx: [...Array(numCols)].map((e) => Infinity),
+          hybridy: [...Array(numRows)].map((e) => Infinity)
+        }
+      ]
     );
     return min;
   } catch (error) {
@@ -358,21 +378,24 @@ const getRange = (): TouchcommADCReport | undefined => {
     if (max === undefined || min === undefined) {
       return undefined;
     }
-    const range = {
-      image: [...Array(numRows)].map((e) => Array(numCols)),
-      hybridx: [...Array(numCols)],
-      hybridy: [...Array(numRows)]
-    };
-    range.image = max.image.map(function (rArray, rIndex) {
+    const range: TouchcommADCReport = [
+      subBuffer[0][0],
+      {
+        image: [...Array(numRows)].map((e) => Array(numCols)),
+        hybridx: [...Array(numCols)],
+        hybridy: [...Array(numRows)]
+      }
+    ];
+    range[1].image = max[1].image.map(function (rArray, rIndex) {
       return rArray.map(function (maxElement, cIndex) {
-        return maxElement - min.image[rIndex][cIndex];
+        return maxElement - min[1].image[rIndex][cIndex];
       });
     });
-    range.hybridx = max.hybridx.map(function (maxElement, index) {
-      return maxElement - min.hybridx[index];
+    range[1].hybridx = max[1].hybridx.map(function (maxElement, index) {
+      return maxElement - min[1].hybridx[index];
     });
-    range.hybridy = max.hybridy.map(function (maxElement, index) {
-      return maxElement - min.hybridy[index];
+    range[1].hybridy = max[1].hybridy.map(function (maxElement, index) {
+      return maxElement - min[1].hybridy[index];
     });
     return range;
   } catch (error) {
@@ -419,7 +442,7 @@ const computePlot = () => {
 export const ADCLive = (props: any): JSX.Element | null => {
   const [initialized, setInitialized] = useState<boolean>(false);
   const [showPlot, setShowPlot] = useState<boolean>(false);
-  const [report, setReport] = useState<TouchcommADCReport>();
+  const [report, setReport] = useState<TouchcommADCReport[1]>();
   const [imageWidth, setImageWidth] = useState<number>(0);
   const [imageHeight, setImageHeight] = useState<number>(0);
   const [imageMargins, setImageMargins] = useState<Margins>(zeroMargins);
@@ -431,8 +454,8 @@ export const ADCLive = (props: any): JSX.Element | null => {
     if (originalReport === undefined) {
       return;
     }
-    numRows = originalReport.image.length;
-    numCols = originalReport.image[0].length;
+    numRows = originalReport[1].image.length;
+    numCols = originalReport[1].image[0].length;
     let imageWidth: number;
     let imageHeight: number;
     if (numCols > numRows) {
@@ -514,9 +537,9 @@ export const ADCLive = (props: any): JSX.Element | null => {
     if (!initialized) {
       if (
         originalReport === undefined ||
-        originalReport.image === undefined ||
-        originalReport.hybridx === undefined ||
-        originalReport.hybridy === undefined
+        originalReport[1].image === undefined ||
+        originalReport[1].hybridx === undefined ||
+        originalReport[1].hybridy === undefined
       ) {
         return;
       }
@@ -537,7 +560,7 @@ export const ADCLive = (props: any): JSX.Element | null => {
       }
     }
 
-    setReport(computedReport);
+    setReport(computedReport[1]);
     setShowPlot(true);
     if (props.setPlotReady) {
       props.setPlotReady(true);

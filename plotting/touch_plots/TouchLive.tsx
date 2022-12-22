@@ -87,7 +87,7 @@ const computeLinearity = (index: number, length: number): number => {
 };
 
 const captureTraces = () => {
-  let pos = touchReport.pos;
+  let pos = touchReport[1].pos;
   if (pos === undefined) {
     pos = [];
   }
@@ -156,8 +156,8 @@ const parseTouchStats = (props: any): number[][] => {
   const stats = [...Array(10)].map((e) => Array(5));
   const x = [...Array(10)].map((e) => Array(1));
   const y = [...Array(10)].map((e) => Array(1));
-  for (let i = 0; i < touchReport.pos!.length; i++) {
-    const obj = touchReport.pos![i];
+  for (let i = 0; i < touchReport[1].pos!.length; i++) {
+    const obj = touchReport[1].pos![i];
     const index = obj.objectIndex;
     let xMeas = props.flip?.v ? props.appInfo.maxX - obj.xMeas : obj.xMeas;
     let yMeas = props.flip?.h ? props.appInfo.maxY - obj.yMeas : obj.yMeas;
@@ -178,18 +178,19 @@ const eventHandler = (event: any) => {
     return;
   }
 
-  touchReport = data.report[1];
-  if (touchReport.pos === undefined) {
-    touchReport.pos = [];
-  }
-
   if (recording) {
-    recordedData.push(touchReport);
+    recordedData.push(data.report);
   } else {
     if (recordedData.length > 0 && !saving) {
       saveRecordedData();
       return;
     }
+  }
+
+  touchReport = data.report;
+
+  if (touchReport[1].pos === undefined) {
+    touchReport[1].pos = [];
   }
 };
 
@@ -263,7 +264,7 @@ export const TouchLive = (props: any): JSX.Element | null => {
   const [initialized, setInitialized] = useState<boolean>(false);
   const [showPlot, setShowPlot] = useState<boolean>(false);
   const [report, setReport] = useState<
-    TouchcommTouchReport | TouchcommTraceReport
+    TouchcommTouchReport[1] | TouchcommTraceReport
   >();
   const [imageWidth, setImageWidth] = useState<number>(0);
   const [imageHeight, setImageHeight] = useState<number>(0);
@@ -309,14 +310,14 @@ export const TouchLive = (props: any): JSX.Element | null => {
   };
 
   const clearPlot = () => {
-    touchReport = { pos: [] };
+    touchReport = ["position", { pos: [] }];
     traceReport = {
       xTrace: [...Array(10)].map((e) => Array(1)),
       yTrace: [...Array(10)].map((e) => Array(1))
     };
     traceStats = [...Array(10)].map((e) => Array(7));
     traceStatus = [...Array(10)].map((e) => "*");
-    setReport(viewType === "position" ? touchReport : traceReport);
+    setReport(viewType === "position" ? touchReport[1] : traceReport);
   };
 
   const animatePlot = () => {
@@ -362,7 +363,7 @@ export const TouchLive = (props: any): JSX.Element | null => {
       }
     }
 
-    setReport(viewType === "position" ? touchReport : traceReport);
+    setReport(viewType === "position" ? touchReport[1] : traceReport);
     if (props.updateStats) {
       props.updateStats(stats);
     }

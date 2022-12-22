@@ -25,7 +25,7 @@ const plotBgColor = "rgba(0.75, 0.75, 0.75, 0.1)";
 const paperBgColor = "rgba(0, 0, 0, 0)";
 const axisLineColor = "rgba(128, 128, 128, 0.5)";
 
-const computePlot = (swapXY: boolean, report: TouchcommADCReport) => {
+const computePlot = (swapXY: boolean, report: TouchcommADCReport[1]) => {
   barY = swapXY ? report.hybridx : report.hybridy;
 
   if (barY === undefined) {
@@ -53,7 +53,7 @@ export const HybridYPlot = (props: any): JSX.Element | null => {
     setBarYFrames(figure.frames);
   };
 
-  const renderPlot = (report: TouchcommADCReport) => {
+  const renderPlot = (report: TouchcommADCReport[1]) => {
     computePlot(props.swapXY, report);
 
     if (barY === undefined) {
