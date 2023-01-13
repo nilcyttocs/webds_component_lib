@@ -1,24 +1,23 @@
-import React from "react";
+import React from 'react';
 
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Tooltip from "@mui/material/Tooltip";
-import { keyframes } from "@mui/system";
-import Button, { ButtonProps } from "@mui/material/Button";
-import IconButton, { IconButtonProps } from "@mui/material/IconButton";
-import SvgIcon from "@mui/material/SvgIcon";
-import PlayCircleIcon from "@mui/icons-material/PlayCircle";
-import PauseCircleIcon from "@mui/icons-material/PauseCircle";
-import StopCircleIcon from "@mui/icons-material/StopCircle";
-import ChangeCircleIcon from "@mui/icons-material/ChangeCircle";
-import RestartAltIcon from "@mui/icons-material/RestartAlt";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
-import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
+import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
+import PauseCircleIcon from '@mui/icons-material/PauseCircle';
+import PlayCircleIcon from '@mui/icons-material/PlayCircle';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import StopCircleIcon from '@mui/icons-material/StopCircle';
+import Box from '@mui/material/Box';
+import Button, { ButtonProps } from '@mui/material/Button';
+import IconButton, { IconButtonProps } from '@mui/material/IconButton';
+import { useTheme } from '@mui/material/styles';
+import SvgIcon from '@mui/material/SvgIcon';
+import Tooltip from '@mui/material/Tooltip';
+import Typography from '@mui/material/Typography';
+import { keyframes } from '@mui/system';
 
-import { useTheme } from "@mui/material/styles";
-
-const TOGGLE_SELECT_COLOR = "#5AACF6";
+const TOGGLE_SELECT_COLOR = '#5AACF6';
 
 const HorizontalFlipIcon = (props: any): JSX.Element => {
   return (
@@ -60,20 +59,20 @@ export const FlipToggle = ({
   ...hFlipToggleProps
 }: FlipToggleProps) => {
   return (
-    <Tooltip title={horizontal ? "Horizontal Flip" : "Vertical Flip"}>
+    <Tooltip title={horizontal ? 'Horizontal Flip' : 'Vertical Flip'}>
       <div
         style={{
-          width: "40px",
-          height: "40px",
+          width: '40px',
+          height: '40px',
           ...(sx as any)
         }}
       >
-        <IconButton sx={{ padding: "0px" }} {...hFlipToggleProps}>
+        <IconButton sx={{ padding: '0px' }} {...hFlipToggleProps}>
           <SvgIcon
             color="primary"
             sx={{
-              fontSize: "2.5rem",
-              fill: flip ? TOGGLE_SELECT_COLOR : "currentColor"
+              fontSize: '2.5rem',
+              fill: flip ? TOGGLE_SELECT_COLOR : 'currentColor'
             }}
           >
             {horizontal ? <HorizontalFlipIcon /> : <VerticalFlipIcon />}
@@ -122,16 +121,16 @@ export const TouchViewToggle = ({
   ...touchViewToggleProps
 }: TouchViewToggleProps) => {
   return (
-    <Tooltip title={traceView ? "Position View" : "Trace View"}>
+    <Tooltip title={traceView ? 'Position View' : 'Trace View'}>
       <div
         style={{
-          width: "40px",
-          height: "40px",
+          width: '40px',
+          height: '40px',
           ...(sx as any)
         }}
       >
-        <IconButton sx={{ padding: "0px" }} {...touchViewToggleProps}>
-          <SvgIcon color="primary" sx={{ fontSize: "2.5rem" }}>
+        <IconButton sx={{ padding: '0px' }} {...touchViewToggleProps}>
+          <SvgIcon color="primary" sx={{ fontSize: '2.5rem' }}>
             {traceView ? <PositionViewIcon /> : <TraceViewIcon />}
           </SvgIcon>
         </IconButton>
@@ -184,26 +183,26 @@ export const RecordToggle = ({
     <Tooltip title="Record">
       <div
         style={{
-          width: "40px",
-          height: "40px",
+          width: '40px',
+          height: '40px',
           ...(sx as any)
         }}
       >
         <IconButton
           sx={{
-            padding: "0px",
-            position: "relative"
+            padding: '0px',
+            position: 'relative'
           }}
           {...recordToggleProps}
         >
-          <SvgIcon color="primary" sx={{ fontSize: "2.5rem" }}>
+          <SvgIcon color="primary" sx={{ fontSize: '2.5rem' }}>
             <RecordIconOuter />
           </SvgIcon>
           <SvgIcon
             sx={{
-              position: "absolute",
-              fontSize: "2.5rem",
-              color: "transparent",
+              position: 'absolute',
+              fontSize: '2.5rem',
+              color: 'transparent',
               animation: recording ? `${blink} 1.5s linear infinite` : null
             }}
           >
@@ -225,20 +224,20 @@ export const PauseRunToggle = ({
   ...pauseRunToggleProps
 }: PauseRunToggleProps) => {
   return (
-    <Tooltip title={running ? "Pause" : "Run"}>
+    <Tooltip title={running ? 'Pause' : 'Run'}>
       <div
         style={{
-          width: "40px",
-          height: "40px",
+          width: '40px',
+          height: '40px',
           ...(sx as any)
         }}
       >
         <IconButton
           color="primary"
           sx={{
-            padding: "0px",
-            "& .MuiSvgIcon-root": {
-              fontSize: "2.5rem"
+            padding: '0px',
+            '& .MuiSvgIcon-root': {
+              fontSize: '2.5rem'
             }
           }}
           {...pauseRunToggleProps}
@@ -257,17 +256,17 @@ export const StopButton = ({ sx, ...stopButtonProps }: StopButtonProps) => {
     <Tooltip title="Stop">
       <div
         style={{
-          width: "40px",
-          height: "40px",
+          width: '40px',
+          height: '40px',
           ...(sx as any)
         }}
       >
         <IconButton
           color="primary"
           sx={{
-            padding: "0px",
-            "& .MuiSvgIcon-root": {
-              fontSize: "2.5rem"
+            padding: '0px',
+            '& .MuiSvgIcon-root': {
+              fontSize: '2.5rem'
             }
           }}
           {...stopButtonProps}
@@ -289,20 +288,20 @@ export const ResetButton = ({
   ...resetButtonProps
 }: ResetButtonProps) => {
   return (
-    <Tooltip title={tooltip ? tooltip : "Reset"}>
+    <Tooltip title={tooltip ? tooltip : 'Reset'}>
       <div
         style={{
-          width: "40px",
-          height: "40px",
+          width: '40px',
+          height: '40px',
           ...(sx as any)
         }}
       >
         <IconButton
           color="primary"
           sx={{
-            padding: "0px",
-            "& .MuiSvgIcon-root": {
-              fontSize: "2.5rem"
+            padding: '0px',
+            '& .MuiSvgIcon-root': {
+              fontSize: '2.5rem'
             }
           }}
           {...resetButtonProps}
@@ -344,11 +343,11 @@ export const UploadButton = ({
   sx
 }: UploadButtonProps) => {
   return (
-    <Tooltip title={tooltip ? tooltip : "Upload File"}>
+    <Tooltip title={tooltip ? tooltip : 'Upload File'}>
       <div
         style={{
-          width: "40px",
-          height: "40px",
+          width: '40px',
+          height: '40px',
           ...(sx as any)
         }}
       >
@@ -357,9 +356,9 @@ export const UploadButton = ({
           component="label"
           disabled={disabled}
           sx={{
-            padding: "0px",
-            "& .MuiSvgIcon-root": {
-              fontSize: "2.5rem"
+            padding: '0px',
+            '& .MuiSvgIcon-root': {
+              fontSize: '2.5rem'
             }
           }}
         >
@@ -415,7 +414,7 @@ export const ProgressButton = ({
 }: ProgressButtonProps) => {
   const theme = useTheme();
   return (
-    <div style={{ position: "relative" }}>
+    <div style={{ position: 'relative' }}>
       <Button
         disabled={
           onCancelClick === undefined &&
@@ -430,23 +429,23 @@ export const ProgressButton = ({
             : onCancelClick
         }
         sx={{
-          width: "125px",
-          padding: "5px 15px",
-          position: "relative",
-          border: "1px solid",
+          width: '125px',
+          padding: '5px 15px',
+          position: 'relative',
+          border: '1px solid',
           borderColor:
             progress === undefined || progress === 100
-              ? "rgba(0, 0, 0, 0)"
+              ? 'rgba(0, 0, 0, 0)'
               : theme.palette.primary.main,
-          color: progress !== undefined && progress !== 100 ? "black" : null,
+          color: progress !== undefined && progress !== 100 ? 'black' : null,
           backgroundColor:
             progress !== undefined && progress !== 100
-              ? "rgba(0, 0, 0, 0.12)"
+              ? 'rgba(0, 0, 0, 0.12)'
               : null,
-          "&:hover": {
+          '&:hover': {
             backgroundColor:
               progress !== undefined && progress !== 100
-                ? "rgba(0, 0, 0, 0.12)"
+                ? 'rgba(0, 0, 0, 0.12)'
                 : null
           },
           ...sx
@@ -457,7 +456,7 @@ export const ProgressButton = ({
           <>
             <div
               style={{
-                position: "absolute",
+                position: 'absolute',
                 top: 0,
                 bottom: 0,
                 left: 0,
@@ -466,38 +465,38 @@ export const ProgressButton = ({
             >
               <Box
                 sx={{
-                  width: progress + "%",
-                  height: "100%",
-                  borderRadius: "4px",
-                  backgroundColor: "custom.progress",
-                  transition: "width 0.5s"
+                  width: progress + '%',
+                  height: '100%',
+                  borderRadius: '4px',
+                  backgroundColor: 'custom.progress',
+                  transition: 'width 0.5s'
                 }}
               />
             </div>
             <div
               style={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)"
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)'
               }}
             >
               <Typography
                 variant="button"
-                sx={{ color: "black", textTransform: "none" }}
+                sx={{ color: 'black', textTransform: 'none' }}
               >
                 {onCancelClick !== undefined
-                  ? "Cancel"
+                  ? 'Cancel'
                   : progressMessage
                   ? progressMessage
-                  : "Processing..."}
+                  : 'Processing...'}
               </Typography>
             </div>
           </>
         )}
         {progress !== undefined ? (
           progress === 100 ? (
-            "Done"
+            'Done'
           ) : (
             <>&nbsp;</>
           )
@@ -507,12 +506,12 @@ export const ProgressButton = ({
       </Button>
       {onResetClick !== undefined && progress === 100 && (
         <IconButton
-          onClick={(event) => {
+          onClick={event => {
             onResetClick();
           }}
           sx={{
             padding: 0,
-            position: "absolute",
+            position: 'absolute',
             bottom: 16,
             right: -32,
             color: theme.palette.primary.main

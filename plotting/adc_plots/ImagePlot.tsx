@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-import { useTheme } from "@mui/material/styles";
+import Plot from 'react-plotly.js';
 
-import { TouchcommADCReport } from "@webds/service";
-
-import Plot from "react-plotly.js";
+import { useTheme } from '@mui/material/styles';
+import { TouchcommADCReport } from '@webds/service';
 
 const PLOT_WIDTH = 0;
 const PLOT_HEIGHT = 0;
@@ -21,10 +20,10 @@ let heatZMin: number | undefined;
 let heatZMax: number | undefined;
 
 const plotConfig = { displayModeBar: false };
-const paperBgColor = "rgba(0, 0, 0, 0)";
+const paperBgColor = 'rgba(0, 0, 0, 0)';
 
 const transpose = (matrix: number[][]): number[][] => {
-  return matrix[0].map((col, i) => matrix.map((row) => row[i]));
+  return matrix[0].map((col, i) => matrix.map(row => row[i]));
 };
 
 const computePlot = (props: any, report: TouchcommADCReport[1]) => {
@@ -40,7 +39,7 @@ const computePlot = (props: any, report: TouchcommADCReport[1]) => {
 
   if (props.flip?.h) {
     if (props.swapXY) {
-      heatZ = heatZ.map((item) => item.reverse());
+      heatZ = heatZ.map(item => item.reverse());
     } else {
       heatZ = heatZ.reverse();
     }
@@ -50,7 +49,7 @@ const computePlot = (props: any, report: TouchcommADCReport[1]) => {
     if (props.swapXY) {
       heatZ = heatZ.reverse();
     } else {
-      heatZ = heatZ.map((item) => item.reverse());
+      heatZ = heatZ.map(item => item.reverse());
     }
   }
 
@@ -101,11 +100,11 @@ export const ImagePlot = (props: any): JSX.Element | null => {
       },
       paper_bgcolor: paperBgColor,
       xaxis: {
-        ticks: "",
+        ticks: '',
         showticklabels: false
       },
       yaxis: {
-        ticks: "",
+        ticks: '',
         showticklabels: false
       }
     });
@@ -114,12 +113,12 @@ export const ImagePlot = (props: any): JSX.Element | null => {
         z: heatZ,
         zmin: props.zMin !== undefined ? props.zMin : heatZMin,
         zmax: props.zMax !== undefined ? props.zMax : heatZMax,
-        type: "heatmap",
+        type: 'heatmap',
         showscale: props.showScale !== undefined ? props.showScale : true,
-        colorscale: "Viridis",
+        colorscale: 'Viridis',
         colorbar: {
-          tickformat: "<-d",
-          tickmode: "array",
+          tickformat: '<-d',
+          tickmode: 'array',
           tickvals: [
             props.zMin !== undefined ? props.zMin : heatZMin,
             props.zMax !== undefined ? props.zMax : heatZMax
@@ -153,8 +152,8 @@ export const ImagePlot = (props: any): JSX.Element | null => {
       config={heatConfig}
       layout={heatLayout}
       frames={heatFrames}
-      onInitialized={(figure) => storeHeatState(figure)}
-      onUpdate={(figure) => storeHeatState(figure)}
+      onInitialized={figure => storeHeatState(figure)}
+      onUpdate={figure => storeHeatState(figure)}
     />
   ) : null;
 };

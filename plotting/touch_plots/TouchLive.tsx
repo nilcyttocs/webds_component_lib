@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-import TouchPlot from "./TouchPlot";
+import { TouchcommTouchReport, TouchcommTraceReport } from '@webds/service';
 
-import { TouchcommTouchReport, TouchcommTraceReport } from "@webds/service";
-
-import { requestAPI } from "../local_exports";
+import { requestAPI } from '../local_exports';
+import TouchPlot from './TouchPlot';
 
 const SSE_CLOSED = 2;
 const REPORT_FPS = 120;
@@ -12,7 +11,7 @@ const RENDER_FPS = 30;
 
 const REPORT_TOUCH = 17;
 
-const RECORDED_DATA_FILE_NAME = "touch_data.json";
+const RECORDED_DATA_FILE_NAME = 'touch_data.json';
 
 const IMAGE_LENGTH = 550;
 
@@ -39,11 +38,11 @@ let tThen: number;
 const saveRecordedData = () => {
   saving = true;
   let blob = new Blob([JSON.stringify({ data: recordedData })], {
-    type: "application/json"
+    type: 'application/json'
   });
   recordedData = [];
   saving = false;
-  const link = document.createElement("a");
+  const link = document.createElement('a');
   link.href = window.URL.createObjectURL(blob);
   link.download = RECORDED_DATA_FILE_NAME;
   link.click();
@@ -53,7 +52,7 @@ const computeLinearity = (index: number, length: number): number => {
   const xSum = traceReport.xTrace[index].reduce((a, b) => a + b, 0);
   const xSumSquared = xSum * xSum;
   const xMean = xSum / length;
-  const xSquared = traceReport.xTrace[index].map((e) => e * e);
+  const xSquared = traceReport.xTrace[index].map(e => e * e);
   const xSquaredSum = xSquared.reduce((a, b) => a + b, 0);
 
   const ySum = traceReport.yTrace[index].reduce((a, b) => a + b, 0);
@@ -93,8 +92,8 @@ const captureTraces = () => {
   }
 
   for (let i = 0; i < 10; i++) {
-    if (traceStatus[i] === "+") {
-      traceStatus[i] = "-";
+    if (traceStatus[i] === '+') {
+      traceStatus[i] = '-';
     }
   }
 
@@ -102,7 +101,7 @@ const captureTraces = () => {
     const obj = pos[i];
     const index = obj.objectIndex;
 
-    if (traceStatus[index] === "*") {
+    if (traceStatus[index] === '*') {
       traceReport.xTrace[index] = [obj.xMeas];
       traceReport.yTrace[index] = [obj.yMeas];
       traceStats[index] = Array(7);
@@ -110,7 +109,7 @@ const captureTraces = () => {
       traceReport.xTrace[index].push(obj.xMeas);
       traceReport.yTrace[index].push(obj.yMeas);
     }
-    traceStatus[index] = "+";
+    traceStatus[index] = '+';
 
     if (
       traceStats[index][0] === undefined ||
@@ -139,8 +138,8 @@ const captureTraces = () => {
   }
 
   for (let i = 0; i < 10; i++) {
-    if (traceStatus[i] === "-") {
-      traceStatus[i] = "*";
+    if (traceStatus[i] === '-') {
+      traceStatus[i] = '*';
       if (traceStats[i][0] !== undefined && traceStats[i][1] !== undefined) {
         traceStats[i][4] = traceStats[i][1]! - traceStats[i][0]!;
       }
@@ -153,9 +152,9 @@ const captureTraces = () => {
 };
 
 const parseTouchStats = (props: any): number[][] => {
-  const stats = [...Array(10)].map((e) => Array(5));
-  const x = [...Array(10)].map((e) => Array(1));
-  const y = [...Array(10)].map((e) => Array(1));
+  const stats = [...Array(10)].map(e => Array(5));
+  const x = [...Array(10)].map(e => Array(1));
+  const y = [...Array(10)].map(e => Array(1));
   for (let i = 0; i < touchReport[1].pos!.length; i++) {
     const obj = touchReport[1].pos![i];
     const index = obj.objectIndex;
@@ -174,7 +173,7 @@ const parseTouchStats = (props: any): number[][] => {
 
 const eventHandler = (event: any) => {
   const data = JSON.parse(event.data);
-  if (!data || !data.report || data.report[0] !== "position") {
+  if (!data || !data.report || data.report[0] !== 'position') {
     return;
   }
 
@@ -201,8 +200,8 @@ const errorHandler = (error: any) => {
 
 const removeEvent = () => {
   if (eventSource && eventSource.readyState !== SSE_CLOSED) {
-    eventSource.removeEventListener("report", eventHandler, false);
-    eventSource.removeEventListener("error", errorHandler, false);
+    eventSource.removeEventListener('report', eventHandler, false);
+    eventSource.removeEventListener('error', errorHandler, false);
     eventSource.close();
     eventSource = undefined;
   }
@@ -213,9 +212,9 @@ const addEvent = () => {
     return;
   }
   eventError = false;
-  eventSource = new window.EventSource("/webds/report");
-  eventSource.addEventListener("report", eventHandler, false);
-  eventSource.addEventListener("error", errorHandler, false);
+  eventSource = new window.EventSource('/webds/report');
+  eventSource.addEventListener('report', eventHandler, false);
+  eventSource.addEventListener('error', errorHandler, false);
 };
 
 const setReportTypes = async (
@@ -224,13 +223,13 @@ const setReportTypes = async (
 ): Promise<void> => {
   const dataToSend = { enable, disable, fps: REPORT_FPS };
   try {
-    await requestAPI<any>("report", {
+    await requestAPI<any>('report', {
       body: JSON.stringify(dataToSend),
-      method: "POST"
+      method: 'POST'
     });
   } catch (error) {
     console.error(`Error - POST /webds/report\n${error}`);
-    return Promise.reject("Failed to enable/disable report types");
+    return Promise.reject('Failed to enable/disable report types');
   }
   return Promise.resolve();
 };
@@ -310,14 +309,14 @@ export const TouchLive = (props: any): JSX.Element | null => {
   };
 
   const clearPlot = () => {
-    touchReport = ["position", { pos: [] }];
+    touchReport = ['position', { pos: [] }];
     traceReport = {
-      xTrace: [...Array(10)].map((e) => Array(1)),
-      yTrace: [...Array(10)].map((e) => Array(1))
+      xTrace: [...Array(10)].map(e => Array(1)),
+      yTrace: [...Array(10)].map(e => Array(1))
     };
-    traceStats = [...Array(10)].map((e) => Array(7));
-    traceStatus = [...Array(10)].map((e) => "*");
-    setReport(viewType === "position" ? touchReport[1] : traceReport);
+    traceStats = [...Array(10)].map(e => Array(7));
+    traceStatus = [...Array(10)].map(e => '*');
+    setReport(viewType === 'position' ? touchReport[1] : traceReport);
   };
 
   const animatePlot = () => {
@@ -353,17 +352,17 @@ export const TouchLive = (props: any): JSX.Element | null => {
     }
 
     let stats: number[][];
-    if (viewType === "position") {
+    if (viewType === 'position') {
       stats = parseTouchStats(props);
     } else {
       captureTraces();
-      stats = [...Array(10)].map((e) => Array(5));
+      stats = [...Array(10)].map(e => Array(5));
       for (let i = 0; i < 10; i++) {
         stats[i] = traceStats[i].slice(4);
       }
     }
 
-    setReport(viewType === "position" ? touchReport[1] : traceReport);
+    setReport(viewType === 'position' ? touchReport[1] : traceReport);
     if (props.updateStats) {
       props.updateStats(stats);
     }
@@ -424,7 +423,7 @@ export const TouchLive = (props: any): JSX.Element | null => {
 
   useEffect(() => {
     viewType = props.viewType;
-    running = viewType === "position" ? props.run : true;
+    running = viewType === 'position' ? props.run : true;
     clearPlot();
   }, [props.viewType]);
 
@@ -440,14 +439,14 @@ export const TouchLive = (props: any): JSX.Element | null => {
   }, []);
 
   return showPlot ? (
-    <div style={{ height: "100%", display: "flex", flexDirection: "column" }}>
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       <TouchPlot
         width={imageWidth}
         height={imageHeight}
         swapXY={swapXY}
         flip={props.flip}
         appInfo={props.appInfo}
-        traceView={props.viewType === "trace"}
+        traceView={props.viewType === 'trace'}
         report={report}
       />
     </div>

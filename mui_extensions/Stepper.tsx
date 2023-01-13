@@ -1,44 +1,42 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-import Stepper, { StepperProps } from "@mui/material/Stepper";
-import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
-import StepContent from "@mui/material/StepContent";
-import { StepIconProps } from "@mui/material/StepIcon";
+import Step from '@mui/material/Step';
+import StepContent from '@mui/material/StepContent';
+import { StepIconProps } from '@mui/material/StepIcon';
+import StepLabel from '@mui/material/StepLabel';
+import Stepper, { StepperProps } from '@mui/material/Stepper';
+import { styled, useTheme } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
 
-import Typography from "@mui/material/Typography";
+import { STEPPER_ATTRS } from './constants';
 
-import { styled, useTheme } from "@mui/material/styles";
-
-import { STEPPER_ATTRS } from "./constants";
-
-const HOVERED_COLOR_LIGHT = "rgba(0, 0, 0, 0.53)";
-const HOVERED_COLOR_DARK = "rgba(255, 255, 255, 0.65)";
+const HOVERED_COLOR_LIGHT = 'rgba(0, 0, 0, 0.53)';
+const HOVERED_COLOR_DARK = 'rgba(255, 255, 255, 0.65)';
 
 let verticalStepperIconSize: number;
 
-const VerticalStepIconRoot = styled("div")<{
+const VerticalStepIconRoot = styled('div')<{
   ownerState: { strict: boolean; active?: boolean; completed?: boolean };
 }>(({ theme, ownerState }) => ({
   backgroundColor:
-    theme.palette.mode === "dark"
-      ? "rgba(255, 255, 255, 0.5)"
-      : "rgba(0, 0, 0, 0.38)",
+    theme.palette.mode === 'dark'
+      ? 'rgba(255, 255, 255, 0.5)'
+      : 'rgba(0, 0, 0, 0.38)',
   width: verticalStepperIconSize,
   height: verticalStepperIconSize,
   zIndex: 1,
-  color: "#fff",
-  borderRadius: "50%",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  "&:hover": !ownerState.strict &&
+  color: '#fff',
+  borderRadius: '50%',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  '&:hover': !ownerState.strict &&
     !ownerState.active && {
-      cursor: "pointer",
+      cursor: 'pointer',
       backgroundColor:
-        theme.palette.mode === "dark" ? HOVERED_COLOR_DARK : HOVERED_COLOR_LIGHT
+        theme.palette.mode === 'dark' ? HOVERED_COLOR_DARK : HOVERED_COLOR_LIGHT
     },
-  ...(ownerState.active && { backgroundColor: "#007dc3" })
+  ...(ownerState.active && { backgroundColor: '#007dc3' })
 }));
 
 const VerticalStepIcon = (props: StepIconProps) => {
@@ -108,10 +106,10 @@ export const VerticalStepper = ({
       orientation="vertical"
       connector={null}
       sx={{
-        whiteSpace: "normal",
-        "& .MuiStepContent-root": {
-          minHeight: connectorMinHeight + "px",
-          marginLeft: iconSize / 2 + "px"
+        whiteSpace: 'normal',
+        '& .MuiStepContent-root': {
+          minHeight: connectorMinHeight + 'px',
+          marginLeft: iconSize / 2 + 'px'
         },
         ...sx
       }}
@@ -151,12 +149,12 @@ export const VerticalStepper = ({
                 color:
                   index !== activeVerticalStep - 1
                     ? index === hoveredVerticalStep - 1
-                      ? theme.palette.mode === "dark"
+                      ? theme.palette.mode === 'dark'
                         ? HOVERED_COLOR_DARK
                         : HOVERED_COLOR_LIGHT
                       : theme.palette.text.disabled
                     : theme.palette.text.primary,
-                fontWeight: index === activeVerticalStep - 1 ? "bold" : "normal"
+                fontWeight: index === activeVerticalStep - 1 ? 'bold' : 'normal'
               }}
             >
               {step.label}

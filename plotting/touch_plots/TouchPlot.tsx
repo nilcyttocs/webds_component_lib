@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-import { VIRIDIS_COLORS } from "./constants";
+import Plot from 'react-plotly.js';
 
-import { TouchcommTouchReport, TouchcommTraceReport } from "@webds/service";
+import { TouchcommTouchReport, TouchcommTraceReport } from '@webds/service';
 
-import Plot from "react-plotly.js";
+import { VIRIDIS_COLORS } from './constants';
 
 const PLOT_WIDTH = 0;
 const PLOT_HEIGHT = 0;
@@ -17,9 +17,9 @@ let plotMargins = {
 };
 
 const plotConfig = { displayModeBar: false };
-const plotBgColor = "black";
-const paperBgColor = "rgba(0, 0, 0, 0)";
-const axisLineColor = "rgba(128, 128, 128, 0.5)";
+const plotBgColor = 'black';
+const paperBgColor = 'rgba(0, 0, 0, 0)';
+const axisLineColor = 'rgba(128, 128, 128, 0.5)';
 
 export const TouchPlot = (props: any): JSX.Element | null => {
   const [initialized, setInitialized] = useState<boolean>(false);
@@ -43,10 +43,10 @@ export const TouchPlot = (props: any): JSX.Element | null => {
       const trace = {
         x: xTrace[i],
         y: yTrace[i],
-        mode: "lines",
-        line: { shape: "linear", width: 5, color: VIRIDIS_COLORS[i] },
-        name: "Object " + i,
-        hovertemplate: "(%{x}, %{y})<extra></extra>"
+        mode: 'lines',
+        line: { shape: 'linear', width: 5, color: VIRIDIS_COLORS[i] },
+        name: 'Object ' + i,
+        hovertemplate: '(%{x}, %{y})<extra></extra>'
       };
       traces.push(trace);
     }
@@ -68,10 +68,10 @@ export const TouchPlot = (props: any): JSX.Element | null => {
       traceX.push(report.xTrace[i].slice());
       traceY.push(report.yTrace[i].slice());
       if (props.flip?.v) {
-        traceX[i] = traceX[i].map((item) => props.appInfo.maxX - item);
+        traceX[i] = traceX[i].map(item => props.appInfo.maxX - item);
       }
       if (props.flip?.h) {
-        traceY[i] = traceY[i].map((item) => props.appInfo.maxY - item);
+        traceY[i] = traceY[i].map(item => props.appInfo.maxY - item);
       }
     }
     const xTrace = props.swapXY ? traceY : traceX;
@@ -88,16 +88,16 @@ export const TouchPlot = (props: any): JSX.Element | null => {
       const marker = {
         x: x[i],
         y: y[i],
-        mode: "markers+text",
+        mode: 'markers+text',
         marker: { size: 32, color: VIRIDIS_COLORS[i] },
         text: [i.toString()],
-        textposition: "inside",
-        textfont: { family: "Arial", color: "white", size: 16 },
-        name: "Object " + i,
-        hovertemplate: "(%{x}, %{y})<extra></extra>"
+        textposition: 'inside',
+        textfont: { family: 'Arial', color: 'white', size: 16 },
+        name: 'Object ' + i,
+        hovertemplate: '(%{x}, %{y})<extra></extra>'
       };
       if (i >= 5) {
-        marker.textfont.color = "black";
+        marker.textfont.color = 'black';
       }
       markers.push(marker);
     }
@@ -111,8 +111,8 @@ export const TouchPlot = (props: any): JSX.Element | null => {
       pos = [];
     }
 
-    const x = [...Array(10)].map((e) => Array(1));
-    const y = [...Array(10)].map((e) => Array(1));
+    const x = [...Array(10)].map(e => Array(1));
+    const y = [...Array(10)].map(e => Array(1));
     for (let i = 0; i < pos.length; i++) {
       const obj = pos[i];
       const index = obj.objectIndex;
@@ -172,8 +172,8 @@ export const TouchPlot = (props: any): JSX.Element | null => {
       layout={layout}
       frames={frames}
       config={config}
-      onInitialized={(figure) => storeState(figure)}
-      onUpdate={(figure) => storeState(figure)}
+      onInitialized={figure => storeState(figure)}
+      onUpdate={figure => storeState(figure)}
     />
   ) : null;
 };

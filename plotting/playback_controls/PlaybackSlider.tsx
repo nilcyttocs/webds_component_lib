@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-import Slider from "@mui/material/Slider";
+import Slider from '@mui/material/Slider';
 
 export const PlaybackSlider = (props: any): JSX.Element => {
   const [index, setIndex] = useState<number>(props.frameIndex + 1);

@@ -1,12 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from 'react';
 
-import ImagePlot from "./ImagePlot";
-import HybridXPlot from "./HybridXPlot";
-import HybridYPlot from "./HybridYPlot";
+import { TouchcommADCReport } from '@webds/service';
 
-import { TouchcommADCReport } from "@webds/service";
-
-import { ADCDataContext } from "../local_exports";
+import { ADCDataContext } from '../local_exports';
+import HybridXPlot from './HybridXPlot';
+import HybridYPlot from './HybridYPlot';
+import ImagePlot from './ImagePlot';
 
 const SLOW_X = 3;
 
@@ -210,8 +209,8 @@ export const ADCPlayback = (props: any): JSX.Element | null => {
   }, []);
 
   return initialized ? (
-    <div style={{ height: "100%", display: "flex", flexDirection: "column" }}>
-      <div style={{ display: "flex", flexWrap: "nowrap" }}>
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <div style={{ display: 'flex', flexWrap: 'nowrap' }}>
         {!props.imageOnly && (
           <HybridYPlot
             height={imageHeight}

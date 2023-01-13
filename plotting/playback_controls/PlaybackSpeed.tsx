@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
-const DEFAULT_SPEED = "Normal";
+const DEFAULT_SPEED = 'Normal';
 
-const FONT_SIZE = "0.875rem";
+const FONT_SIZE = '0.875rem';
 
-const speeds = ["Fast", "Normal", "Slow"];
+const speeds = ['Fast', 'Normal', 'Slow'];
 
 const convertSpeedtoNum = (speed: string) => {
   switch (speed) {
-    case "Fast":
+    case 'Fast':
       return 3;
-    case "Normal":
+    case 'Normal':
       return 2;
-    case "Slow":
+    case 'Slow':
       return 1;
   }
 };
@@ -37,10 +37,10 @@ export const PlaybackSpeed = (props: any): JSX.Element => {
   return (
     <FormControl
       sx={{
-        minWidth: "100px",
-        maxWidth: "100px",
-        "& .MuiOutlinedInput-root": { height: "40px", textAlign: "center" },
-        "& .MuiSelect-icon": { width: "0.75em", height: "0.75em" }
+        minWidth: '100px',
+        maxWidth: '100px',
+        '& .MuiOutlinedInput-root': { height: '40px', textAlign: 'center' },
+        '& .MuiSelect-icon': { width: '0.75em', height: '0.75em' }
       }}
     >
       <InputLabel sx={{ fontSize: FONT_SIZE }}>Speed</InputLabel>
@@ -51,7 +51,7 @@ export const PlaybackSpeed = (props: any): JSX.Element => {
         onChange={handleChange}
         sx={{ fontSize: FONT_SIZE }}
       >
-        {speeds.map((item) => {
+        {speeds.map(item => {
           return (
             <MenuItem key={item} value={item} sx={{ fontSize: FONT_SIZE }}>
               {item}

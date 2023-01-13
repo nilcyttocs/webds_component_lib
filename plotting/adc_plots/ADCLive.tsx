@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-import ImagePlot from "../adc_plots/ImagePlot";
-import HybridXPlot from "../adc_plots/HybridXPlot";
-import HybridYPlot from "../adc_plots/HybridYPlot";
+import { TouchcommADCReport } from '@webds/service';
 
-import { TouchcommADCReport } from "@webds/service";
-
-import { requestAPI } from "../local_exports";
+import HybridXPlot from '../adc_plots/HybridXPlot';
+import HybridYPlot from '../adc_plots/HybridYPlot';
+import ImagePlot from '../adc_plots/ImagePlot';
+import { requestAPI } from '../local_exports';
 
 const SSE_CLOSED = 2;
 const REPORT_FPS = 120;
@@ -16,7 +15,7 @@ const REPORT_DELTA = 18;
 const REPORT_RAW = 19;
 const REPORT_BASELINE = 20;
 
-const RECORDED_DATA_FILE_NAME = "adc_data.json";
+const RECORDED_DATA_FILE_NAME = 'adc_data.json';
 
 const IMAGE_LENGTH = 550;
 const HYBRID_HEIGHT = 60;
@@ -88,11 +87,11 @@ let numCols: number;
 const saveRecordedData = () => {
   saving = true;
   let blob = new Blob([JSON.stringify({ data: recordedData })], {
-    type: "application/json"
+    type: 'application/json'
   });
   recordedData = [];
   saving = false;
-  const link = document.createElement("a");
+  const link = document.createElement('a');
   link.href = window.URL.createObjectURL(blob);
   link.download = RECORDED_DATA_FILE_NAME;
   link.click();
@@ -115,9 +114,9 @@ const eventHandler = (event: any) => {
   }
 
   if (
-    (reportType === REPORT_DELTA && data.report[0] === "delta") ||
-    (reportType === REPORT_RAW && data.report[0] === "raw") ||
-    (reportType === REPORT_BASELINE && data.report[0] === "baseline")
+    (reportType === REPORT_DELTA && data.report[0] === 'delta') ||
+    (reportType === REPORT_RAW && data.report[0] === 'raw') ||
+    (reportType === REPORT_BASELINE && data.report[0] === 'baseline')
   ) {
     originalReport = data.report;
   } else {
@@ -181,8 +180,8 @@ const errorHandler = (error: any) => {
 
 const removeEvent = () => {
   if (eventSource && eventSource.readyState !== SSE_CLOSED) {
-    eventSource.removeEventListener("report", eventHandler, false);
-    eventSource.removeEventListener("error", errorHandler, false);
+    eventSource.removeEventListener('report', eventHandler, false);
+    eventSource.removeEventListener('error', errorHandler, false);
     eventSource.close();
     eventSource = undefined;
   }
@@ -193,9 +192,9 @@ const addEvent = () => {
     return;
   }
   eventError = false;
-  eventSource = new window.EventSource("/webds/report");
-  eventSource.addEventListener("report", eventHandler, false);
-  eventSource.addEventListener("error", errorHandler, false);
+  eventSource = new window.EventSource('/webds/report');
+  eventSource.addEventListener('report', eventHandler, false);
+  eventSource.addEventListener('error', errorHandler, false);
 };
 
 const setReportTypes = async (
@@ -204,13 +203,13 @@ const setReportTypes = async (
 ): Promise<void> => {
   const dataToSend = { enable, disable, fps: REPORT_FPS };
   try {
-    await requestAPI<any>("report", {
+    await requestAPI<any>('report', {
       body: JSON.stringify(dataToSend),
-      method: "POST"
+      method: 'POST'
     });
   } catch (error) {
     console.error(`Error - POST /webds/report\n${error}`);
-    return Promise.reject("Failed to enable/disable report types");
+    return Promise.reject('Failed to enable/disable report types');
   }
   return Promise.resolve();
 };
@@ -259,9 +258,9 @@ const getMean = (): TouchcommADCReport | undefined => {
       [
         subBuffer[0][0],
         {
-          image: [...Array(numRows)].map((e) => Array(numCols).fill(0)),
-          hybridx: [...Array(numCols)].map((e) => 0),
-          hybridy: [...Array(numRows)].map((e) => 0)
+          image: [...Array(numRows)].map(e => Array(numCols).fill(0)),
+          hybridx: [...Array(numCols)].map(e => 0),
+          hybridy: [...Array(numRows)].map(e => 0)
         }
       ]
     );
@@ -307,9 +306,9 @@ const getMax = (): TouchcommADCReport | undefined => {
       [
         subBuffer[0][0],
         {
-          image: [...Array(numRows)].map((e) => Array(numCols).fill(-Infinity)),
-          hybridx: [...Array(numCols)].map((e) => -Infinity),
-          hybridy: [...Array(numRows)].map((e) => -Infinity)
+          image: [...Array(numRows)].map(e => Array(numCols).fill(-Infinity)),
+          hybridx: [...Array(numCols)].map(e => -Infinity),
+          hybridy: [...Array(numRows)].map(e => -Infinity)
         }
       ]
     );
@@ -355,9 +354,9 @@ const getMin = (): TouchcommADCReport | undefined => {
       [
         subBuffer[0][0],
         {
-          image: [...Array(numRows)].map((e) => Array(numCols).fill(Infinity)),
-          hybridx: [...Array(numCols)].map((e) => Infinity),
-          hybridy: [...Array(numRows)].map((e) => Infinity)
+          image: [...Array(numRows)].map(e => Array(numCols).fill(Infinity)),
+          hybridx: [...Array(numCols)].map(e => Infinity),
+          hybridy: [...Array(numRows)].map(e => Infinity)
         }
       ]
     );
@@ -381,7 +380,7 @@ const getRange = (): TouchcommADCReport | undefined => {
     const range: TouchcommADCReport = [
       subBuffer[0][0],
       {
-        image: [...Array(numRows)].map((e) => Array(numCols)),
+        image: [...Array(numRows)].map(e => Array(numCols)),
         hybridx: [...Array(numCols)],
         hybridy: [...Array(numRows)]
       }
@@ -418,19 +417,19 @@ const computePlot = () => {
   }
 
   switch (statistics) {
-    case "Single":
+    case 'Single':
       computedReport = buffer[index];
       break;
-    case "Mean":
+    case 'Mean':
       computedReport = getMean();
       break;
-    case "Max":
+    case 'Max':
       computedReport = getMax();
       break;
-    case "Min":
+    case 'Min':
       computedReport = getMin();
       break;
-    case "Range":
+    case 'Range':
       computedReport = getRange();
       break;
     default:
@@ -648,8 +647,8 @@ export const ADCLive = (props: any): JSX.Element | null => {
   }, []);
 
   return showPlot ? (
-    <div style={{ height: "100%", display: "flex", flexDirection: "column" }}>
-      <div style={{ display: "flex", flexWrap: "nowrap" }}>
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <div style={{ display: 'flex', flexWrap: 'nowrap' }}>
         {!props.imageOnly && (
           <HybridYPlot
             height={imageHeight}

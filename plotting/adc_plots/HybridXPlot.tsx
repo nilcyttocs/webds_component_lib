@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-import { useTheme } from "@mui/material/styles";
+import Plot from 'react-plotly.js';
 
-import { TouchcommADCReport } from "@webds/service";
-
-import Plot from "react-plotly.js";
+import { useTheme } from '@mui/material/styles';
+import { TouchcommADCReport } from '@webds/service';
 
 const PLOT_WIDTH = 0;
 const PLOT_HEIGHT = 60;
@@ -21,9 +20,9 @@ let barXMin: number | undefined;
 let barXMax: number | undefined;
 
 const plotConfig = { displayModeBar: false };
-const plotBgColor = "rgba(0.75, 0.75, 0.75, 0.1)";
-const paperBgColor = "rgba(0, 0, 0, 0)";
-const axisLineColor = "rgba(128, 128, 128, 0.5)";
+const plotBgColor = 'rgba(0.75, 0.75, 0.75, 0.1)';
+const paperBgColor = 'rgba(0, 0, 0, 0)';
+const axisLineColor = 'rgba(128, 128, 128, 0.5)';
 
 const computePlot = (swapXY: boolean, report: TouchcommADCReport[1]) => {
   barX = swapXY ? report.hybridy : report.hybridx;
@@ -77,9 +76,9 @@ export const HybridXPlot = (props: any): JSX.Element | null => {
         mirror: true,
         showline: true,
         showgrid: false,
-        ticks: "",
-        tickformat: ">-d",
-        tickmode: "array",
+        ticks: '',
+        tickformat: '>-d',
+        tickmode: 'array',
         tickvals: [],
         linecolor: axisLineColor
       },
@@ -87,9 +86,9 @@ export const HybridXPlot = (props: any): JSX.Element | null => {
         mirror: true,
         showline: true,
         showgrid: false,
-        ticks: "",
-        tickformat: ">-d",
-        tickmode: "array",
+        ticks: '',
+        tickformat: '>-d',
+        tickmode: 'array',
         tickvals: [barXMin, barXMax],
         range: [barXMin, barXMax],
         linecolor: axisLineColor,
@@ -99,7 +98,7 @@ export const HybridXPlot = (props: any): JSX.Element | null => {
     setBarXData([
       {
         y: barX,
-        type: "bar",
+        type: 'bar',
         width: 0.5
       }
     ]);
@@ -129,8 +128,8 @@ export const HybridXPlot = (props: any): JSX.Element | null => {
       config={barXConfig}
       layout={barXLayout}
       frames={barXFrames}
-      onInitialized={(figure) => storeBarXState(figure)}
-      onUpdate={(figure) => storeBarXState(figure)}
+      onInitialized={figure => storeBarXState(figure)}
+      onUpdate={figure => storeBarXState(figure)}
     />
   ) : null;
 };

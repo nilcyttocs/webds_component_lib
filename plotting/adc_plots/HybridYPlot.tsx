@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-import { useTheme } from "@mui/material/styles";
+import Plot from 'react-plotly.js';
 
-import { TouchcommADCReport } from "@webds/service";
-
-import Plot from "react-plotly.js";
+import { useTheme } from '@mui/material/styles';
+import { TouchcommADCReport } from '@webds/service';
 
 const PLOT_WIDTH = 60;
 const PLOT_HEIGHT = 0;
@@ -21,9 +20,9 @@ let barYMin: number | undefined;
 let barYMax: number | undefined;
 
 const plotConfig = { displayModeBar: false };
-const plotBgColor = "rgba(0.75, 0.75, 0.75, 0.1)";
-const paperBgColor = "rgba(0, 0, 0, 0)";
-const axisLineColor = "rgba(128, 128, 128, 0.5)";
+const plotBgColor = 'rgba(0.75, 0.75, 0.75, 0.1)';
+const paperBgColor = 'rgba(0, 0, 0, 0)';
+const axisLineColor = 'rgba(128, 128, 128, 0.5)';
 
 const computePlot = (swapXY: boolean, report: TouchcommADCReport[1]) => {
   barY = swapXY ? report.hybridx : report.hybridy;
@@ -74,13 +73,13 @@ export const HybridYPlot = (props: any): JSX.Element | null => {
       plot_bgcolor: plotBgColor,
       paper_bgcolor: paperBgColor,
       xaxis: {
-        side: "top",
+        side: 'top',
         mirror: true,
         showline: true,
         showgrid: false,
-        ticks: "",
-        tickformat: ">-d",
-        tickmode: "array",
+        ticks: '',
+        tickformat: '>-d',
+        tickmode: 'array',
         tickvals: [barYMin, barYMax],
         range: [barYMin, barYMax],
         linecolor: axisLineColor,
@@ -90,9 +89,9 @@ export const HybridYPlot = (props: any): JSX.Element | null => {
         mirror: true,
         showline: true,
         showgrid: false,
-        ticks: "",
-        tickformat: ">-d",
-        tickmode: "array",
+        ticks: '',
+        tickformat: '>-d',
+        tickmode: 'array',
         tickvals: [],
         linecolor: axisLineColor
       }
@@ -100,7 +99,7 @@ export const HybridYPlot = (props: any): JSX.Element | null => {
     setBarYData([
       {
         x: barY,
-        type: "bar",
+        type: 'bar',
         width: 0.5
       }
     ]);
@@ -130,8 +129,8 @@ export const HybridYPlot = (props: any): JSX.Element | null => {
       config={barYConfig}
       layout={barYLayout}
       frames={barYFrames}
-      onInitialized={(figure) => storeBarYState(figure)}
-      onUpdate={(figure) => storeBarYState(figure)}
+      onInitialized={figure => storeBarYState(figure)}
+      onUpdate={figure => storeBarYState(figure)}
     />
   ) : null;
 };

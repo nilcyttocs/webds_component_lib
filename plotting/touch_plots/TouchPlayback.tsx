@@ -1,10 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from 'react';
 
-import TouchPlot from "./TouchPlot";
+import { TouchcommTouchReport, TouchcommTraceReport } from '@webds/service';
 
-import { TouchcommTouchReport, TouchcommTraceReport } from "@webds/service";
-
-import { TouchDataContext, TraceDataContext } from "../local_exports";
+import { TouchDataContext, TraceDataContext } from '../local_exports';
+import TouchPlot from './TouchPlot';
 
 const SLOW_X = 3;
 
@@ -163,7 +162,7 @@ export const TouchPlayback = (props: any): JSX.Element | null => {
   }, []);
 
   return initialized ? (
-    <div style={{ height: "100%", display: "flex", flexDirection: "column" }}>
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       <TouchPlot
         width={imageWidth}
         height={imageHeight}
