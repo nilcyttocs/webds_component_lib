@@ -16,7 +16,7 @@ interface CanvasProps extends PaperProps {
   minWidth?: number | null;
   stretch?: boolean;
   showHelp?: boolean;
-  annotation?: string | null;
+  annotation?: string | JSX.Element | null;
 }
 
 export const Canvas = ({
@@ -92,7 +92,11 @@ export const Canvas = ({
                 transform: 'translate(0%, -50%)'
               }}
             >
-              <Typography variant="body2">{annotation}</Typography>
+              {typeof annotation === 'string' ? (
+                <Typography variant="body2">{annotation}</Typography>
+              ) : (
+                annotation
+              )}
             </div>
           )}
         </Box>
