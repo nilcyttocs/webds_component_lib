@@ -8,6 +8,7 @@ import PauseCircleIcon from '@mui/icons-material/PauseCircle';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import StopCircleIcon from '@mui/icons-material/StopCircle';
+import SwapHorizontalCircleIcon from '@mui/icons-material/SwapHorizontalCircle';
 import Box from '@mui/material/Box';
 import Button, { ButtonProps } from '@mui/material/Button';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
@@ -307,6 +308,122 @@ export const ResetButton = ({
           {...resetButtonProps}
         >
           <ChangeCircleIcon />
+        </IconButton>
+      </div>
+    </Tooltip>
+  );
+};
+
+interface SwitchButtonProps extends IconButtonProps {
+  tooltip?: string;
+}
+
+export const SwitchButton = ({
+  tooltip,
+  sx,
+  ...switchButtonProps
+}: SwitchButtonProps) => {
+  return (
+    <Tooltip title={tooltip ? tooltip : 'Switch'}>
+      <div
+        style={{
+          width: '40px',
+          height: '40px',
+          ...(sx as any)
+        }}
+      >
+        <IconButton
+          color="primary"
+          sx={{
+            padding: '0px',
+            '& .MuiSvgIcon-root': {
+              fontSize: '2.5rem'
+            }
+          }}
+          {...switchButtonProps}
+        >
+          <SwapHorizontalCircleIcon />
+        </IconButton>
+      </div>
+    </Tooltip>
+  );
+};
+
+const FilterIcon = (props: any): JSX.Element => {
+  return (
+    <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+      <g id="filter">
+        <path
+          id="filter"
+          d="m12,22c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10zm4.085,-14.045c-0.0319,-0.0614 -0.0799,-0.113 -0.139,-0.1491c-0.059,-0.0362 -0.1268,-0.0555 -0.196,-0.0559l-7.5,0c-0.0692,0.0004 -0.137,0.0197 -0.196,0.0559c-0.0591,0.0361 -0.1071,0.0877 -0.139,0.1491c-0.0318,0.0616 -0.0454,0.131 -0.0392,0.2001c0.0062,0.0691 0.0319,0.1349 0.0742,0.1899l2.675,3.655l0,3.875c0.0013,0.0991 0.0412,0.1937 0.1113,0.2638c0.07,0.07 0.1646,0.1099 0.2637,0.1112l2,0c0.0991,-0.0013 0.1937,-0.0412 0.2637,-0.1112c0.0701,-0.0701 0.11,-0.1647 0.1113,-0.2638l0,-3.875l2.675,-3.655c0.0423,-0.055 0.068,-0.1208 0.0742,-0.1899c0.0062,-0.0691 -0.0074,-0.1385 -0.0392,-0.2001z"
+          fillRule="evenodd"
+        />
+      </g>
+    </svg>
+  );
+};
+
+interface FilterButtonProps extends IconButtonProps {}
+
+export const FilterButton = ({
+  sx,
+  ...filterButtonProps
+}: FilterButtonProps) => {
+  return (
+    <Tooltip title="Filter">
+      <div
+        style={{
+          width: '40px',
+          height: '40px',
+          ...(sx as any)
+        }}
+      >
+        <IconButton sx={{ padding: '0px' }} {...filterButtonProps}>
+          <SvgIcon color="primary" sx={{ fontSize: '2.5rem' }}>
+            <FilterIcon />
+          </SvgIcon>
+        </IconButton>
+      </div>
+    </Tooltip>
+  );
+};
+
+const DownloadIcon = (props: any): JSX.Element => {
+  return (
+    <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+      <g id="download">
+        <path
+          id="download"
+          d="m12,22c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10zm1.8,-14.9l-3.6,0l0,3.6l-2.4,0l4.2,4.2l4.2,-4.2l-2.4,0l0,-3.6zm-1.8,14.9c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10zm-4.2,-6.1l8.4,0l0,1.2l-8.4,0l0,-1.2zm4.2,6.1c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10z"
+          fillRule="evenodd"
+        />
+      </g>
+    </svg>
+  );
+};
+
+interface DownloadButtonProps extends IconButtonProps {
+  tooltip?: string;
+}
+
+export const DownloadButton = ({
+  tooltip,
+  sx,
+  ...downloadButtonProps
+}: DownloadButtonProps) => {
+  return (
+    <Tooltip title={tooltip ? tooltip : 'Download'}>
+      <div
+        style={{
+          width: '40px',
+          height: '40px',
+          ...(sx as any)
+        }}
+      >
+        <IconButton sx={{ padding: '0px' }} {...downloadButtonProps}>
+          <SvgIcon color="primary" sx={{ fontSize: '2.5rem' }}>
+            <DownloadIcon />
+          </SvgIcon>
         </IconButton>
       </div>
     </Tooltip>
