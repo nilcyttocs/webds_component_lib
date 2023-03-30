@@ -51,16 +51,18 @@ const VerticalFlipIcon = (props: any): JSX.Element => {
 interface FlipToggleProps extends IconButtonProps {
   horizontal: boolean;
   flip: boolean;
+  tooltip?: string;
 }
 
 export const FlipToggle = ({
   horizontal,
   flip,
+  tooltip = horizontal ? 'Horizontal Flip' : 'Vertical Flip',
   sx,
   ...hFlipToggleProps
 }: FlipToggleProps) => {
   return (
-    <Tooltip title={horizontal ? 'Horizontal Flip' : 'Vertical Flip'}>
+    <Tooltip title={tooltip}>
       <div
         style={{
           width: '40px',
@@ -114,15 +116,17 @@ const TraceViewIcon = (props: any): JSX.Element => {
 
 interface TouchViewToggleProps extends IconButtonProps {
   traceView: boolean;
+  tooltip?: string;
 }
 
 export const TouchViewToggle = ({
   traceView,
+  tooltip = traceView ? 'Position View' : 'Trace View',
   sx,
   ...touchViewToggleProps
 }: TouchViewToggleProps) => {
   return (
-    <Tooltip title={traceView ? 'Position View' : 'Trace View'}>
+    <Tooltip title={tooltip}>
       <div
         style={{
           width: '40px',
@@ -173,15 +177,17 @@ const RecordIconInner = (props: any): JSX.Element => {
 
 interface RecordToggleProps extends IconButtonProps {
   recording: boolean;
+  tooltip?: string;
 }
 
 export const RecordToggle = ({
   recording,
+  tooltip = 'Record',
   sx,
   ...recordToggleProps
 }: RecordToggleProps) => {
   return (
-    <Tooltip title="Record">
+    <Tooltip title={tooltip}>
       <div
         style={{
           width: '40px',
@@ -217,15 +223,17 @@ export const RecordToggle = ({
 
 interface PauseRunToggleProps extends IconButtonProps {
   running: boolean;
+  tooltip?: string;
 }
 
 export const PauseRunToggle = ({
   running,
+  tooltip = running ? 'Pause' : 'Run',
   sx,
   ...pauseRunToggleProps
 }: PauseRunToggleProps) => {
   return (
-    <Tooltip title={running ? 'Pause' : 'Run'}>
+    <Tooltip title={tooltip}>
       <div
         style={{
           width: '40px',
@@ -250,11 +258,17 @@ export const PauseRunToggle = ({
   );
 };
 
-interface StopButtonProps extends IconButtonProps {}
+interface StopButtonProps extends IconButtonProps {
+  tooltip?: string;
+}
 
-export const StopButton = ({ sx, ...stopButtonProps }: StopButtonProps) => {
+export const StopButton = ({
+  tooltip = 'Stop',
+  sx,
+  ...stopButtonProps
+}: StopButtonProps) => {
   return (
-    <Tooltip title="Stop">
+    <Tooltip title={tooltip}>
       <div
         style={{
           width: '40px',
@@ -284,12 +298,12 @@ interface ResetButtonProps extends IconButtonProps {
 }
 
 export const ResetButton = ({
-  tooltip,
+  tooltip = 'Reset',
   sx,
   ...resetButtonProps
 }: ResetButtonProps) => {
   return (
-    <Tooltip title={tooltip ? tooltip : 'Reset'}>
+    <Tooltip title={tooltip}>
       <div
         style={{
           width: '40px',
@@ -319,12 +333,12 @@ interface SwitchButtonProps extends IconButtonProps {
 }
 
 export const SwitchButton = ({
-  tooltip,
+  tooltip = 'Switch',
   sx,
   ...switchButtonProps
 }: SwitchButtonProps) => {
   return (
-    <Tooltip title={tooltip ? tooltip : 'Switch'}>
+    <Tooltip title={tooltip}>
       <div
         style={{
           width: '40px',
@@ -363,14 +377,17 @@ const FilterIcon = (props: any): JSX.Element => {
   );
 };
 
-interface FilterButtonProps extends IconButtonProps {}
+interface FilterButtonProps extends IconButtonProps {
+  tooltip?: string;
+}
 
 export const FilterButton = ({
+  tooltip = 'Filter',
   sx,
   ...filterButtonProps
 }: FilterButtonProps) => {
   return (
-    <Tooltip title="Filter">
+    <Tooltip title={tooltip}>
       <div
         style={{
           width: '40px',
@@ -407,12 +424,12 @@ interface DownloadButtonProps extends IconButtonProps {
 }
 
 export const DownloadButton = ({
-  tooltip,
+  tooltip = 'Download',
   sx,
   ...downloadButtonProps
 }: DownloadButtonProps) => {
   return (
-    <Tooltip title={tooltip ? tooltip : 'Download'}>
+    <Tooltip title={tooltip}>
       <div
         style={{
           width: '40px',
@@ -444,23 +461,21 @@ const UploadIcon = (props: any): JSX.Element => {
   );
 };
 
-interface UploadButtonProps {
+interface UploadButtonProps extends IconButtonProps {
   input: JSX.Element;
-  tooltip?: string;
-  disabled?: boolean;
   cloud?: boolean;
-  sx?: any;
+  tooltip?: string;
 }
 
 export const UploadButton = ({
   input,
-  tooltip,
-  disabled,
   cloud = false,
-  sx
+  tooltip = 'Upload File',
+  sx,
+  ...uploadButtonProps
 }: UploadButtonProps) => {
   return (
-    <Tooltip title={tooltip ? tooltip : 'Upload File'}>
+    <Tooltip title={tooltip}>
       <div
         style={{
           width: '40px',
@@ -471,13 +486,13 @@ export const UploadButton = ({
         <IconButton
           color="primary"
           component="label"
-          disabled={disabled}
           sx={{
             padding: '0px',
             '& .MuiSvgIcon-root': {
               fontSize: '2.5rem'
             }
           }}
+          {...uploadButtonProps}
         >
           {input}
           {cloud ? (
