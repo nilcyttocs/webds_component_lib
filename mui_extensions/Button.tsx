@@ -466,6 +466,7 @@ interface UploadButtonProps {
   cloud?: boolean;
   disabled?: boolean;
   tooltip?: string;
+  sx?: any;
 }
 
 export const UploadButton = ({
