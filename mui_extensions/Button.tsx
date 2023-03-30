@@ -461,18 +461,19 @@ const UploadIcon = (props: any): JSX.Element => {
   );
 };
 
-interface UploadButtonProps extends IconButtonProps {
+interface UploadButtonProps {
   input: JSX.Element;
   cloud?: boolean;
+  disabled?: boolean;
   tooltip?: string;
 }
 
 export const UploadButton = ({
   input,
   cloud = false,
+  disabled = false,
   tooltip = 'Upload File',
-  sx,
-  ...uploadButtonProps
+  sx
 }: UploadButtonProps) => {
   return (
     <Tooltip title={tooltip}>
@@ -486,13 +487,13 @@ export const UploadButton = ({
         <IconButton
           color="primary"
           component="label"
+          disabled={disabled}
           sx={{
             padding: '0px',
             '& .MuiSvgIcon-root': {
               fontSize: '2.5rem'
             }
           }}
-          {...uploadButtonProps}
         >
           {input}
           {cloud ? (
