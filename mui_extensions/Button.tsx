@@ -20,6 +20,90 @@ import { keyframes } from '@mui/system';
 
 const TOGGLE_SELECT_COLOR = '#5AACF6';
 
+const DownloadIcon = (props: any): JSX.Element => {
+  return (
+    <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+      <g id="download">
+        <path
+          id="download"
+          d="m12,22c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10zm1.8,-14.9l-3.6,0l0,3.6l-2.4,0l4.2,4.2l4.2,-4.2l-2.4,0l0,-3.6zm-1.8,14.9c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10zm-4.2,-6.1l8.4,0l0,1.2l-8.4,0l0,-1.2zm4.2,6.1c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10z"
+          fillRule="evenodd"
+        />
+      </g>
+    </svg>
+  );
+};
+
+interface DownloadButtonProps extends IconButtonProps {
+  tooltip?: string;
+}
+
+export const DownloadButton = ({
+  tooltip = 'Download',
+  sx,
+  ...downloadButtonProps
+}: DownloadButtonProps) => {
+  return (
+    <Tooltip title={tooltip}>
+      <div
+        style={{
+          width: '40px',
+          height: '40px',
+          ...(sx as any)
+        }}
+      >
+        <IconButton sx={{ padding: '0px' }} {...downloadButtonProps}>
+          <SvgIcon color="primary" sx={{ fontSize: '2.5rem' }}>
+            <DownloadIcon />
+          </SvgIcon>
+        </IconButton>
+      </div>
+    </Tooltip>
+  );
+};
+
+const FilterIcon = (props: any): JSX.Element => {
+  return (
+    <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+      <g id="filter">
+        <path
+          id="filter"
+          d="m12,22c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10zm4.085,-14.045c-0.0319,-0.0614 -0.0799,-0.113 -0.139,-0.1491c-0.059,-0.0362 -0.1268,-0.0555 -0.196,-0.0559l-7.5,0c-0.0692,0.0004 -0.137,0.0197 -0.196,0.0559c-0.0591,0.0361 -0.1071,0.0877 -0.139,0.1491c-0.0318,0.0616 -0.0454,0.131 -0.0392,0.2001c0.0062,0.0691 0.0319,0.1349 0.0742,0.1899l2.675,3.655l0,3.875c0.0013,0.0991 0.0412,0.1937 0.1113,0.2638c0.07,0.07 0.1646,0.1099 0.2637,0.1112l2,0c0.0991,-0.0013 0.1937,-0.0412 0.2637,-0.1112c0.0701,-0.0701 0.11,-0.1647 0.1113,-0.2638l0,-3.875l2.675,-3.655c0.0423,-0.055 0.068,-0.1208 0.0742,-0.1899c0.0062,-0.0691 -0.0074,-0.1385 -0.0392,-0.2001z"
+          fillRule="evenodd"
+        />
+      </g>
+    </svg>
+  );
+};
+
+interface FilterButtonProps extends IconButtonProps {
+  tooltip?: string;
+}
+
+export const FilterButton = ({
+  tooltip = 'Filter',
+  sx,
+  ...filterButtonProps
+}: FilterButtonProps) => {
+  return (
+    <Tooltip title={tooltip}>
+      <div
+        style={{
+          width: '40px',
+          height: '40px',
+          ...(sx as any)
+        }}
+      >
+        <IconButton sx={{ padding: '0px' }} {...filterButtonProps}>
+          <SvgIcon color="primary" sx={{ fontSize: '2.5rem' }}>
+            <FilterIcon />
+          </SvgIcon>
+        </IconButton>
+      </div>
+    </Tooltip>
+  );
+};
+
 const HorizontalFlipIcon = (props: any): JSX.Element => {
   return (
     <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
@@ -86,45 +170,17 @@ export const FlipToggle = ({
   );
 };
 
-const PositionViewIcon = (props: any): JSX.Element => {
-  return (
-    <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
-      <g id="position_view">
-        <path
-          id="position_view"
-          d="m12,22c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10zm-0.375,-12.8125c-0.8978,0 -1.625,-0.7831 -1.625,-1.75c0,-0.9668 0.7272,-1.75 1.625,-1.75c0.8978,0 1.625,0.7832 1.625,1.75c0,0.9669 -0.7272,1.75 -1.625,1.75zm0.375,12.8125c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10zm-3.75,-8.0625c-0.8978,0 -1.625,-0.7831 -1.625,-1.75c0,-0.9669 0.7272,-1.75 1.625,-1.75c0.8978,0 1.625,0.7831 1.625,1.75c0,0.9669 -0.7272,1.75 -1.625,1.75zm3.75,8.0625c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10zm3,-4.5625c-0.8978,0 -1.625,-0.7831 -1.625,-1.75c0,-0.9669 0.7272,-1.75 1.625,-1.75c0.8978,0 1.625,0.7831 1.625,1.75c0,0.9669 -0.7272,1.75 -1.625,1.75z"
-          fillRule="evenodd"
-        />
-      </g>
-    </svg>
-  );
-};
-
-const TraceViewIcon = (props: any): JSX.Element => {
-  return (
-    <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
-      <g id="trace_view">
-        <path
-          id="trace_view"
-          d="m12,22c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10zm6.7841,-8.3268c-0.0695,-0.0835 -1.2839,-1.5141 -3.3499,-2.3156c-0.1182,-0.998 -0.498,-1.9075 -1.0985,-2.6106c-0.8421,-0.9859 -2.0565,-1.507 -3.5117,-1.507c-2.8854,0 -4.7659,2.5863 -4.8445,2.6964a0.448,0.448 90 0 0 0.7287,0.5214c0.0166,-0.0233 1.6973,-2.3218 4.1158,-2.3218c1.185,0 2.1638,0.4125 2.8304,1.193a3.8728,3.8728 90 0 1 0.8229,1.7243a7.668,7.668 90 0 0 -1.8613,-0.2293c-1.4594,0 -2.6846,0.3813 -3.543,1.1027c-0.7593,0.6382 -1.1949,1.5272 -1.1949,2.4392a2.665,2.665 90 0 0 0.7769,1.9071c0.541,0.5384 1.291,0.823 2.169,0.823c1.4125,0 2.6146,-0.5587 3.4762,-1.6156c0.684,-0.839 1.1005,-1.9654 1.1647,-3.1305c1.6454,0.743 2.617,1.8803 2.631,1.8969a0.448,0.448 90 1 0 0.6882,-0.5736zm-7.9601,2.5268c-1.416,0 -2.0499,-0.9212 -2.0499,-1.8341c0,-1.2743 1.2023,-2.6459 3.8419,-2.6459a6.7201,6.7201 90 0 1 1.9616,0.2953c0,0.0061 0.0001,0.0123 0.0001,0.0185c0,2.0703 -1.2894,4.1662 -3.7537,4.1662z"
-          fillRule="evenodd"
-        />
-      </g>
-    </svg>
-  );
-};
-
-interface TouchViewToggleProps extends IconButtonProps {
-  traceView: boolean;
+interface PauseRunToggleProps extends IconButtonProps {
+  running: boolean;
   tooltip?: string;
 }
 
-export const TouchViewToggle = ({
-  traceView,
-  tooltip = traceView ? 'Position View' : 'Trace View',
+export const PauseRunToggle = ({
+  running,
+  tooltip = running ? 'Pause' : 'Run',
   sx,
-  ...touchViewToggleProps
-}: TouchViewToggleProps) => {
+  ...pauseRunToggleProps
+}: PauseRunToggleProps) => {
   return (
     <Tooltip title={tooltip}>
       <div
@@ -134,10 +190,17 @@ export const TouchViewToggle = ({
           ...(sx as any)
         }}
       >
-        <IconButton sx={{ padding: '0px' }} {...touchViewToggleProps}>
-          <SvgIcon color="primary" sx={{ fontSize: '2.5rem' }}>
-            {traceView ? <PositionViewIcon /> : <TraceViewIcon />}
-          </SvgIcon>
+        <IconButton
+          color="primary"
+          sx={{
+            padding: '0px',
+            '& .MuiSvgIcon-root': {
+              fontSize: '2.5rem'
+            }
+          }}
+          {...pauseRunToggleProps}
+        >
+          {running ? <PauseCircleIcon /> : <PlayCircleIcon />}
         </IconButton>
       </div>
     </Tooltip>
@@ -221,17 +284,15 @@ export const RecordToggle = ({
   );
 };
 
-interface PauseRunToggleProps extends IconButtonProps {
-  running: boolean;
+interface ResetButtonProps extends IconButtonProps {
   tooltip?: string;
 }
 
-export const PauseRunToggle = ({
-  running,
-  tooltip = running ? 'Pause' : 'Run',
+export const ResetButton = ({
+  tooltip = 'Reset',
   sx,
-  ...pauseRunToggleProps
-}: PauseRunToggleProps) => {
+  ...resetButtonProps
+}: ResetButtonProps) => {
   return (
     <Tooltip title={tooltip}>
       <div
@@ -249,9 +310,9 @@ export const PauseRunToggle = ({
               fontSize: '2.5rem'
             }
           }}
-          {...pauseRunToggleProps}
+          {...resetButtonProps}
         >
-          {running ? <PauseCircleIcon /> : <PlayCircleIcon />}
+          <ChangeCircleIcon />
         </IconButton>
       </div>
     </Tooltip>
@@ -293,41 +354,6 @@ export const StopButton = ({
   );
 };
 
-interface ResetButtonProps extends IconButtonProps {
-  tooltip?: string;
-}
-
-export const ResetButton = ({
-  tooltip = 'Reset',
-  sx,
-  ...resetButtonProps
-}: ResetButtonProps) => {
-  return (
-    <Tooltip title={tooltip}>
-      <div
-        style={{
-          width: '40px',
-          height: '40px',
-          ...(sx as any)
-        }}
-      >
-        <IconButton
-          color="primary"
-          sx={{
-            padding: '0px',
-            '& .MuiSvgIcon-root': {
-              fontSize: '2.5rem'
-            }
-          }}
-          {...resetButtonProps}
-        >
-          <ChangeCircleIcon />
-        </IconButton>
-      </div>
-    </Tooltip>
-  );
-};
-
 interface SwitchButtonProps extends IconButtonProps {
   tooltip?: string;
 }
@@ -363,13 +389,13 @@ export const SwitchButton = ({
   );
 };
 
-const FilterIcon = (props: any): JSX.Element => {
+const PositionViewIcon = (props: any): JSX.Element => {
   return (
     <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
-      <g id="filter">
+      <g id="position_view">
         <path
-          id="filter"
-          d="m12,22c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10zm4.085,-14.045c-0.0319,-0.0614 -0.0799,-0.113 -0.139,-0.1491c-0.059,-0.0362 -0.1268,-0.0555 -0.196,-0.0559l-7.5,0c-0.0692,0.0004 -0.137,0.0197 -0.196,0.0559c-0.0591,0.0361 -0.1071,0.0877 -0.139,0.1491c-0.0318,0.0616 -0.0454,0.131 -0.0392,0.2001c0.0062,0.0691 0.0319,0.1349 0.0742,0.1899l2.675,3.655l0,3.875c0.0013,0.0991 0.0412,0.1937 0.1113,0.2638c0.07,0.07 0.1646,0.1099 0.2637,0.1112l2,0c0.0991,-0.0013 0.1937,-0.0412 0.2637,-0.1112c0.0701,-0.0701 0.11,-0.1647 0.1113,-0.2638l0,-3.875l2.675,-3.655c0.0423,-0.055 0.068,-0.1208 0.0742,-0.1899c0.0062,-0.0691 -0.0074,-0.1385 -0.0392,-0.2001z"
+          id="position_view"
+          d="m12,22c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10zm-0.375,-12.8125c-0.8978,0 -1.625,-0.7831 -1.625,-1.75c0,-0.9668 0.7272,-1.75 1.625,-1.75c0.8978,0 1.625,0.7832 1.625,1.75c0,0.9669 -0.7272,1.75 -1.625,1.75zm0.375,12.8125c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10zm-3.75,-8.0625c-0.8978,0 -1.625,-0.7831 -1.625,-1.75c0,-0.9669 0.7272,-1.75 1.625,-1.75c0.8978,0 1.625,0.7831 1.625,1.75c0,0.9669 -0.7272,1.75 -1.625,1.75zm3.75,8.0625c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10zm3,-4.5625c-0.8978,0 -1.625,-0.7831 -1.625,-1.75c0,-0.9669 0.7272,-1.75 1.625,-1.75c0.8978,0 1.625,0.7831 1.625,1.75c0,0.9669 -0.7272,1.75 -1.625,1.75z"
           fillRule="evenodd"
         />
       </g>
@@ -377,15 +403,31 @@ const FilterIcon = (props: any): JSX.Element => {
   );
 };
 
-interface FilterButtonProps extends IconButtonProps {
+const TraceViewIcon = (props: any): JSX.Element => {
+  return (
+    <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+      <g id="trace_view">
+        <path
+          id="trace_view"
+          d="m12,22c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10zm6.7841,-8.3268c-0.0695,-0.0835 -1.2839,-1.5141 -3.3499,-2.3156c-0.1182,-0.998 -0.498,-1.9075 -1.0985,-2.6106c-0.8421,-0.9859 -2.0565,-1.507 -3.5117,-1.507c-2.8854,0 -4.7659,2.5863 -4.8445,2.6964a0.448,0.448 90 0 0 0.7287,0.5214c0.0166,-0.0233 1.6973,-2.3218 4.1158,-2.3218c1.185,0 2.1638,0.4125 2.8304,1.193a3.8728,3.8728 90 0 1 0.8229,1.7243a7.668,7.668 90 0 0 -1.8613,-0.2293c-1.4594,0 -2.6846,0.3813 -3.543,1.1027c-0.7593,0.6382 -1.1949,1.5272 -1.1949,2.4392a2.665,2.665 90 0 0 0.7769,1.9071c0.541,0.5384 1.291,0.823 2.169,0.823c1.4125,0 2.6146,-0.5587 3.4762,-1.6156c0.684,-0.839 1.1005,-1.9654 1.1647,-3.1305c1.6454,0.743 2.617,1.8803 2.631,1.8969a0.448,0.448 90 1 0 0.6882,-0.5736zm-7.9601,2.5268c-1.416,0 -2.0499,-0.9212 -2.0499,-1.8341c0,-1.2743 1.2023,-2.6459 3.8419,-2.6459a6.7201,6.7201 90 0 1 1.9616,0.2953c0,0.0061 0.0001,0.0123 0.0001,0.0185c0,2.0703 -1.2894,4.1662 -3.7537,4.1662z"
+          fillRule="evenodd"
+        />
+      </g>
+    </svg>
+  );
+};
+
+interface TouchViewToggleProps extends IconButtonProps {
+  traceView: boolean;
   tooltip?: string;
 }
 
-export const FilterButton = ({
-  tooltip = 'Filter',
+export const TouchViewToggle = ({
+  traceView,
+  tooltip = traceView ? 'Position View' : 'Trace View',
   sx,
-  ...filterButtonProps
-}: FilterButtonProps) => {
+  ...touchViewToggleProps
+}: TouchViewToggleProps) => {
   return (
     <Tooltip title={tooltip}>
       <div
@@ -395,51 +437,9 @@ export const FilterButton = ({
           ...(sx as any)
         }}
       >
-        <IconButton sx={{ padding: '0px' }} {...filterButtonProps}>
+        <IconButton sx={{ padding: '0px' }} {...touchViewToggleProps}>
           <SvgIcon color="primary" sx={{ fontSize: '2.5rem' }}>
-            <FilterIcon />
-          </SvgIcon>
-        </IconButton>
-      </div>
-    </Tooltip>
-  );
-};
-
-const DownloadIcon = (props: any): JSX.Element => {
-  return (
-    <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
-      <g id="download">
-        <path
-          id="download"
-          d="m12,22c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10zm1.8,-14.9l-3.6,0l0,3.6l-2.4,0l4.2,4.2l4.2,-4.2l-2.4,0l0,-3.6zm-1.8,14.9c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10zm-4.2,-6.1l8.4,0l0,1.2l-8.4,0l0,-1.2zm4.2,6.1c-5.5248,0 -10,-4.4752 -10,-10c0,-5.5248 4.4752,-10 10,-10c5.5248,0 10,4.4752 10,10c0,5.5248 -4.4752,10 -10,10z"
-          fillRule="evenodd"
-        />
-      </g>
-    </svg>
-  );
-};
-
-interface DownloadButtonProps extends IconButtonProps {
-  tooltip?: string;
-}
-
-export const DownloadButton = ({
-  tooltip = 'Download',
-  sx,
-  ...downloadButtonProps
-}: DownloadButtonProps) => {
-  return (
-    <Tooltip title={tooltip}>
-      <div
-        style={{
-          width: '40px',
-          height: '40px',
-          ...(sx as any)
-        }}
-      >
-        <IconButton sx={{ padding: '0px' }} {...downloadButtonProps}>
-          <SvgIcon color="primary" sx={{ fontSize: '2.5rem' }}>
-            <DownloadIcon />
+            {traceView ? <PositionViewIcon /> : <TraceViewIcon />}
           </SvgIcon>
         </IconButton>
       </div>
