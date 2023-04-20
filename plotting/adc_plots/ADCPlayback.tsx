@@ -17,13 +17,14 @@ const HYBRIDY_R_MARGIN = 40;
 const HYBRIDY_T_MARGIN = 24;
 const HYBRIDY_B_MARGIN = 32;
 
+const HYBRIDY_L_MARGIN_TIGHT = 32;
+const HYBRIDY_R_MARGIN_TIGHT = 32;
+const HYBRIDY_B_MARGIN_TIGHT = 16;
+
 const IMAGE_L_MARGIN = 0;
 const IMAGE_R_MARGIN = 112;
 const IMAGE_T_MARGIN = HYBRIDY_T_MARGIN;
-const IMAGE_B_MARGIN = HYBRIDY_B_MARGIN;
 
-const HYBRIDX_L_MARGIN =
-  HYBRID_HEIGHT + HYBRIDY_L_MARGIN + HYBRIDY_R_MARGIN + IMAGE_L_MARGIN;
 const HYBRIDX_R_MARGIN = IMAGE_R_MARGIN;
 const HYBRIDX_T_MARGIN = 10;
 const HYBRIDX_B_MARGIN = 10;
@@ -69,6 +70,7 @@ export const ADCPlayback = (props: any): JSX.Element | null => {
   const [imageWidth, setImageWidth] = useState<number>(0);
   const [imageHeight, setImageHeight] = useState<number>(0);
   const [imageMargins, setImageMargins] = useState<Margins>(zeroMargins);
+  const [hybridHeight, setHybridHeight] = useState<number>(0);
   const [hybridXMargins, setHybridXMargins] = useState<Margins>(zeroMargins);
   const [hybridYMargins, setHybridYMargins] = useState<Margins>(zeroMargins);
   const [swapXY, setSwapXY] = useState<boolean>(false);
@@ -110,26 +112,42 @@ export const ADCPlayback = (props: any): JSX.Element | null => {
       setImageWidth(imageWidth);
       setImageHeight(imageHeight);
     }
+    const hybridHeight =
+      props.hybridHeight !== undefined ? props.hybridHeight : HYBRID_HEIGHT;
+    setHybridHeight(hybridHeight);
     if (props.imageOnly) {
       setImageMargins(zeroMargins);
     } else {
+      const hybridYLMargin = props.tight
+        ? HYBRIDY_L_MARGIN_TIGHT
+        : HYBRIDY_L_MARGIN;
+      const hybridYRMargin = props.tight
+        ? HYBRIDY_R_MARGIN_TIGHT
+        : HYBRIDY_R_MARGIN;
+      const hybridYTMargin = HYBRIDY_T_MARGIN;
+      const hybridYBMargin = props.tight
+        ? HYBRIDY_B_MARGIN_TIGHT
+        : HYBRIDY_B_MARGIN;
+      const hybridXLMargin =
+        hybridHeight + hybridYLMargin + hybridYRMargin + IMAGE_L_MARGIN;
+      const imageBMargin = hybridYBMargin;
       setImageMargins({
         l: IMAGE_L_MARGIN,
         r: IMAGE_R_MARGIN,
         t: IMAGE_T_MARGIN,
-        b: IMAGE_B_MARGIN
+        b: imageBMargin
       });
       setHybridXMargins({
-        l: HYBRIDX_L_MARGIN,
+        l: hybridXLMargin,
         r: HYBRIDX_R_MARGIN,
         t: HYBRIDX_T_MARGIN,
         b: HYBRIDX_B_MARGIN
       });
       setHybridYMargins({
-        l: HYBRIDY_L_MARGIN,
-        r: HYBRIDY_R_MARGIN,
-        t: HYBRIDY_T_MARGIN,
-        b: HYBRIDY_B_MARGIN
+        l: hybridYLMargin,
+        r: hybridYRMargin,
+        t: hybridYTMargin,
+        b: hybridYBMargin
       });
     }
   };
@@ -213,6 +231,7 @@ export const ADCPlayback = (props: any): JSX.Element | null => {
       <div style={{ display: 'flex', flexWrap: 'nowrap' }}>
         {!props.imageOnly && (
           <HybridYPlot
+            width={hybridHeight}
             height={imageHeight}
             margins={hybridYMargins}
             swapXY={swapXY}
@@ -234,6 +253,7 @@ export const ADCPlayback = (props: any): JSX.Element | null => {
       {!props.imageOnly && (
         <HybridXPlot
           width={imageWidth}
+          height={hybridHeight}
           margins={hybridXMargins}
           swapXY={swapXY}
           report={report}
