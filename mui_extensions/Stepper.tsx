@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from 'react';
 
+import CircleIcon from '@mui/icons-material/Circle';
+import BottomNavigation, {
+  BottomNavigationProps
+} from '@mui/material/BottomNavigation';
+import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import Step from '@mui/material/Step';
 import StepContent from '@mui/material/StepContent';
 import { StepIconProps } from '@mui/material/StepIcon';
 import StepLabel from '@mui/material/StepLabel';
 import Stepper, { StepperProps } from '@mui/material/Stepper';
-import { styled, useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
+import { styled, useTheme } from '@mui/material/styles';
 
-import { STEPPER_ATTRS } from './constants';
+import { CAROUSEL_ATTRS, STEPPER_ATTRS } from './constants';
 
 const HOVERED_COLOR_LIGHT = 'rgba(0, 0, 0, 0.53)';
 const HOVERED_COLOR_DARK = 'rgba(255, 255, 255, 0.65)';
@@ -164,5 +169,62 @@ export const VerticalStepper = ({
         </Step>
       ))}
     </Stepper>
+  );
+};
+
+interface CarouselNavigationProps extends BottomNavigationProps {
+  steps?: number;
+  disabled?: boolean;
+  onStepClick?: (clickedStep: number) => void;
+}
+
+export const CarouselNavigation = ({
+  steps = CAROUSEL_ATTRS.STEPS,
+  disabled = false,
+  onStepClick = undefined,
+  sx,
+  ...carouselNavigationProps
+}: CarouselNavigationProps) => {
+  const [step, setStep] = useState(1);
+
+  const generateButtons = (): JSX.Element[] => {
+    const output: JSX.Element[] = [];
+    for (let i = 1; i <= steps; i++) {
+      output.push(
+        <BottomNavigationAction
+          key={i}
+          value={i}
+          icon={<CircleIcon sx={{ fontSize: '16px' }} />}
+          disableRipple
+          disabled={disabled}
+          sx={{
+            minWidth: '24px',
+            maxWidth: '24px',
+            padding: 0,
+            margin: '0px 2px',
+            '&.Mui-selected': {
+              paddingTop: 0
+            }
+          }}
+        />
+      );
+    }
+    return output;
+  };
+
+  return (
+    <BottomNavigation
+      value={step}
+      onChange={(event, clickedStep: number) => {
+        setStep(clickedStep);
+        if (onStepClick !== undefined) {
+          onStepClick(clickedStep);
+        }
+      }}
+      sx={{ height: '24px', ...sx }}
+      {...carouselNavigationProps}
+    >
+      {generateButtons()}
+    </BottomNavigation>
   );
 };
