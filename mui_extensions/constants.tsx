@@ -27,3 +27,7 @@ export const STEPPER_ATTRS = {
   ICON_SIZE: 32,
   CONNECTOR_MIN_HEIGHT: 20
 };
+
+export const CAROUSEL_ATTRS = {
+  STEPS: 3
+};
