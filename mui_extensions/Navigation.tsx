@@ -13,7 +13,7 @@ import Stepper, { StepperProps } from '@mui/material/Stepper';
 import Typography from '@mui/material/Typography';
 import { styled, useTheme } from '@mui/material/styles';
 
-import { CAROUSEL_ATTRS, STEPPER_ATTRS } from './constants';
+import { CAROUSAL_ATTRS, STEPPER_ATTRS } from './constants';
 
 const HOVERED_COLOR_LIGHT = 'rgba(0, 0, 0, 0.53)';
 const HOVERED_COLOR_DARK = 'rgba(255, 255, 255, 0.65)';
@@ -172,19 +172,19 @@ export const VerticalStepper = ({
   );
 };
 
-interface CarouselNavigationProps extends BottomNavigationProps {
+interface CarousalNavigationProps extends BottomNavigationProps {
   steps?: number;
   disabled?: boolean;
   onStepClick?: (clickedStep: number) => void;
 }
 
-export const CarouselNavigation = ({
-  steps = CAROUSEL_ATTRS.STEPS,
+export const CarousalNavigation = ({
+  steps = CAROUSAL_ATTRS.STEPS,
   disabled = false,
   onStepClick = undefined,
   sx,
-  ...carouselNavigationProps
-}: CarouselNavigationProps) => {
+  ...carousalNavigationProps
+}: CarousalNavigationProps) => {
   const [step, setStep] = useState(1);
 
   const generateButtons = (): JSX.Element[] => {
@@ -222,7 +222,7 @@ export const CarouselNavigation = ({
         }
       }}
       sx={{ height: '24px', ...sx }}
-      {...carouselNavigationProps}
+      {...carousalNavigationProps}
     >
       {generateButtons()}
     </BottomNavigation>

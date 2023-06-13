@@ -28,6 +28,6 @@ export const STEPPER_ATTRS = {
   CONNECTOR_MIN_HEIGHT: 20
 };
 
-export const CAROUSEL_ATTRS = {
+export const CAROUSAL_ATTRS = {
   STEPS: 3
 };
