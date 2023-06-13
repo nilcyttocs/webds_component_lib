@@ -36,10 +36,12 @@ const DownloadIcon = (props: any): JSX.Element => {
 
 interface DownloadButtonProps extends IconButtonProps {
   tooltip?: string;
+  disabled?: boolean;
 }
 
 export const DownloadButton = ({
   tooltip = 'Download',
+  disabled = false,
   sx,
   ...downloadButtonProps
 }: DownloadButtonProps) => {
@@ -52,8 +54,15 @@ export const DownloadButton = ({
           ...(sx as any)
         }}
       >
-        <IconButton sx={{ padding: '0px' }} {...downloadButtonProps}>
-          <SvgIcon color="primary" sx={{ fontSize: '2.5rem' }}>
+        <IconButton
+          disabled={disabled}
+          sx={{ padding: '0px' }}
+          {...downloadButtonProps}
+        >
+          <SvgIcon
+            color={disabled ? 'disabled' : 'primary'}
+            sx={{ fontSize: '2.5rem' }}
+          >
             <DownloadIcon />
           </SvgIcon>
         </IconButton>
@@ -78,10 +87,12 @@ const FilterIcon = (props: any): JSX.Element => {
 
 interface FilterButtonProps extends IconButtonProps {
   tooltip?: string;
+  disabled?: boolean;
 }
 
 export const FilterButton = ({
   tooltip = 'Filter',
+  disabled = false,
   sx,
   ...filterButtonProps
 }: FilterButtonProps) => {
@@ -94,8 +105,15 @@ export const FilterButton = ({
           ...(sx as any)
         }}
       >
-        <IconButton sx={{ padding: '0px' }} {...filterButtonProps}>
-          <SvgIcon color="primary" sx={{ fontSize: '2.5rem' }}>
+        <IconButton
+          disabled={disabled}
+          sx={{ padding: '0px' }}
+          {...filterButtonProps}
+        >
+          <SvgIcon
+            color={disabled ? 'disabled' : 'primary'}
+            sx={{ fontSize: '2.5rem' }}
+          >
             <FilterIcon />
           </SvgIcon>
         </IconButton>
@@ -136,12 +154,14 @@ interface FlipToggleProps extends IconButtonProps {
   horizontal: boolean;
   flip: boolean;
   tooltip?: string;
+  disabled?: boolean;
 }
 
 export const FlipToggle = ({
   horizontal,
   flip,
   tooltip = horizontal ? 'Horizontal Flip' : 'Vertical Flip',
+  disabled = false,
   sx,
   ...hFlipToggleProps
 }: FlipToggleProps) => {
@@ -154,9 +174,13 @@ export const FlipToggle = ({
           ...(sx as any)
         }}
       >
-        <IconButton sx={{ padding: '0px' }} {...hFlipToggleProps}>
+        <IconButton
+          disabled={disabled}
+          sx={{ padding: '0px' }}
+          {...hFlipToggleProps}
+        >
           <SvgIcon
-            color="primary"
+            color={disabled ? 'disabled' : 'primary'}
             sx={{
               fontSize: '2.5rem',
               fill: flip ? TOGGLE_SELECT_COLOR : 'currentColor'
@@ -241,11 +265,13 @@ const RecordIconInner = (props: any): JSX.Element => {
 interface RecordToggleProps extends IconButtonProps {
   recording: boolean;
   tooltip?: string;
+  disabled?: boolean;
 }
 
 export const RecordToggle = ({
   recording,
   tooltip = 'Record',
+  disabled = false,
   sx,
   ...recordToggleProps
 }: RecordToggleProps) => {
@@ -259,13 +285,17 @@ export const RecordToggle = ({
         }}
       >
         <IconButton
+          disabled={disabled}
           sx={{
             padding: '0px',
             position: 'relative'
           }}
           {...recordToggleProps}
         >
-          <SvgIcon color="primary" sx={{ fontSize: '2.5rem' }}>
+          <SvgIcon
+            color={disabled ? 'disabled' : 'primary'}
+            sx={{ fontSize: '2.5rem' }}
+          >
             <RecordIconOuter />
           </SvgIcon>
           <SvgIcon
@@ -420,11 +450,13 @@ const TraceViewIcon = (props: any): JSX.Element => {
 interface TouchViewToggleProps extends IconButtonProps {
   traceView: boolean;
   tooltip?: string;
+  disabled?: boolean;
 }
 
 export const TouchViewToggle = ({
   traceView,
   tooltip = traceView ? 'Position View' : 'Trace View',
+  disabled = false,
   sx,
   ...touchViewToggleProps
 }: TouchViewToggleProps) => {
@@ -437,8 +469,15 @@ export const TouchViewToggle = ({
           ...(sx as any)
         }}
       >
-        <IconButton sx={{ padding: '0px' }} {...touchViewToggleProps}>
-          <SvgIcon color="primary" sx={{ fontSize: '2.5rem' }}>
+        <IconButton
+          disabled={disabled}
+          sx={{ padding: '0px' }}
+          {...touchViewToggleProps}
+        >
+          <SvgIcon
+            color={disabled ? 'disabled' : 'primary'}
+            sx={{ fontSize: '2.5rem' }}
+          >
             {traceView ? <PositionViewIcon /> : <TraceViewIcon />}
           </SvgIcon>
         </IconButton>
@@ -500,7 +539,7 @@ export const UploadButton = ({
           {cloud ? (
             <CloudUploadIcon />
           ) : (
-            <SvgIcon color="primary">
+            <SvgIcon color={disabled ? 'disabled' : 'primary'}>
               <UploadIcon />
             </SvgIcon>
           )}
