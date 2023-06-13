@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import MuiAccordion, { AccordionProps } from '@mui/material/Accordion';
@@ -52,21 +52,34 @@ export const FlexiPanel = ({
   summary,
   details,
   scrollable = false,
+  expanded = false,
+  onChange,
   sx,
   ...flexiPanelProps
 }: FlexiPanelProps): JSX.Element => {
-  const [expanded, setExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const handleExpandedChange = (expanded: boolean) => {
-    setExpanded(expanded);
+    setIsExpanded(expanded);
   };
+
+  useEffect(() => {
+    handleExpandedChange(expanded);
+  }, [expanded]);
 
   return (
     <Accordion
+      expanded={expanded}
       onChange={(event: React.SyntheticEvent, expanded: boolean) => {
         handleExpandedChange(expanded);
+        if (onChange !== undefined) {
+          onChange(event, expanded);
+        }
       }}
       sx={{
+        ...(!isExpanded && {
+          minHeight: '48px'
+        }),
         ...(scrollable && {
           display: 'flex',
           flexDirection: 'column',
@@ -81,7 +94,7 @@ export const FlexiPanel = ({
     >
       <AccordionSummary
         sx={{
-          ...(expanded && {
+          ...(isExpanded && {
             boxShadow: 'inset 0 -1px 0 0 rgba(0, 0, 0, .125)'
           })
         }}
