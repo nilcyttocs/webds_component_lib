@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 
 export const ConfigInput = (props: any): JSX.Element => {
   return (
-    <>
+    <div>
       <Typography sx={{ fontWeight: 'bold' }}>
         {props.configEntry.name}
       </Typography>
@@ -121,6 +121,6 @@ export const ConfigInput = (props: any): JSX.Element => {
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 };
