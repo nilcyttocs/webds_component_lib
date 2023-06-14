@@ -28,29 +28,33 @@ export const ConfigInput = (props: any): JSX.Element => {
             Value:&nbsp;
           </Typography>
         )}
-        <Tooltip title={props.tooltip} arrow>
-          <TextField
-            variant="standard"
-            value={props.inputValue !== undefined ? props.inputValue : ''}
-            inputProps={{ style: { textAlign: 'center' } }}
-            onChange={event => props.handleInputValueChange(event.target.value)}
-            sx={{
-              width: 48 * props.configEntry.elements + 'px',
-              display: 'inline-block',
-              '& .MuiInput-root': {
-                width: '100%',
-                fontSize: '0.875rem'
-              },
-              '& .MuiInput-input': {
-                padding: 0,
-                color:
-                  props.inputValueColor !== undefined
-                    ? props.inputValueColor
-                    : null
+        {props.tooltip !== undefined && (
+          <Tooltip title={props.tooltip} arrow>
+            <TextField
+              variant="standard"
+              value={props.inputValue !== undefined ? props.inputValue : ''}
+              inputProps={{ style: { textAlign: 'center' } }}
+              onChange={event =>
+                props.handleInputValueChange(event.target.value)
               }
-            }}
-          />
-        </Tooltip>
+              sx={{
+                width: 48 * props.configEntry.elements + 'px',
+                display: 'inline-block',
+                '& .MuiInput-root': {
+                  width: '100%',
+                  fontSize: '0.875rem'
+                },
+                '& .MuiInput-input': {
+                  padding: 0,
+                  color:
+                    props.inputValueColor !== undefined
+                      ? props.inputValueColor
+                      : null
+                }
+              }}
+            />
+          </Tooltip>
+        )}
         {props.inputValueUnits && (
           <Typography
             variant="body2"
